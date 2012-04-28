@@ -10,18 +10,16 @@ class Kippt::Clips
     @client = client
   end
 
-  def all(options = {})
-    validate_collection_options(options)
-
-    Kippt::ClipCollection.new(@client.get("clips", options).body, self)
+  def object_class
+    Kippt::Clip
   end
 
-  def build
-    Kippt::Clip.new({}, self)
+  def collection_class
+    Kippt::ClipCollection
   end
 
-  def [](clip_id)
-    Kippt::Clip.new(@client.get("clips/#{clip_id}").body, self)
+  def base_uri
+    "clips"
   end
 
   def search(parameters)
@@ -35,10 +33,6 @@ class Kippt::Clips
         @client.get("search/clips", parameters).body,
         self)
     end
-  end
-
-  def collection_from_url(url)
-    Kippt::ClipCollection.new(@client.get(url).body, self)
   end
 
   def save_object(object)

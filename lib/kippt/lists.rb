@@ -10,20 +10,15 @@ class Kippt::Lists
     @client = client
   end
 
-  def all(options = {})
-    validate_collection_options(options)
-
-    Kippt::ListCollection.new(@client.get("lists", options).body, self)
+  def object_class
+    Kippt::List
   end
 
-  # def new
-  # end
-
-  def [](list_id)
-    Kippt::List.new(@client.get("lists/#{list_id}").body)
+  def collection_class
+    Kippt::ListCollection
   end
 
-  def collection_from_url(url)
-    Kippt::ListCollection.new(@client.get(url).body, self)
+  def base_uri
+    "lists"
   end
 end
