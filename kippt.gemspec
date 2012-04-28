@@ -3,9 +3,9 @@ require File.expand_path('../lib/kippt/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Vesa Vänskä"]
-  gem.email         = ["vesan2000@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.email         = ["vesa@vesavanska.com"]
+  gem.description   = %q{Client library for using Kippt.com API}
+  gem.summary       = %q{Client library for using Kippt.com API}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
@@ -14,4 +14,11 @@ Gem::Specification.new do |gem|
   gem.name          = "kippt"
   gem.require_paths = ["lib"]
   gem.version       = Kippt::VERSION
+
+  gem.add_dependency "faraday", "~> 0.7.6"
+  gem.add_dependency "faraday_middleware", "~> 0.8.7"
+  gem.add_dependency "yajl-ruby", "~> 1.1.0"
+
+  gem.add_development_dependency "rspec", "~> 2.9.0"
+  gem.add_development_dependency "webmock", "~> 1.8.6"
 end

@@ -103,3 +103,22 @@ Other available options are `is_starred: true` and `list: [list-id]` like:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## TODO
+
+* Ability to create, update and delete resources
+* Add user agent string
+
+#### Creating, updating and deleting resources
+
+    clip = client.clips.build
+    clip.url = "http://github.com"
+    clip.save #=> Returns boolean
+
+If you are missing required fields `#save` will return `false` and you can use 
+`#error_message` to get the error message returned by the API.
+
+    clip = client.clips.build
+    clip.save #=> false
+    clip.error_message #=> "No url."
+
