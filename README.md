@@ -6,15 +6,21 @@ Kippt is a gem that provides a client library for using Kippt.com API.
 
 Add this line to your application's Gemfile:
 
-    gem "kippt"
+```ruby
+gem "kippt"
+```
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install kippt
+```sh
+$ gem install kippt
+```
 
 ## Usage
 
@@ -24,20 +30,26 @@ To be able to use the API you need to authenticated. There's two ways to authent
 
 #### With login credentials
 
-    client = Kippt::Client.new(username: "vesan", password: "s3cr3t")
-    # Methods called on `client` will use the passed credentials
+```ruby
+client = Kippt::Client.new(username: "vesan", password: "s3cr3t")
+# Methods called on `client` will use the passed credentials
+```
 
 #### With token
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    # Methods called on `client` will use the passed credentials
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+# Methods called on `client` will use the passed credentials
+```
 
 ### Account
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    account = client.account
-    account.username #=> "vesan"
-    account.token    #=> "2544d6bfddf5893ec8617"
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+account = client.account
+account.username #=> "vesan"
+account.token    #=> "2544d6bfddf5893ec8617"
+```
 
 ### Resources
 
@@ -48,67 +60,88 @@ resources will be added soon.
 
 Get all the lists:
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    lists = client.lists # Returns Kippt::ListCollection
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+lists = client.lists # Returns Kippt::ListCollection
+```
 
 Get single list:
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    list_id = 10
-    list = client.lists[list_id] # Returns Kippt::ListItem
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+list_id = 10
+list = client.lists[list_id] # Returns Kippt::ListItem
+```
 
 #### Clips
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    clips = client.clips # Returns Kippt::ClipCollection
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+clips = client.clips # Returns Kippt::ClipCollection
+```
 
 ### Pagination
 
 Lists and clips are paginated:
 
-    client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-    clips = client.clips.all
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+clips = client.clips.all
 
-    clips.total_count
-    clips.offset
-    clips.limit
+clips.total_count
+clips.offset
+clips.limit
+```
 
 You can get next and previous set of results:
 
-    clips.next_page? #=> true
-    clips.next_page # Returns new Kippt::ClipCollection
-    clips.prev_page? #=> true
-    clips.prev_page # Returns new Kippt::ClipCollection
+```ruby
+clips.next_page? #=> true
+clips.next_page # Returns new Kippt::ClipCollection
+clips.prev_page? #=> true
+clips.prev_page # Returns new Kippt::ClipCollection
+```
 
-There's also `#previous_page?` and `#previous_page`.
+There's also `#previous\_page?` and `#previous\_page`.
 
 Limit and offset can be controlled manually:
 
-    client.clips.all(limit: 25, offset: 50)
+```ruby
+client.clips.all(limit: 25, offset: 50)
+```
 
 ### Search
 
 Clips can be searched:
 
-    client.clips.search("kippt") #=> Returns Kippt::ClipCollection
+```ruby
+client.clips.search("kippt") #=> Returns Kippt::ClipCollection
+```
 
-Other available options are `is_starred: true` and `list: [list-id]` like:
+Other available options are `is\_starred: true` and `list: [list-id]` like:
 
-    client.clips.search(q: "kippt", list: 5, is_starred: true)
+```ruby
+client.clips.search(q: "kippt", list: 5, is_starred: true)
+```
 
 ### Creating, updating and deleting resources
 
-    clip = client.clips.build
-    clip.url = "http://github.com"
-    clip.save #=> Returns boolean
+**NOT IMPLEMENTED YET**
+
+```ruby
+clip = client.clips.build
+clip.url = "http://github.com"
+clip.save #=> Returns boolean
+```
 
 If you are missing required fields `#save` will return `false` and you can use 
-`#error_message` to get the error message returned by the API.
+`#error\_message` to get the error message returned by the API.
 
-    clip = client.clips.build
-    clip.save #=> false
-    clip.error_message #=> "No url."
-
+```ruby
+clip = client.clips.build
+clip.save #=> false
+clip.error_message #=> "No url."
+```
 
 ## Contributing
 
