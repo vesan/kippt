@@ -80,11 +80,36 @@ describe Kippt::Clips do
   describe "#save_object" do
     subject { Kippt::Client.new(valid_user_credentials).clips }
 
+    context "successful request" do
+      it "returns hash with success boolean" do
+       stub_request(:post, "https://kippt.com/api/clips").
+         with(:body => "{\"url\":\"http://kiskolabs.com\"}").
+         to_return(:status => 200, :body => "{}", :headers => {})
+
+        clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
+        response = subject.save_object(clip)
+        response[:success].should be_true
+      end
+    end
+
+    context "unsuccessful request" do
+      it "returns hash with success boolean and error message" do
+       stub_request(:post, "https://kippt.com/api/clips").
+         with(:body => "{\"url\":\"http://kiskolabs.com\"}").
+         to_return(:status => 400, :body => "{\"message\": \"No good.\"}", :headers => {})
+
+        clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
+        response = subject.save_object(clip)
+        response[:success].should be_false
+        response[:error_message].should eq "No good."
+      end
+    end
+
     context "when object doesn't have an id" do
       it "POSTs new resource to the API" do
        stub_request(:post, "https://kippt.com/api/clips").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
-         to_return(:status => 200, :body => "", :headers => {})
+         to_return(:status => 200, :body => "{}", :headers => {})
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         subject.save_object(clip)
@@ -95,7 +120,7 @@ describe Kippt::Clips do
       it "PUTs new version of the resource to the API" do
        stub_request(:put, "https://kippt.com/api/clips/22").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
-         to_return(:status => 200, :body => "", :headers => {})
+         to_return(:status => 200, :body => "{}", :headers => {})
 
         clip = Kippt::Clip.new(:id => 22, :url => "http://kiskolabs.com")
         subject.save_object(clip)
