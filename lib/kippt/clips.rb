@@ -1,10 +1,10 @@
 require "kippt/connection"
-require "kippt/collection_proxy"
+require "kippt/collection_resource"
 require "kippt/clip_collection"
 require "kippt/clip"
 
 class Kippt::Clips
-  include Kippt::Resource
+  include Kippt::CollectionResource
 
   def initialize(client)
     @client = client
@@ -43,9 +43,9 @@ class Kippt::Clips
 
   def save_object(object)
     if object.id
-      @client.put("clips/#{object.id}", writable_parameters_from(object))
+      @client.put("clips/#{object.id}", writable_parameters_from(object)).success?
     else
-      @client.post("clips", writable_parameters_from(object))
+      @client.post("clips", writable_parameters_from(object)).success?
     end
   end
 

@@ -1,4 +1,4 @@
-module Kippt::Resource
+module Kippt::CollectionResource
   private
 
   def validate_collection_options(options)

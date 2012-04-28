@@ -1,10 +1,10 @@
 require "kippt/connection"
-require "kippt/collection_proxy"
+require "kippt/collection_resource"
 require "kippt/list_collection"
 require "kippt/list"
 
 class Kippt::Lists
-  include Kippt::Resource
+  include Kippt::CollectionResource
 
   def initialize(client)
     @client = client

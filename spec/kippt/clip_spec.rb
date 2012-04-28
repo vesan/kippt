@@ -17,11 +17,11 @@ describe Kippt::ClipCollection do
   end
 
   describe "#save" do
-    let(:collection_proxy) { Kippt::Client.new(valid_user_credentials).clips }
-    subject { Kippt::Clip.new({}, collection_proxy) }
+    let(:collection_resource) { Kippt::Client.new(valid_user_credentials).clips }
+    subject { Kippt::Clip.new({}, collection_resource) }
 
     it "sends POST request to server" do
-      collection_proxy.should_receive(:save_object).with(subject)
+      collection_resource.should_receive(:save_object).with(subject)
       subject.url = "http://kiskolabs.com"
       subject.save
     end

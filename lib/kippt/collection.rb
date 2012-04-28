@@ -1,7 +1,7 @@
 module Kippt::Collection
   attr_reader :total_count, :limit, :offset
 
-  def initialize(data, collection_proxy = nil)
+  def initialize(data, collection_resource = nil)
     meta         = data.fetch("meta")
     @limit       = meta.fetch("limit")
     @offset      = meta.fetch("offset")
@@ -9,13 +9,13 @@ module Kippt::Collection
     @prev        = meta.fetch("prev") { nil }
     @total_count = meta.fetch("total_count")
 
-    @collection_proxy  = collection_proxy
+    @collection_resource  = collection_resource
 
     @object_data = data.fetch("objects")
   end
 
   def objects
-    @objects ||= @object_data.map {|data| object_class.new(data) }
+    @objects ||= @object_data.map {|data| object_class.new(data, @collection_resource) }
   end
 
   def [](index)
@@ -32,7 +32,7 @@ module Kippt::Collection
 
   def next_page
     # TODO: Raise error if there is no page
-    @collection_proxy.collection_from_url(@next)
+    @collection_resource.collection_from_url(@next)
   end
 
   def prev_page?
@@ -41,6 +41,6 @@ module Kippt::Collection
 
   def prev_page
     # TODO: Raise error if there is no page
-    @collection_proxy.collection_from_url(@prev)
+    @collection_resource.collection_from_url(@prev)
   end
 end

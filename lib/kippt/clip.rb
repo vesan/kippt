@@ -9,12 +9,12 @@ class Kippt::Clip
                 :url, :notes, :created, :list, :id, :resource_uri, 
                 :is_starred=, :title=, :url=, :notes=, :list=
 
-  def initialize(attributes = {}, collection_proxy = nil)
-    @attributes       = OpenStruct.new(attributes)
-    @collection_proxy = collection_proxy
+  def initialize(attributes = {}, collection_resource = nil)
+    @attributes = OpenStruct.new(attributes)
+    @collection_resource   = collection_resource
   end
 
   def save
-    @collection_proxy.save_object(self)
+    @collection_resource.save_object(self)
   end
 end
