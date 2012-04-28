@@ -11,6 +11,10 @@ module Kippt::Connection
     request(:put, url, options)
   end
 
+  def delete(url, options = {})
+    request(:delete, url, options)
+  end
+
   private
 
   def connection

@@ -127,4 +127,18 @@ describe Kippt::Clips do
       end 
     end
   end
+
+  describe "#destroy_resource" do
+    subject { Kippt::Client.new(valid_user_credentials).clips }
+
+    context "successful request" do
+      it "returns boolean" do
+       stub_request(:delete, "https://kippt.com/api/clips/100").
+         to_return(:status => 200, :headers => {})
+
+        clip = Kippt::Clip.new(id: 100)
+        subject.destroy_resource(clip).should be_true
+      end
+    end
+  end
 end

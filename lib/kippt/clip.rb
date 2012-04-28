@@ -15,6 +15,10 @@ class Kippt::Clip
     @collection_resource   = collection_resource
   end
 
+  def destroy
+    @collection_resource.destroy_resource(self)
+  end
+
   def save
     response = @collection_resource.save_object(self)
     if response[:error_message]

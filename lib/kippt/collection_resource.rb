@@ -17,6 +17,12 @@ module Kippt::CollectionResource
     collection_class.new(@client.get(url).body, self)
   end
 
+  def destroy_resource(resource)
+    if resource.id
+      @client.delete("#{base_uri}/#{resource.id}").success?
+    end
+  end
+
   private
 
   def validate_collection_options(options)

@@ -143,6 +143,14 @@ clip.save   #=> false
 clip.errors #=> ["No url."]
 ```
 
+Deleting clips is done with `#destroy`:
+
+```ruby
+clip_id = 1001
+clip = client.clips[clip_id]
+clip.destroy #=> true
+```
+
 ## Contributing
 
 1. Fork it
