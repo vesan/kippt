@@ -62,7 +62,7 @@ Get single list:
     client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
     clips = client.clips # Returns Kippt::ClipCollection
 
-#### Pagination
+### Pagination
 
 Lists and clips are paginated:
 
@@ -86,7 +86,7 @@ Limit and offset can be controlled manually:
 
     client.clips.all(limit: 25, offset: 50)
 
-#### Search
+### Search
 
 Clips can be searched:
 
@@ -95,6 +95,20 @@ Clips can be searched:
 Other available options are `is_starred: true` and `list: [list-id]` like:
 
     client.clips.search(q: "kippt", list: 5, is_starred: true)
+
+### Creating, updating and deleting resources
+
+    clip = client.clips.build
+    clip.url = "http://github.com"
+    clip.save #=> Returns boolean
+
+If you are missing required fields `#save` will return `false` and you can use 
+`#error_message` to get the error message returned by the API.
+
+    clip = client.clips.build
+    clip.save #=> false
+    clip.error_message #=> "No url."
+
 
 ## Contributing
 
@@ -108,17 +122,3 @@ Other available options are `is_starred: true` and `list: [list-id]` like:
 
 * Ability to create, update and delete resources
 * Add user agent string
-
-#### Creating, updating and deleting resources
-
-    clip = client.clips.build
-    clip.url = "http://github.com"
-    clip.save #=> Returns boolean
-
-If you are missing required fields `#save` will return `false` and you can use 
-`#error_message` to get the error message returned by the API.
-
-    clip = client.clips.build
-    clip.save #=> false
-    clip.error_message #=> "No url."
-
