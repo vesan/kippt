@@ -24,8 +24,13 @@ module Kippt::Connection
 
   def request(method, url, options)
     response = connection.send(method) do |req|
-      req.headers["X-Kippt-Username"]  = @username + "jah"
-      req.headers["X-Kippt-API-Token"] = @token
+      if @password
+        connection.basic_auth(@username, @password)
+      else
+        req.headers["X-Kippt-Username"]  = @username
+        req.headers["X-Kippt-API-Token"] = @token
+      end
+
       if method == :get
         req.url url, options
       else
