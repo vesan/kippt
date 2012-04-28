@@ -43,10 +43,16 @@ class Kippt::Clips
 
   def save_object(object)
     if object.id
-      @client.put("clips/#{object.id}", writable_parameters_from(object)).success?
+      response = @client.put("clips/#{object.id}", writable_parameters_from(object))
     else
-      @client.post("clips", writable_parameters_from(object)).success?
+      response = @client.post("clips", writable_parameters_from(object))
     end
+
+    save_response = {success: response.success?}
+    if response.body["message"]
+      save_response[:error_message] = response.body["message"]
+    end
+    save_response
   end
 
   private

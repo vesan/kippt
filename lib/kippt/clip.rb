@@ -3,7 +3,7 @@ require "ostruct"
 class Kippt::Clip
   extend Forwardable
 
-  attr_reader :attributes
+  attr_reader :attributes, :errors
 
   def_delegators :attributes, :url_domain, :updated, :is_starred, :title,
                 :url, :notes, :created, :list, :id, :resource_uri, 
@@ -11,10 +11,15 @@ class Kippt::Clip
 
   def initialize(attributes = {}, collection_resource = nil)
     @attributes = OpenStruct.new(attributes)
+    @errors     = []
     @collection_resource   = collection_resource
   end
 
   def save
-    @collection_resource.save_object(self)
+    response = @collection_resource.save_object(self)
+    if response[:error_message]
+      errors << response[:error_message]
+    end
+    response[:success]
   end
 end

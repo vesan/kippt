@@ -135,12 +135,12 @@ clip.save #=> Returns boolean
 ```
 
 If you are missing required fields `#save` will return `false` and you can use 
-`#error\_message` to get the error message returned by the API.
+`#errors` to get the error messages returned by the API.
 
 ```ruby
 clip = client.clips.build
-clip.save #=> false
-clip.error_message #=> "No url."
+clip.save   #=> false
+clip.errors #=> ["No url."]
 ```
 
 ## Contributing

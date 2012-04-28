@@ -20,10 +20,33 @@ describe Kippt::ClipCollection do
     let(:collection_resource) { Kippt::Client.new(valid_user_credentials).clips }
     subject { Kippt::Clip.new({}, collection_resource) }
 
-    it "sends POST request to server" do
-      collection_resource.should_receive(:save_object).with(subject)
-      subject.url = "http://kiskolabs.com"
-      subject.save
+    context "with valid parameters" do
+      it "sends POST request to server" do
+        collection_resource.should_receive(:save_object).with(subject).and_return({})
+        subject.url = "http://kiskolabs.com"
+        subject.save
+      end
+
+      it "returns true" do
+        collection_resource.stub(:save_object).and_return(
+          {success: true})
+        subject.save.should be_true
+      end
+    end
+
+    context "with invalid parameters" do
+      before do
+        collection_resource.stub(:save_object).and_return({success: false, error_message: "No url."})
+      end
+
+      it "sets an error messages" do
+        subject.save
+        subject.errors.should eq ["No url."]
+      end
+
+      it "returns false" do
+        subject.save.should be_false
+      end
     end
   end
 end
