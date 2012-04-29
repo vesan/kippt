@@ -20,6 +20,7 @@ class Kippt::Clip
   end
 
   def save
+    @errors = []
     response = @collection_resource.save_object(self)
     if response[:error_message]
       errors << response[:error_message]

@@ -47,6 +47,13 @@ describe Kippt::ClipCollection do
       it "returns false" do
         subject.save.should be_false
       end
+
+      it "clears previous errors" do
+        subject.save
+        subject.errors.should eq ["No url."]
+        subject.save
+        subject.errors.should eq ["No url."]
+      end
     end
   end
 end
