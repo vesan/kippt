@@ -1,6 +1,6 @@
 # Kippt
 
-Kippt is a gem that provides a client library for using Kippt.com API.
+Kippt is a gem that provides a client library for using [Kippt.com API](https://kippt.com/developers/).
 
 [![Build Status](https://secure.travis-ci.org/vesan/kippt.png)](http://travis-ci.org/vesan/kippt)
 
