@@ -2,6 +2,7 @@
 
 Kippt is a gem that provides a client library for using Kippt.com API.
 
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,11 +23,14 @@ Or install it yourself as:
 $ gem install kippt
 ```
 
+
 ## Usage
+
 
 ### Authentication
 
 To be able to use the API you need to authenticated. There's two ways to authenticate:
+
 
 #### With login credentials
 
@@ -35,6 +39,7 @@ client = Kippt::Client.new(username: "vesan", password: "s3cr3t")
 # Methods called on `client` will use the passed credentials
 ```
 
+
 #### With token
 
 ```ruby
@@ -42,7 +47,10 @@ client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 # Methods called on `client` will use the passed credentials
 ```
 
+
 ### Account
+
+You can get the account details (username and token):
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
@@ -51,10 +59,11 @@ account.username #=> "vesan"
 account.token    #=> "2544d6bfddf5893ec8617"
 ```
 
+Always use token instead of the password if possible because it's more secure.
+
+
 ### Resources
 
-Currently this client library is read-only! Ability to create and edit
-resources will be added soon.
 
 #### Lists
 
@@ -73,12 +82,14 @@ list_id = 10
 list = client.lists[list_id] # Returns Kippt::ListItem
 ```
 
+
 #### Clips
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 clips = client.clips # Returns Kippt::ClipCollection
 ```
+
 
 ### Pagination
 
@@ -110,6 +121,7 @@ Limit and offset can be controlled manually:
 client.clips.all(limit: 25, offset: 50)
 ```
 
+
 ### Search
 
 Clips can be searched:
@@ -124,9 +136,10 @@ Other available options are `is\_starred: true` and `list: [list-id]` like:
 client.clips.search(q: "kippt", list: 5, is_starred: true)
 ```
 
-### Creating, updating and deleting resources
 
-**NOT IMPLEMENTED YET**
+### Creating and updating resources
+
+You can create new resources, here for example clips:
 
 ```ruby
 clip = client.clips.build
@@ -143,13 +156,16 @@ clip.save   #=> false
 clip.errors #=> ["No url."]
 ```
 
-Deleting clips is done with `#destroy`:
+### Deleting resources
+
+Deleting resources is done with `#destroy`:
 
 ```ruby
 clip_id = 1001
 clip = client.clips[clip_id]
 clip.destroy #=> true
 ```
+
 
 ## Contributing
 
@@ -158,7 +174,3 @@ clip.destroy #=> true
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-## TODO
-
-* Ability to create, update and delete resources
