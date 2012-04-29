@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["vesa@vesavanska.com"]
   gem.description   = %q{Client library for using Kippt.com API}
   gem.summary       = %q{Client library for using Kippt.com API}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/vesan/kippt"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
