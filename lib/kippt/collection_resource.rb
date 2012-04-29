@@ -19,12 +19,12 @@ module Kippt::CollectionResource
 
   def save_resource(object)
     if object.id
-      response = @client.put("#{base_uri}/#{object.id}", data: writable_parameters_from(object))
+      response = @client.put("#{base_uri}/#{object.id}", :data => writable_parameters_from(object))
     else
-      response = @client.post("#{base_uri}", data: writable_parameters_from(object))
+      response = @client.post("#{base_uri}", :data => writable_parameters_from(object))
     end
 
-    save_response = {success: response.success?}
+    save_response = {:success => response.success?}
     if response.body["message"]
       save_response[:error_message] = response.body["message"]
     end

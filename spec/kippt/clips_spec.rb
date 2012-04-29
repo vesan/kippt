@@ -94,7 +94,7 @@ describe Kippt::Clips do
        stub_request(:delete, "https://kippt.com/api/clips/100").
          to_return(:status => 200, :headers => {})
 
-        clip = Kippt::Clip.new(id: 100)
+        clip = Kippt::Clip.new(:id => 100)
         subject.destroy_resource(clip).should be_true
       end
     end
