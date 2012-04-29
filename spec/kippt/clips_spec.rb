@@ -2,55 +2,63 @@ require "spec_helper"
 require "kippt/clips"
 
 describe Kippt::Clips do
-  describe "#all" do
-    subject { Kippt::Client.new(valid_user_credentials).clips }
+  subject { Kippt::Client.new(valid_user_credentials).clips }
+  let(:base_uri) { "clips" }
+  let(:singular_fixture) { "clip" }
+  let(:collection_class) { Kippt::ClipCollection }
+  let(:resource_class) { Kippt::Clip }
 
-    it "returns ClipCollection" do
-      stub_get("/clips").
-        to_return(:status => 200, :body => fixture("clips.json"))
-      clips = subject.all
-      clips.is_a? Kippt::ClipCollection
-    end
+  it_behaves_like "collection resource"
 
-    it "accepts limit and offset options" do
-      stub_get("/clips?limit=10&offset=100").
-        to_return(:status => 200, :body => fixture("clips.json"))
-      clips = subject.all(:limit => 10, :offset => 100)
-    end
+  # describe "#all" do
+  #   subject { Kippt::Client.new(valid_user_credentials).clips }
 
-    context "when passed unrecognized arguments" do
-      it "raises error" do
-        lambda {
-          subject.all(:foobar => true)
-        }.should raise_error(
-          ArgumentError, "Unrecognized argument: foobar")
-      end
-    end
-  end
+  #   it "returns ClipCollection" do
+  #     stub_get("/clips").
+  #       to_return(:status => 200, :body => fixture("clips.json"))
+  #     clips = subject.all
+  #     clips.is_a? Kippt::ClipCollection
+  #   end
 
-  describe "#[]" do
-    subject { Kippt::Client.new(valid_user_credentials).clips }
+  #   it "accepts limit and offset options" do
+  #     stub_get("/clips?limit=10&offset=100").
+  #       to_return(:status => 200, :body => fixture("clips.json"))
+  #     clips = subject.all(:limit => 10, :offset => 100)
+  #   end
 
-    it "fetches single list" do
-      stub_get("/clips/10").
-        to_return(:status => 200, :body => fixture("list.json"))
-      subject[10].id.should eq 10
-    end
+  #   context "when passed unrecognized arguments" do
+  #     it "raises error" do
+  #       lambda {
+  #         subject.all(:foobar => true)
+  #       }.should raise_error(
+  #         ArgumentError, "Unrecognized argument: foobar")
+  #     end
+  #   end
+  # end
 
-    it "returns Kippt::Clip" do
-      stub_get("/clips/10").
-        to_return(:status => 200, :body => fixture("list.json"))
-      subject[10].should be_a(Kippt::Clip)
-    end
-  end
+  # describe "#[]" do
+  #   subject { Kippt::Client.new(valid_user_credentials).clips }
 
-  describe "#build" do
-    subject { Kippt::Client.new(valid_user_credentials).clips }
+  #   it "fetches single list" do
+  #     stub_get("/clips/10").
+  #       to_return(:status => 200, :body => fixture("list.json"))
+  #     subject[10].id.should eq 10
+  #   end
 
-    it "returns Kippt::Clip" do
-      subject.build.should be_a(Kippt::Clip)
-    end
-  end
+  #   it "returns Kippt::Clip" do
+  #     stub_get("/clips/10").
+  #       to_return(:status => 200, :body => fixture("list.json"))
+  #     subject[10].should be_a(Kippt::Clip)
+  #   end
+  # end
+
+  # describe "#build" do
+  #   subject { Kippt::Client.new(valid_user_credentials).clips }
+
+  #   it "returns Kippt::Clip" do
+  #     subject.build.should be_a(Kippt::Clip)
+  #   end
+  # end
 
   describe "#search" do
     subject { Kippt::Client.new(valid_user_credentials).clips }
