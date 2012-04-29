@@ -1,3 +1,5 @@
+require "multi_json"
+
 module Kippt::Connection
   def get(url, options = {})
     request(:get, url, options)
@@ -19,7 +21,6 @@ module Kippt::Connection
 
   def connection
     @connection ||= Faraday.new("https://kippt.com/api") do |builder|
-      builder.use Faraday::Request::JSON
       builder.use FaradayMiddleware::ParseJson
       # builder.use Faraday::Response::Logger
       builder.adapter Faraday.default_adapter
@@ -41,7 +42,7 @@ module Kippt::Connection
         req.url url, options
       else
         req.url  url
-        req.body = options
+        req.body = MultiJson.dump(options[:data])
       end
     end
     
