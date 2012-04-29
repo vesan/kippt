@@ -28,6 +28,8 @@ module Kippt::Connection
 
   def request(method, url, options)
     response = connection.send(method) do |req|
+      set_default_headers(req)
+
       if @password
         connection.basic_auth(@username, @password)
       else
@@ -48,5 +50,12 @@ module Kippt::Connection
     end
 
     response
+  end
+
+  def set_default_headers(req)
+    req.headers["Content-Type"] = "application/vnd.kippt.20120429+json"
+    app_string = "KipptRubyGem #{Kippt::VERSION},vesa@vesavanska.com,https://github.com/vesan/kippt"
+    req.headers["X-Kippt-Client"] = app_string
+    req.headers["User-Agent"]     = app_string
   end
 end

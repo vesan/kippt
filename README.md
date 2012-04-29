@@ -162,4 +162,3 @@ clip.destroy #=> true
 ## TODO
 
 * Ability to create, update and delete resources
-* Add user agent string

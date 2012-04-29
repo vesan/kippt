@@ -12,6 +12,18 @@ describe Kippt::Client do
     end
   end
 
+  describe "connection" do
+    subject { Kippt::Client.new(username: "bob", password: "secret") }
+
+    describe "default headers" do
+      it "includes correct mime-type and user-agent" do
+        stub_request(:get, "https://bob:secret@kippt.com/foobar").
+         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/vnd.kippt.20120429+json', 'User-Agent'=>"KipptRubyGem #{Kippt::VERSION},vesa@vesavanska.com,https://github.com/vesan/kippt", 'X-Kippt-Client'=>"KipptRubyGem #{Kippt::VERSION},vesa@vesavanska.com,https://github.com/vesan/kippt"})
+        subject.get("/foobar")
+      end
+    end
+  end
+
   describe "#lists" do
   end
 end
