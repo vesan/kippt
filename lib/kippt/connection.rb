@@ -1,6 +1,17 @@
 require "multi_json"
+require "faraday_middleware/response_middleware"
 
 module Kippt::Connection
+  class ParseMultiJson < FaradayMiddleware::ResponseMiddleware
+    define_parser do |body|
+      begin
+        MultiJson.load(body) unless body.strip.empty?
+      rescue MultiJson::DecodeError
+        nil
+      end
+    end
+  end
+
   def get(url, options = {})
     request(:get, url, options)
   end
@@ -21,7 +32,7 @@ module Kippt::Connection
 
   def connection
     @connection ||= Faraday.new("https://kippt.com/api") do |builder|
-      builder.use FaradayMiddleware::ParseJson
+      builder.use Kippt::Connection::ParseMultiJson
       # builder.use Faraday::Response::Logger
       builder.adapter Faraday.default_adapter
     end
