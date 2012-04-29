@@ -34,6 +34,16 @@ module Resource
     @collection_resource.destroy_resource(self)
   end
 
+  def writable_attributes_hash
+    writable_attribute_names.inject({}) do |parameters, attribute_name|
+      value = self.send(attribute_name)
+      unless value.nil?
+        parameters[attribute_name] = value
+      end
+      parameters
+    end
+  end
+
   def save
     @errors = []
     response = @collection_resource.save_resource(self)

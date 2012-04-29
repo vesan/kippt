@@ -48,11 +48,6 @@ module Kippt::CollectionResource
   end
 
   def writable_parameters_from(resource)
-    resource.writable_attribute_names.inject({}) do |parameters, attribute_name|
-      unless resource.send(attribute_name).nil?
-        parameters[attribute_name] = resource.send(attribute_name)
-      end
-      parameters
-    end
+    resource.writable_attributes_hash
   end
 end
