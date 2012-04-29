@@ -1,14 +1,10 @@
 require "ostruct"
 
 class Kippt::List
-  extend Forwardable
+  include Resource
 
-  attr_reader :attributes
+  attributes :id, :rss_url, :updated, :title,
+             :created, :slug, :resource_uri
 
-  def_delegators :attributes, :rss_url, :updated, :title,
-                 :created, :slug, :id, :resource_uri
-
-  def initialize(attributes = {}, collection_resource = nil)
-    @attributes = OpenStruct.new(attributes)
-  end
+  writable_attributes :title
 end

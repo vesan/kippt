@@ -17,6 +17,20 @@ module Kippt::CollectionResource
     collection_class.new(@client.get(url).body, self)
   end
 
+  def save_resource(object)
+    if object.id
+      response = @client.put("#{base_uri}/#{object.id}", writable_parameters_from(object))
+    else
+      response = @client.post("#{base_uri}", writable_parameters_from(object))
+    end
+
+    save_response = {success: response.success?}
+    if response.body["message"]
+      save_response[:error_message] = response.body["message"]
+    end
+    save_response
+  end
+
   def destroy_resource(resource)
     if resource.id
       @client.delete("#{base_uri}/#{resource.id}").success?
@@ -30,6 +44,15 @@ module Kippt::CollectionResource
       unless [:limit, :offset].include?(key)
         raise ArgumentError.new("Unrecognized argument: #{key}")
       end
+    end
+  end
+
+  def writable_parameters_from(resource)
+    resource.writable_attribute_names.inject({}) do |parameters, attribute_name|
+      unless resource.send(attribute_name).nil?
+        parameters[attribute_name] = resource.send(attribute_name)
+      end
+      parameters
     end
   end
 end

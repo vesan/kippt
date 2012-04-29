@@ -3,19 +3,24 @@ module Resource
     base.instance_eval do
       extend Forwardable
       attr_reader :attributes, :errors
+
+      def_delegators "self.class", :writable_attribute_names
     end
 
     base.extend(ClassMethods)
   end
 
   module ClassMethods
+    attr_reader :writable_attribute_names
+
     def attributes(*attribs)
       def_delegators :attributes, *attribs
     end
 
     def writable_attributes(*attribs)
-      attribs.map! {|attrib| attrib.to_s + "=" }
-      def_delegators :attributes, *attribs
+      @writable_attribute_names = attribs
+      @writable_attribute_names.freeze
+      def_delegators :attributes, *(attribs.map {|attrib| attrib.to_s + "=" })
     end
   end
 
@@ -31,7 +36,7 @@ module Resource
 
   def save
     @errors = []
-    response = @collection_resource.save_object(self)
+    response = @collection_resource.save_resource(self)
     if response[:error_message]
       errors << response[:error_message]
     end

@@ -1,10 +1,16 @@
 require "spec_helper"
 require "crack/json"
-require "kippt/clip_collection"
+require "kippt/clip"
 
-describe Kippt::ClipCollection do
+describe Kippt::Clip do
+  subject { Kippt::Clip.new(data, collection_resource) }
+  let(:collection_resource) { Kippt::Client.new(valid_user_credentials).clips }
+
   let(:data) { Crack::JSON.parse(fixture("clip.json").read) }
-  subject { Kippt::Clip.new(data) }
+  let(:attributes) {
+    [:url_domain, :updated, :is_starred, :title,
+     :url, :notes, :created, :list, :id, :resource_uri]
+   }
 
   it_behaves_like "resource"
 end

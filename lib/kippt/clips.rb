@@ -34,30 +34,4 @@ class Kippt::Clips
         self)
     end
   end
-
-  def save_object(object)
-    if object.id
-      response = @client.put("clips/#{object.id}", writable_parameters_from(object))
-    else
-      response = @client.post("clips", writable_parameters_from(object))
-    end
-
-    save_response = {success: response.success?}
-    if response.body["message"]
-      save_response[:error_message] = response.body["message"]
-    end
-    save_response
-  end
-
-  private
-
-  def writable_parameters_from(clip)
-    [:url, :title, :list, :notes, :is_starred].
-      inject({}) do |parameters, attribute_name|
-        unless clip.send(attribute_name).nil?
-          parameters[attribute_name] = clip.send(attribute_name)
-        end
-        parameters
-    end
-  end
 end

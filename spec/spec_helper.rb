@@ -97,27 +97,21 @@ end
 shared_examples_for "resource" do
   describe "attribute accessors" do
     it "delegates to attributes" do
-      [:url_domain, :updated, :is_starred,
-       :title, :url, :notes, :created, :list, :id,
-       :resource_uri].each do |attribute_name|
+      attributes.each do |attribute_name|
           subject.send(attribute_name).should eq data[attribute_name.to_s]
        end
     end
   end
 
   describe "#save" do
-    let(:collection_resource) { Kippt::Client.new(valid_user_credentials).clips }
-    subject { Kippt::Clip.new({}, collection_resource) }
-
     context "with valid parameters" do
       it "sends POST request to server" do
-        collection_resource.should_receive(:save_object).with(subject).and_return({})
-        subject.url = "http://kiskolabs.com"
+        collection_resource.should_receive(:save_resource).with(subject).and_return({})
         subject.save
       end
 
       it "returns true" do
-        collection_resource.stub(:save_object).and_return(
+        collection_resource.stub(:save_resource).and_return(
           {success: true})
         subject.save.should be_true
       end
@@ -125,7 +119,7 @@ shared_examples_for "resource" do
 
     context "with invalid parameters" do
       before do
-        collection_resource.stub(:save_object).and_return({success: false, error_message: "No url."})
+        collection_resource.stub(:save_resource).and_return({success: false, error_message: "No url."})
       end
 
       it "sets an error messages" do
