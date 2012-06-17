@@ -14,16 +14,30 @@ describe Kippt::Clips do
     subject { Kippt::Client.new(valid_user_credentials).clips }
 
     describe "parameters" do
-      it "accepts String" do
-        stub_get("/search/clips?q=bunny").
-          to_return(:status => 200, :body => fixture("clips.json"))
-        subject.search("bunny")
+      context "when parameter is a String" do
+        it "does the search with the string being q" do
+          stub_get("/search/clips?q=bunny").
+            to_return(:status => 200, :body => fixture("clips.json"))
+          subject.search("bunny")
+        end
       end
 
-      it "accepts Hash" do
-        stub_get("/search/clips?q=bunny&list=4&is_starred=true").
-          to_return(:status => 200, :body => fixture("clips.json"))
-        subject.search(:q => "bunny", :list => 4, :is_starred => true)
+      context "when parameter is a Hash" do
+        context "with accepted keys" do
+          it "does the search" do
+            stub_get("/search/clips?q=bunny&list=4&is_starred=true").
+              to_return(:status => 200, :body => fixture("clips.json"))
+            subject.search(:q => "bunny", :list => 4, :is_starred => true)
+          end
+        end
+
+        context "with invalid keys" do
+          it "raises ArgumentError" do
+            lambda {
+              subject.search(:q => "bunny", :stuff => true)
+            }.should raise_error(ArgumentError, "'stuff' is not a valid search parameter")
+          end
+        end
       end
     end
 

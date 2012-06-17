@@ -5,6 +5,7 @@ require "kippt/clip"
 
 class Kippt::Clips
   include Kippt::CollectionResource
+  VALID_SEARCH_PARAMETERS = [:q, :list, :is_starred]
 
   def initialize(client)
     @client = client
@@ -29,9 +30,19 @@ class Kippt::Clips
         @client.get("search/clips", {:q => parameters}).body,
         self)
     else
+      validate_search_parameters(parameters)
+
       Kippt::ClipCollection.new(
         @client.get("search/clips", parameters).body,
         self)
+    end
+  end
+
+  private
+
+  def validate_search_parameters(parameters)
+    parameters.each do |key, value|
+      raise ArgumentError.new("'#{key}' is not a valid search parameter") unless VALID_SEARCH_PARAMETERS.include?(key)
     end
   end
 end
