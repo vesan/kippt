@@ -68,6 +68,17 @@ shared_examples_for "collection resource" do
       collection = subject.collection_from_url("/api/#{base_uri}/?limit=20&offset=20")
       collection.should be_a(collection_class)
     end
+
+    context "when passed URL is blank" do
+      it "raises ArgumentError" do
+        lambda {
+          subject.collection_from_url("")
+        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
+        lambda {
+          subject.collection_from_url(nil)
+        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
+      end
+    end
   end
 
   describe "#build" do
