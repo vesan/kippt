@@ -6,7 +6,7 @@ describe Kippt::Client do
     context "when there is no username" do
       it "raises error" do
         lambda {
-          Kippt::Client.new(password: "secret")
+          Kippt::Client.new(:password => "secret")
         }.should raise_error(ArgumentError, "username is required")
       end
     end
@@ -14,7 +14,7 @@ describe Kippt::Client do
     context "when there is no password or token" do
       it "raises error" do
         lambda {
-          Kippt::Client.new(username: "vesan")
+          Kippt::Client.new(:username => "vesan")
         }.should raise_error(ArgumentError, "password or token is required")
       end
     end
@@ -50,7 +50,7 @@ describe Kippt::Client do
 
     it "returns a Kippt::Account instance" do
       subject.should_receive(:get).with("account").and_return(
-        stub body: {}
+        stub :body => {}
       )
       account = subject.account
       account.should be_a(Kippt::Account)
