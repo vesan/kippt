@@ -1,4 +1,4 @@
-if defined? RUBY_ENGINE && RUBY_ENGINE == "ruby"
+unless ENV["CI"] == "true"
   require "simplecov"
   SimpleCov.start
 end
