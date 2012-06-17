@@ -1,3 +1,6 @@
+require "simplecov"
+SimpleCov.start
+
 require "kippt"
 require "rspec"
 require "webmock/rspec"
