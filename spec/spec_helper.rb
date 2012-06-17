@@ -1,4 +1,4 @@
-if RUBY_ENGINE == "ruby"
+if defined? RUBY_ENGINE && RUBY_ENGINE == "ruby"
   require "simplecov"
   SimpleCov.start
 end
