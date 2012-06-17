@@ -6,7 +6,7 @@ module Kippt::Collection
     @limit       = meta.fetch("limit")
     @offset      = meta.fetch("offset")
     @next        = meta.fetch("next") { nil }
-    @prev        = meta.fetch("prev") { nil }
+    @previous    = meta.fetch("previous") { nil }
     @total_count = meta.fetch("total_count")
 
     @collection_resource  = collection_resource
@@ -31,16 +31,20 @@ module Kippt::Collection
   end
 
   def next_page
-    # TODO: Raise error if there is no page
+    raise Kippt::APIError.new("There is no next page") if @next.nil? || @next == ""
+
     @collection_resource.collection_from_url(@next)
   end
 
-  def prev_page?
-    @prev
+  def previous_page?
+    @previous
   end
+  alias_method :prev_page?, :previous_page?
 
-  def prev_page
-    # TODO: Raise error if there is no page
-    @collection_resource.collection_from_url(@prev)
+  def previous_page
+    raise Kippt::APIError.new("There is no previous page") if @previous.nil? || @previous == ""
+
+    @collection_resource.collection_from_url(@previous)
   end
+  alias_method :prev_page, :previous_page
 end

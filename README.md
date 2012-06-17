@@ -111,11 +111,9 @@ You can get next and previous set of results:
 ```ruby
 clips.next_page? #=> true
 clips.next_page # Returns new Kippt::ClipCollection
-clips.prev_page? #=> true
-clips.prev_page # Returns new Kippt::ClipCollection
+clips.previous_page? #=> true
+clips.previous_page # Returns new Kippt::ClipCollection
 ```
-
-There's also `#previous\_page?` and `#previous\_page`.
 
 Limit and offset can be controlled manually:
 
