@@ -43,7 +43,7 @@ module Kippt::CollectionResource
 
   def validate_collection_options(options)
     options.each do |key, _|
-      unless [:limit, :offset].include?(key)
+      unless self.class.valid_filter_parameters.include?(key)
         raise ArgumentError.new("Unrecognized argument: #{key}")
       end
     end

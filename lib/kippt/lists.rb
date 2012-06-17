@@ -10,6 +10,10 @@ class Kippt::Lists
     @client = client
   end
 
+  def self.valid_filter_parameters
+    [:limit, :offset]
+  end
+
   def object_class
     Kippt::List
   end

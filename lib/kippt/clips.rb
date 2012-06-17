@@ -11,6 +11,10 @@ class Kippt::Clips
     @client = client
   end
 
+  def self.valid_filter_parameters
+    [:limit, :offset, :is_read_later, :is_starred]
+  end
+
   def object_class
     Kippt::Clip
   end
@@ -24,7 +28,6 @@ class Kippt::Clips
   end
 
   def search(parameters)
-    # TODO: Validate parameters
     if parameters.is_a?(String)
       Kippt::ClipCollection.new(
         @client.get("search/clips", {:q => parameters}).body,
