@@ -96,6 +96,28 @@ shared_examples_for "collection" do
     end
   end
 
+  describe "#objects" do
+    it "returns the objects generated from the data" do
+      subject.objects.each do |object|
+        object.should be_a(subject.object_class)
+      end
+    end
+  end
+
+  describe "#[]" do
+    it "returns a object by index" do
+      subject[0].id.should eq data["objects"][0]["id"]
+    end
+  end
+
+  describe "#each" do
+    it "loops through the objects" do
+      ids = []
+      subject.each {|object| ids << object.id }
+      ids.should eq data["objects"].map { |node| node["id"] }
+    end
+  end
+
   describe "#next_page?" do
     context "there is a next page" do
       it "returns url of the page" do
@@ -177,6 +199,13 @@ shared_examples_for "resource" do
       attributes.each do |attribute_name|
         subject.send(attribute_name).should eq data[attribute_name.to_s]
       end
+    end
+  end
+
+  describe "#destroy" do
+    it "sends delete request to the server" do
+      collection_resource.should_receive(:destroy_resource).with(subject).and_return(true)
+      subject.destroy.should be_true
     end
   end
 
