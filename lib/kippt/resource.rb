@@ -1,4 +1,4 @@
-module Resource
+module Kippt::Resource
   def self.included(base)
     base.instance_eval do
       extend Forwardable

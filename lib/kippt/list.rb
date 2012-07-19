@@ -1,7 +1,7 @@
 require "ostruct"
 
 class Kippt::List
-  include Resource
+  include Kippt::Resource
 
   attributes :id, :rss_url, :updated, :title,
              :created, :slug, :resource_uri
