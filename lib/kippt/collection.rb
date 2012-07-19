@@ -1,4 +1,6 @@
 module Kippt::Collection
+  include Enumerable
+
   attr_reader :total_count, :limit, :offset
 
   def initialize(data, collection_resource = nil)

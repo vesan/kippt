@@ -73,7 +73,7 @@ Get all the lists:
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-lists = client.lists # Returns Kippt::ListCollection
+lists = client.lists.all # Returns Kippt::ListCollection
 ```
 
 Get single list:
@@ -89,8 +89,10 @@ list = client.lists[list_id] # Returns Kippt::ListItem
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-clips = client.clips # Returns Kippt::ClipCollection
+clips = client.clips.all # Returns Kippt::ClipCollection
 ```
+
+Both ListCollection and ClipCollection are Enumerable.
 
 
 ### Pagination

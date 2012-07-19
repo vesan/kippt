@@ -96,6 +96,10 @@ shared_examples_for "collection resource" do
 end
 
 shared_examples_for "collection" do
+  it "is Enumberable" do
+    subject.should be_a(Enumerable)
+  end
+
   describe "#total_count" do
     it "returns total count of resources" do
       subject.total_count.should eq data["meta"]["total_count"]
