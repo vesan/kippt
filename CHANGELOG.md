@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1 / To be released
+## 1.1 / July 20, 2012
 
 Changes in response to feedback from [Matias Korhonen](https://github.com/k33l0r):
 
