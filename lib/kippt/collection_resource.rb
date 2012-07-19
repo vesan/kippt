@@ -13,6 +13,8 @@ module Kippt::CollectionResource
     object_class.new(@client.get("#{base_uri}/#{resource_id}").body)
   end
 
+  alias find []
+
   def collection_from_url(url)
     raise ArgumentError.new("The parameter URL can't be blank") if url.nil? || url == ""
 

@@ -63,6 +63,12 @@ shared_examples_for "collection resource" do
     end
   end
 
+  describe "#find" do
+    it "exists" do
+      subject.respond_to?(:find).should be_true
+    end
+  end
+
   describe "#collection_from_url" do
     it "returns a new collection" do
       stub_get("/#{base_uri}/?limit=20&offset=20").
