@@ -4,23 +4,24 @@ module Kippt::Resource
       extend Forwardable
       attr_reader :attributes, :errors
 
-      def_delegators "self.class", :writable_attribute_names
+      def_delegators "self.class", :writable_attribute_names, :attribute_names
     end
 
     base.extend(ClassMethods)
   end
 
   module ClassMethods
-    attr_reader :writable_attribute_names
+    attr_reader :writable_attribute_names, :attribute_names
 
     def attributes(*attribs)
-      def_delegators :attributes, *attribs
+      @attribute_names = attribs.map {|attrib| attrib.to_sym }
+      def_delegators :attributes, *@attribute_names
     end
 
     def writable_attributes(*attribs)
-      @writable_attribute_names = attribs
+      @writable_attribute_names = attribs.map {|attrib| attrib.to_sym }
       @writable_attribute_names.freeze
-      def_delegators :attributes, *(attribs.map {|attrib| attrib.to_s + "=" })
+      def_delegators :attributes, *(@writable_attribute_names.map {|attrib| attrib.to_s + "=" })
     end
   end
 
@@ -49,6 +50,13 @@ module Kippt::Resource
     response = @collection_resource.save_resource(self)
     if response[:error_message]
       errors << response[:error_message]
+    else
+      if response[:resource]
+        updated_attributes = response[:resource].select do |key, _|
+          attribute_names.include?(key.to_sym)
+        end
+        @attributes = OpenStruct.new(updated_attributes)
+      end
     end
     response[:success]
   end

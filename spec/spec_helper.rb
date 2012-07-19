@@ -239,6 +239,13 @@ shared_examples_for "resource" do
           {:success => true})
         subject.save.should be_true
       end
+
+      it "sets the updated attributes received from the server" do
+        collection_resource.stub(:save_resource).and_return(
+          {:success => true, :resource => {id: 9999}})
+        subject.save
+        subject.id.should eq 9999
+      end
     end
 
     context "with invalid parameters" do

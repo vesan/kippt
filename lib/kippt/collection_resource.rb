@@ -27,9 +27,11 @@ module Kippt::CollectionResource
     end
 
     save_response = {:success => response.success?}
+    save_response[:resource] = response.body
     if response.body["message"]
       save_response[:error_message] = response.body["message"]
     end
+
     save_response
   end
 
