@@ -5,8 +5,8 @@ module Kippt::CollectionResource
     collection_class.new(@client.get(base_uri, options).body, self)
   end
 
-  def build
-    object_class.new({}, self)
+  def build(attributes = {})
+    object_class.new(attributes, self)
   end
 
   def [](resource_id)

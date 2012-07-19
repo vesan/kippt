@@ -87,6 +87,11 @@ shared_examples_for "collection resource" do
     it "returns new resource" do
       subject.build.should be_a(resource_class)
     end
+
+    it "accepts parameters" do
+      subject.object_class.should_receive(:new).with({an: "attribute"}, subject)
+      subject.build(an: "attribute")
+    end
   end
 end
 
