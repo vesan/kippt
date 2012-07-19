@@ -96,7 +96,7 @@ shared_examples_for "collection resource" do
 
     it "accepts parameters" do
       subject.object_class.should_receive(:new).with({:an => "attribute"}, subject)
-      subject.build(an: "attribute")
+      subject.build(:an => "attribute")
     end
   end
 end
