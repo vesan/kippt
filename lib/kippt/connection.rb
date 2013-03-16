@@ -2,6 +2,8 @@ require "multi_json"
 require "faraday_middleware/response_middleware"
 
 module Kippt::Connection
+  HOST = "grandcentral.kippt.com"
+
   class ParseMultiJson < FaradayMiddleware::ResponseMiddleware
     define_parser do |body|
       begin
@@ -31,7 +33,7 @@ module Kippt::Connection
   private
 
   def connection
-    @connection ||= Faraday.new("https://kippt.com/api") do |builder|
+    @connection ||= Faraday.new("https://#{HOST}/api") do |builder|
       builder.use Kippt::Connection::ParseMultiJson
       # builder.use Faraday::Response::Logger
       builder.adapter Faraday.default_adapter

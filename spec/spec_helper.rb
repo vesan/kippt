@@ -24,7 +24,7 @@ def stub_delete(url)
 end
 
 def kippt_url(url)
-  "https://kippt.com/api#{url}"
+  "https://grandcentral.kippt.com/api#{url}"
 end
 
 def valid_user_credentials
