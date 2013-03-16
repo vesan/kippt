@@ -14,8 +14,23 @@ module Kippt::Resource
     attr_reader :writable_attribute_names, :attribute_names
 
     def attributes(*attribs)
-      @attribute_names = attribs.map {|attrib| attrib.to_sym }
+      @attribute_names ||= []
+      @attribute_names += attribs.map {|attrib| attrib.to_sym }
       def_delegators :attributes, *@attribute_names
+    end
+
+    def boolean_attributes(*attribs)
+      @attribute_names ||= []
+      @attribute_names += attribs.map {|attrib| attrib.to_sym }
+      def_delegators :attributes, *@attribute_names
+
+      attribs.each do |attribute_name|
+        if result = attribute_name.to_s.match(/\Ais\_(.*)/)
+          define_method "#{result[1]}?" do
+            public_send(attribute_name)
+          end
+        end
+      end
     end
 
     def writable_attributes(*attribs)

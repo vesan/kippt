@@ -19,7 +19,7 @@
 
 # List
 
-* Support for is private
+* DONE Support for is private
 * Getting the user
 * Getting & setting the description
 * Getting the collaborators of the list
