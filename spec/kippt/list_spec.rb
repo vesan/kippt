@@ -15,7 +15,7 @@ describe Kippt::List do
 
   describe "#private?" do
     it "gets data from is_private" do
-      list = Kippt::List.new({is_private: true}, nil)
+      list = Kippt::List.new({:is_private => true}, nil)
       list.private?.should be_true
     end
   end

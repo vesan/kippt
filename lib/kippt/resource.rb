@@ -27,7 +27,7 @@ module Kippt::Resource
       attribs.each do |attribute_name|
         if result = attribute_name.to_s.match(/\Ais\_(.*)/)
           define_method "#{result[1]}?" do
-            public_send(attribute_name)
+            send(attribute_name) if respond_to?(attribute_name)
           end
         end
       end
