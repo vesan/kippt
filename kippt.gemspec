@@ -15,11 +15,11 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Kippt::VERSION
 
-  gem.add_dependency "faraday", "~> 0.7.6"
-  gem.add_dependency "faraday_middleware", "~> 0.8.7"
-  gem.add_dependency "multi_json", "~> 1.3.4"
+  gem.add_dependency "faraday", "~> 0.8"
+  gem.add_dependency "faraday_middleware", "~> 0.8"
+  gem.add_dependency "multi_json", "~> 1.3"
 
-  gem.add_development_dependency "rspec", "~> 2.9.0"
-  gem.add_development_dependency "webmock", "~> 1.8.6"
-  gem.add_development_dependency "simplecov", "~> 0.6.4"
+  gem.add_development_dependency "rspec", "~> 2.9"
+  gem.add_development_dependency "webmock", "~> 1.11"
+  gem.add_development_dependency "simplecov", "~> 0.7"
 end
