@@ -39,12 +39,14 @@ module Kippt::Connection
   end
 
   def request(method, url, options)
+    if @password
+      connection.basic_auth(@username, @password)
+    end
+
     response = connection.send(method) do |req|
       set_default_headers(req)
 
-      if @password
-        connection.basic_auth(@username, @password)
-      else
+      unless @password
         req.headers["X-Kippt-Username"]  = @username
         req.headers["X-Kippt-API-Token"] = @token
       end
@@ -56,7 +58,7 @@ module Kippt::Connection
         req.body = MultiJson.dump(options[:data])
       end
     end
-    
+
     if response.status == 401
       raise Kippt::APIError.new(response.body["message"])
     end
