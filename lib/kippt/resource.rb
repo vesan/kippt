@@ -15,8 +15,16 @@ module Kippt::Resource
 
     def attributes(*attribs)
       @attribute_names ||= []
-      @attribute_names += attribs.map {|attrib| attrib.to_sym }
+      hashes, other = attribs.partition {|attrib| attrib.is_a? Hash }
+      hashes = hashes.reduce({}, :update)
+      @attribute_names += other.map {|attrib| attrib.to_sym }
       def_delegators :attributes, *@attribute_names
+      @attribute_names += hashes.keys.map {|attrib| attrib.to_sym }
+      hashes.each do |attrib, object_class|
+        define_method(attrib) do
+          object_class.new(attributes.send(attrib))
+        end
+      end
     end
 
     def boolean_attributes(*attribs)

@@ -3,7 +3,8 @@
 # Clip
 
 * [DONE] Getting the feed of authenticated user
-* Getting the user of the clip
+* [DONE] Getting the user of the clip
+* Support for including list & via data
 * Getting the list of the clip
 * Getting the original clip the clip was created via
 * Getting the comments, likes & saves of a clip
