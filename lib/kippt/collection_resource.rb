@@ -10,7 +10,12 @@ module Kippt::CollectionResource
   end
 
   def [](resource_id)
-    object_class.new(client.get("#{base_uri}/#{resource_id}").body, client)
+    response = client.get("#{base_uri}/#{resource_id}")
+    if response.success?
+      object_class.new(response.body, client)
+    else
+      raise Kippt::APIError.new("Resource could not be loaded: #{response.body["message"]}")
+    end
   end
 
   alias find []

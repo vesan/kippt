@@ -77,6 +77,18 @@ shared_examples_for "collection resource" do
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
       subject[10].should be_a(resource_class)
     end
+
+    context "when resource is not found" do
+      it "raises exception" do
+        stub_get("/#{base_uri}/10").
+          to_return(:status => 404, :body => {"message" => "Resource not found."})
+        lambda {
+          subject[10]
+          subject.all(:foobar => true)
+        }.should raise_error(
+          Kippt::APIError, "Resource could not be loaded: Resource not found.")
+      end
+    end
   end
 
   describe "#find" do
