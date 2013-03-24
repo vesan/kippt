@@ -2,6 +2,7 @@ require "kippt/connection"
 require "kippt/account"
 require "kippt/clips"
 require "kippt/lists"
+require "kippt/users"
 
 class Kippt::Client
   include Kippt::Connection
@@ -29,5 +30,9 @@ class Kippt::Client
 
   def clips
     Kippt::Clips.new(self)
+  end
+
+  def users
+    Kippt::Users.new(self)
   end
 end

@@ -74,4 +74,13 @@ describe Kippt::Client do
       clips.should be_a(Kippt::Clips)
     end
   end
+
+  describe "#users" do
+    subject { Kippt::Client.new(:username => "bob", :password => "secret") }
+
+    it "returns a Kippt::Users instance" do
+      users = subject.users
+      users.should be_a(Kippt::Users)
+    end
+  end
 end
