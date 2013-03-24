@@ -49,7 +49,7 @@ module Kippt::Connection
       set_default_headers(req)
 
       unless @password
-        if @user && @token
+        if @username && @token
           req.headers["X-Kippt-Username"]  = @username
           req.headers["X-Kippt-API-Token"] = @token
         end
