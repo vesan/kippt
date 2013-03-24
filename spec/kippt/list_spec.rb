@@ -16,8 +16,16 @@ describe Kippt::List do
 
   describe "#private?" do
     it "gets data from is_private" do
-      list = Kippt::List.new({:is_private => true}, nil)
+      list = Kippt::List.new({"is_private" => true}, nil)
       list.private?.should be_true
+    end
+  end
+
+  describe "#collaborators" do
+    it "returns the users generated from the data" do
+      list = Kippt::List.new({"collaborators" => {"count" => 1, "data" => [fixture("user.json")]}}, nil)
+      list.collaborators.size.should eq 1
+      list.collaborators.first.should be_a Kippt::User
     end
   end
 end

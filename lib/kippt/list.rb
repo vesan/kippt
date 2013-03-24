@@ -14,4 +14,10 @@ class Kippt::List
   def collection_resource_class
     Kippt::Lists
   end
+
+  def collaborators
+    attributes.collaborators["data"].map {|collborator_data|
+      Kippt::User.new(collborator_data, client)
+    }
+  end
 end

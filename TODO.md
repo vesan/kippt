@@ -26,7 +26,7 @@
 * [DONE] Support for is private
 * [DONE] Getting the user
 * [DONE] Getting & setting the description
-* Getting the collaborators of the list
+* [DONE] Getting the collaborators of the list
 * Getting the app url fo the clip
 * Getting the rss url fo the clip
 * Add support for following and unfollowing a list
