@@ -11,7 +11,11 @@ module Kippt::Resource
   end
 
   module ClassMethods
-    attr_reader :writable_attribute_names, :attribute_names, :embedded_attribute_names
+    attr_reader :writable_attribute_names, :attribute_names
+
+    def embedded_attribute_names
+      @embedded_attribute_names || []
+    end
 
     def attributes(*attribs)
       @attribute_names ||= []
