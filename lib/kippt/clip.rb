@@ -12,8 +12,12 @@ class Kippt::Clip
              :user => Kippt::User
 
   writable_attributes :is_favorite, :title, :url, :notes, :list
-  alias_method :is_starred, :is_favorite
-  alias_method :is_starred=, :is_favorite=
+
+  boolean_attributes :is_favorite
+
+  alias :is_starred :is_favorite
+  alias :is_starred= :is_favorite=
+  alias :starred? :favorite?
 
   embedded_attributes :list => Kippt::List
 
