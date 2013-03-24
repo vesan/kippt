@@ -20,6 +20,7 @@
 * Support for all the user API's
 * Getting the user for the authenticated user
 * Getting the embedded user for likes
+* Getting the counts
 
 # List
 
@@ -27,8 +28,8 @@
 * [DONE] Getting the user
 * [DONE] Getting & setting the description
 * [DONE] Getting the collaborators of the list
-* Getting the app url fo the clip
-* Getting the rss url fo the clip
+* [DONE] Getting the app url fo the clip
+* [DONE] Getting the rss url fo the clip
 * Add support for following and unfollowing a list
 * Handle "List not found" error
 
