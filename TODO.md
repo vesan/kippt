@@ -24,7 +24,7 @@
 
 * [DONE] Support for is private
 * [DONE] Getting the user
-* Getting & setting the description
+* [DONE] Getting & setting the description
 * Getting the collaborators of the list
 * Getting the app url fo the clip
 * Getting the rss url fo the clip
