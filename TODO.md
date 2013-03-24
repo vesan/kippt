@@ -1,4 +1,4 @@
-* Adding support for unauthenticated requests
+* [DONE] Adding support for unauthenticated requests
 * Better text representation in IRB
 
 # Clip

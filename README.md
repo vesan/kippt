@@ -49,6 +49,12 @@ client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 # Methods called on `client` will use the passed credentials
 ```
 
+Or you can use the API unauthenticated:
+
+```ruby
+client = Kippt::Client.new(unauthenticated: true)
+```
+
 
 ### Account
 

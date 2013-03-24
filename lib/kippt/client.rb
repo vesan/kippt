@@ -10,13 +10,17 @@ class Kippt::Client
   attr_reader :username, :token, :password
 
   def initialize(options = {})
-    @username = options.fetch(:username) { raise ArgumentError.new("username is required") }
+    if options[:unauthenticated]
+      # Unauthenticated
+    else
+      @username = options.fetch(:username) { raise ArgumentError.new("username is required") }
 
-    @password = options.fetch(:password) { nil }
-    @token    = options.fetch(:token) { nil }
+      @password = options.fetch(:password) { nil }
+      @token    = options.fetch(:token) { nil }
 
-    if @password.nil? && @token.nil?
-      raise ArgumentError.new("password or token is required")
+      if @password.nil? && @token.nil?
+        raise ArgumentError.new("password or token is required")
+      end
     end
   end
 

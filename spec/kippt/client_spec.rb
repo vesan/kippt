@@ -5,17 +5,25 @@ describe Kippt::Client do
   describe "#initialize" do
     context "when there is no username" do
       it "raises error" do
-        lambda {
+        expect {
           Kippt::Client.new(:password => "secret")
-        }.should raise_error(ArgumentError, "username is required")
+        }.to raise_error(ArgumentError, "username is required")
       end
     end
 
     context "when there is no password or token" do
       it "raises error" do
-        lambda {
+        expect {
           Kippt::Client.new(:username => "vesan")
-        }.should raise_error(ArgumentError, "password or token is required")
+        }.to raise_error(ArgumentError, "password or token is required")
+      end
+    end
+
+    context "when there is unauthenticated parameter" do
+      it "doesn't raise error" do
+        expect {
+          Kippt::Client.new(:unauthenticated => true)
+        }.to_not raise_error
       end
     end
   end
@@ -37,9 +45,9 @@ describe Kippt::Client do
           stub_request(:get, "https://bob:secret@kippt.com/error_path").
             to_return(:status => 401, :body => "{\"message\": \"Something horrible.\"}")
 
-          lambda {
+          expect {
             subject.get("/error_path")
-          }.should raise_error(Kippt::APIError, "Something horrible.")
+          }.to raise_error(Kippt::APIError, "Something horrible.")
         end
       end
     end
@@ -96,12 +104,12 @@ describe Kippt::Client do
 
     context "when passed URL is blank" do
       it "raises ArgumentError" do
-        lambda {
+        expect {
           subject.resource_from_url(stub, "")
-        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
-        lambda {
+        }.to raise_error(ArgumentError, "The parameter URL can't be blank")
+        expect {
           subject.resource_from_url(stub, nil)
-        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
+        }.to raise_error(ArgumentError, "The parameter URL can't be blank")
       end
     end
   end
