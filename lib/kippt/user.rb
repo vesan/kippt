@@ -8,4 +8,8 @@ class Kippt::User
              :counts, :resource_uri
 
   boolean_attributes :is_pro
+
+  def collection_resource_class
+    Kippt::Users
+  end
 end

@@ -10,4 +10,8 @@ class Kippt::List
   boolean_attributes :is_private
 
   writable_attributes :title
+
+  def collection_resource_class
+    Kippt::Lists
+  end
 end

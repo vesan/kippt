@@ -107,7 +107,7 @@ shared_examples_for "collection resource" do
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, subject)
+      subject.object_class.should_receive(:new).with({:an => "attribute"}, client)
       subject.build(:an => "attribute")
     end
   end
@@ -177,6 +177,8 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the next page of results from the collection resource" do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+
         results = stub
         collection_resource.should_receive(:collection_from_url).
           with(data_with_multiple_pages["meta"]["next"]).
@@ -214,6 +216,8 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the previous page of results from the collection resource" do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+
         results = stub
         collection_resource.should_receive(:collection_from_url).
           with(data_with_multiple_pages["meta"]["previous"]).
@@ -243,7 +247,10 @@ shared_examples_for "resource" do
   end
 
   describe "#destroy" do
+    let(:collection_resource)  { stub }
+
     it "sends delete request to the server" do
+      client.stub(:collection_resource_for).and_return(collection_resource)
       collection_resource.should_receive(:destroy_resource).with(subject).and_return(true)
       subject.destroy.should be_true
     end
@@ -251,6 +258,12 @@ shared_examples_for "resource" do
 
   describe "#save" do
     context "with valid parameters" do
+      let(:collection_resource)  { stub }
+
+      before do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+      end
+
       it "sends POST request to server" do
         collection_resource.should_receive(:save_resource).with(subject).and_return({})
         subject.save
@@ -271,7 +284,10 @@ shared_examples_for "resource" do
     end
 
     context "with invalid parameters" do
+      let(:collection_resource)  { stub }
+
       before do
+        client.stub(:collection_resource_for).and_return(collection_resource)
         collection_resource.stub(:save_resource).and_return({:success => false, :error_message => "No url."})
       end
 

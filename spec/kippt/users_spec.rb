@@ -2,7 +2,8 @@ require "spec_helper"
 require "kippt/users"
 
 describe Kippt::Users do
-  subject { Kippt::Client.new(valid_user_credentials).users }
+  let(:client) { Kippt::Client.new(valid_user_credentials) }
+  subject { client.users }
   let(:base_uri) { "users" }
   let(:singular_fixture) { "user" }
   let(:collection_class) { Kippt::UserCollection }

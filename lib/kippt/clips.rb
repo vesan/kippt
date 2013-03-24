@@ -28,20 +28,20 @@ class Kippt::Clips
   end
 
   def feed
-    Kippt::ClipCollection.new(@client.get("clips/feed").body)
+    Kippt::ClipCollection.new(client.get("clips/feed").body, client)
   end
 
   def search(parameters)
     if parameters.is_a?(String)
       Kippt::ClipCollection.new(
-        @client.get("search/clips", {:q => parameters}).body,
-        self)
+        client.get("search/clips", {:q => parameters}).body,
+        client)
     else
       validate_search_parameters(parameters)
 
       Kippt::ClipCollection.new(
-        @client.get("search/clips", parameters).body,
-        self)
+        client.get("search/clips", parameters).body,
+        client)
     end
   end
 
@@ -51,5 +51,9 @@ class Kippt::Clips
     parameters.each do |key, value|
       raise ArgumentError.new("'#{key}' is not a valid search parameter") unless VALID_SEARCH_PARAMETERS.include?(key)
     end
+  end
+
+  def client
+    @client
   end
 end

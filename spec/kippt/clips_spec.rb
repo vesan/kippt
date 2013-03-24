@@ -2,7 +2,8 @@ require "spec_helper"
 require "kippt/clips"
 
 describe Kippt::Clips do
-  subject { Kippt::Client.new(valid_user_credentials).clips }
+  let(:client) { Kippt::Client.new(valid_user_credentials) }
+  subject { client.clips }
   let(:base_uri) { "clips" }
   let(:singular_fixture) { "clip" }
   let(:collection_class) { Kippt::ClipCollection }

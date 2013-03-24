@@ -83,4 +83,26 @@ describe Kippt::Client do
       users.should be_a(Kippt::Users)
     end
   end
+
+  describe "#resource_from_url" do
+    subject { Kippt::Client.new(valid_user_credentials) }
+
+    it "returns correct resource" do
+      stub_get("/users/10").
+        to_return(:status => 200, :body => fixture("user.json"))
+      resource = subject.resource_from_url(Kippt::User, "/api/users/10")
+      resource.should be_a(Kippt::User)
+    end
+
+    context "when passed URL is blank" do
+      it "raises ArgumentError" do
+        lambda {
+          subject.resource_from_url(stub, "")
+        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
+        lambda {
+          subject.resource_from_url(stub, nil)
+        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
+      end
+    end
+  end
 end

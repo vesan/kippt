@@ -2,8 +2,9 @@ require "spec_helper"
 require "kippt/user"
 
 describe Kippt::User do
-  subject { Kippt::User.new(data, collection_resource) }
-  let(:collection_resource) { Kippt::Client.new(valid_user_credentials).users }
+  subject { Kippt::User.new(data, client) }
+  let(:client) { Kippt::Client.new(valid_user_credentials) }
+  let(:collection_resource_class) { Kippt::Users }
 
   let(:data) { MultiJson.load(fixture("user.json").read) }
   let(:attributes) {

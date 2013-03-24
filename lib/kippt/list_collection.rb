@@ -7,4 +7,8 @@ class Kippt::ListCollection
   def object_class
     Kippt::List
   end
+
+  def collection_resource_class
+    Kippt::Lists
+  end
 end

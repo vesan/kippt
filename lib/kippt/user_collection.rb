@@ -7,4 +7,8 @@ class Kippt::UserCollection
   def object_class
     Kippt::User
   end
+
+  def collection_resource_class
+    Kippt::Users
+  end
 end

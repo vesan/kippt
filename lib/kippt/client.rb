@@ -35,4 +35,14 @@ class Kippt::Client
   def users
     Kippt::Users.new(self)
   end
+
+  def collection_resource_for(resource_class)
+    resource_class.new(self)
+  end
+
+  def resource_from_url(resource_class, url)
+    raise ArgumentError.new("The parameter URL can't be blank") if url.nil? || url == ""
+
+    resource_class.new(self.get(url).body, self)
+  end
 end

@@ -7,4 +7,8 @@ class Kippt::ClipCollection
   def object_class
     Kippt::Clip
   end
+
+  def collection_resource_class
+    Kippt::Clips
+  end
 end
