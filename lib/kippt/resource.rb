@@ -16,21 +16,25 @@ module Kippt::Resource
     def attributes(*attribs)
       @attribute_names ||= []
       hashes, other = attribs.partition {|attrib| attrib.is_a? Hash }
-      hashes = hashes.reduce({}, :update)
-      @attribute_names += other.map {|attrib| attrib.to_sym }
-      def_delegators :attributes, *@attribute_names
-      @attribute_names += hashes.keys.map {|attrib| attrib.to_sym }
-      hashes.each do |attrib, object_class|
+
+      attribute_names = convert_to_symbols(other)
+      def_delegators :attributes, *attribute_names
+      @attribute_names += attribute_names
+
+      mappings = hashes.reduce({}, :update)
+      mappings.each do |attrib, object_class|
         define_method(attrib) do
           object_class.new(attributes.send(attrib))
         end
       end
+      @attribute_names += convert_to_symbols(mappings.keys)
     end
 
     def boolean_attributes(*attribs)
       @attribute_names ||= []
-      @attribute_names += attribs.map {|attrib| attrib.to_sym }
-      def_delegators :attributes, *@attribute_names
+      attribute_names = convert_to_symbols(attribs)
+      def_delegators :attributes, *attribute_names
+      @attribute_names += attribute_names
 
       attribs.each do |attribute_name|
         if result = attribute_name.to_s.match(/\Ais\_(.*)/)
@@ -42,9 +46,15 @@ module Kippt::Resource
     end
 
     def writable_attributes(*attribs)
-      @writable_attribute_names = attribs.map {|attrib| attrib.to_sym }
+      @writable_attribute_names = convert_to_symbols(attribs)
       @writable_attribute_names.freeze
-      def_delegators :attributes, *(@writable_attribute_names.map {|attrib| attrib.to_s + "=" })
+      def_delegators :attributes, *(@writable_attribute_names.map {|attrib| attrib.to_s + "=" }).dup
+    end
+
+    private
+
+    def convert_to_symbols(list)
+      list.map {|item| item.to_sym }
     end
   end
 
