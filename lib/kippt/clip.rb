@@ -8,9 +8,12 @@ class Kippt::Clip
 
   attributes :url_domain, :updated, :is_starred, :title,
              :url, :notes, :created, :id, :resource_uri,
+             :type, :favicon_url, :app_url, :media,
              :user => Kippt::User
 
-  writable_attributes :is_starred, :title, :url, :notes, :list
+  writable_attributes :is_favorite, :title, :url, :notes, :list
+  alias_method :is_starred, :is_favorite
+  alias_method :is_starred=, :is_favorite=
 
   embedded_attributes :list => Kippt::List
 
