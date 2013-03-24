@@ -1,3 +1,5 @@
+* Adding support for unauthenticated requests
+
 # Clip
 
 * Getting the feed of authenticated user
