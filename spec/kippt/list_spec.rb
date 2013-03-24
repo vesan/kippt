@@ -28,4 +28,70 @@ describe Kippt::List do
       list.collaborators.first.should be_a Kippt::User
     end
   end
+
+  describe "#follow" do
+    context "when request is successful" do
+      let(:client) { Kippt::Client.new(valid_user_credentials) }
+
+      it "makes a request" do
+        response = stub(:success? => true)
+        client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "follow"}).and_return(response)
+        list = Kippt::List.new(json_fixture("list.json"), client)
+        list.follow
+      end
+
+      it "returns true" do
+        stub_request(:post, "https://kippt.com/api/lists/10/relationship").
+           with(:body => "{\"action\":\"follow\"}").
+           to_return(:status => 200, :body => "{\"folloring\":true}")
+        list = Kippt::List.new(json_fixture("list.json"), client)
+        list.follow.should eq true
+      end
+    end
+
+    context "when request is unsuccessful" do
+      it "raises an exception" do
+        response = stub(:success? => false, :body => {"message" => "Weird issue going on."})
+        client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "follow"}).and_return(response)
+        list = Kippt::List.new(json_fixture("list.json"), client)
+
+        expect {
+          list.follow
+        }.to raise_error(Kippt::APIError, "There was an error with the request: Weird issue going on.")
+      end
+    end
+  end
+
+  describe "#unfollow" do
+    context "when request is successful" do
+      let(:client) { Kippt::Client.new(valid_user_credentials) }
+
+      it "makes a request" do
+        response = stub(:success? => true)
+        client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "unfollow"}).and_return(response)
+        list = Kippt::List.new(json_fixture("list.json"), client)
+        list.unfollow
+      end
+
+      it "returns true" do
+        stub_request(:post, "https://kippt.com/api/lists/10/relationship").
+           with(:body => "{\"action\":\"unfollow\"}").
+           to_return(:status => 200, :body => "{\"folloring\":false}")
+        list = Kippt::List.new(json_fixture("list.json"), client)
+        list.unfollow.should eq true
+      end
+    end
+
+    context "when request is unsuccessful" do
+      it "raises an exception" do
+        response = stub(:success? => false, :body => {"message" => "Weird issue going on."})
+        client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "unfollow"}).and_return(response)
+        list = Kippt::List.new(json_fixture("list.json"), client)
+
+        expect {
+          list.unfollow
+        }.to raise_error(Kippt::APIError, "There was an error with the request: Weird issue going on.")
+      end
+    end
+  end
 end

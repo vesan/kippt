@@ -30,8 +30,8 @@
 * [DONE] Getting the collaborators of the list
 * [DONE] Getting the app url fo the clip
 * [DONE] Getting the rss url fo the clip
-* Add support for following and unfollowing a list
 * Handle "List not found" error
+* [DONE] Add support for following and unfollowing a list
 
 # Comment
 

@@ -20,4 +20,16 @@ class Kippt::List
       Kippt::User.new(collborator_data, client)
     }
   end
+
+  def follow
+    response = client.post("#{resource_uri}relationship", :data => {:action => "follow"})
+    raise Kippt::APIError.new("There was an error with the request: #{response.body["message"]}") unless response.success?
+    response.success?
+  end
+
+  def unfollow
+    response = client.post("#{resource_uri}relationship", :data => {:action => "unfollow"})
+    raise Kippt::APIError.new("There was an error with the request: #{response.body["message"]}") unless response.success?
+    response.success?
+  end
 end

@@ -36,6 +36,10 @@ def fixture(file)
   File.new(fixture_path + '/' + file)
 end
 
+def json_fixture(file)
+  MultiJson.load(fixture(file).read)
+end
+
 shared_examples_for "collection resource" do
   describe "#all" do
     it "returns collection class" do
