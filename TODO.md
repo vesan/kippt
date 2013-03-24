@@ -1,4 +1,5 @@
 * Adding support for unauthenticated requests
+* Better text representation in IRB
 
 # Clip
 
@@ -29,6 +30,7 @@
 * Getting the app url fo the clip
 * Getting the rss url fo the clip
 * Add support for following and unfollowing a list
+* Handle "List not found" error
 
 # Comment
 
