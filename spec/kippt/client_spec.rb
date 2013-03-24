@@ -25,7 +25,7 @@ describe Kippt::Client do
 
     describe "default headers" do
       it "includes correct mime-type and user-agent" do
-        stub_request(:get, "https://bob:secret@grandcentral.kippt.com/foobar").
+        stub_request(:get, "https://bob:secret@kippt.com/foobar").
          with(:headers => {'Accept'=>'*/*', 'Content-Type'=>'application/vnd.kippt.20120429+json', 'User-Agent'=>"KipptRubyGem #{Kippt::VERSION},vesa@vesavanska.com,https://github.com/vesan/kippt", 'X-Kippt-Client'=>"KipptRubyGem #{Kippt::VERSION},vesa@vesavanska.com,https://github.com/vesan/kippt"})
         subject.get("/foobar")
       end
@@ -34,7 +34,7 @@ describe Kippt::Client do
     describe "error handling" do
       context "when response status is 401" do
         it "raises Kippt::APIError with message received from the server" do
-          stub_request(:get, "https://bob:secret@grandcentral.kippt.com/error_path").
+          stub_request(:get, "https://bob:secret@kippt.com/error_path").
             to_return(:status => 401, :body => "{\"message\": \"Something horrible.\"}")
 
           lambda {

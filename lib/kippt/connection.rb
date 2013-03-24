@@ -2,7 +2,7 @@ require "multi_json"
 require "faraday_middleware/response_middleware"
 
 module Kippt::Connection
-  HOST = "grandcentral.kippt.com"
+  HOST = "kippt.com"
 
   class ParseMultiJson < FaradayMiddleware::ResponseMiddleware
     define_parser do |body|
