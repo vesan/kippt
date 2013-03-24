@@ -9,7 +9,7 @@ module Kippt::Collection
     @offset      = meta.fetch("offset")
     @next        = meta.fetch("next") { nil }
     @previous    = meta.fetch("previous") { nil }
-    @total_count = meta.fetch("total_count")
+    @total_count = meta.fetch("total_count") { nil }
 
     @collection_resource  = collection_resource
 

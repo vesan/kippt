@@ -10,6 +10,16 @@ describe Kippt::Clips do
 
   it_behaves_like "collection resource"
 
+  describe "#feed" do
+    subject { Kippt::Client.new(valid_user_credentials).clips }
+
+    it "returns ClipCollection" do
+      stub_get("/clips/feed").
+        to_return(:status => 200, :body => fixture("feed.json"))
+      subject.feed.should be_a Kippt::ClipCollection
+    end
+  end
+
   describe "#search" do
     subject { Kippt::Client.new(valid_user_credentials).clips }
 
@@ -45,7 +55,7 @@ describe Kippt::Clips do
       stub_get("/search/clips?q=bunny").
         to_return(:status => 200, :body => fixture("clips.json"))
       clips = subject.search("bunny")
-      clips.is_a? Kippt::ClipCollection
+      clips.should be_a Kippt::ClipCollection
     end
   end
 

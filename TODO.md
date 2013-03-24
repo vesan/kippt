@@ -2,7 +2,7 @@
 
 # Clip
 
-* Getting the feed of authenticated user
+* [DONE] Getting the feed of authenticated user
 * Getting the user of the clip
 * Getting the list of the clip
 * Getting the original clip the clip was created via
@@ -21,7 +21,7 @@
 
 # List
 
-* DONE Support for is private
+* [DONE] Support for is private
 * Getting the user
 * Getting & setting the description
 * Getting the collaborators of the list

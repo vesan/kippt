@@ -27,6 +27,10 @@ class Kippt::Clips
     "clips"
   end
 
+  def feed
+    Kippt::ClipCollection.new(@client.get("clips/feed").body)
+  end
+
   def search(parameters)
     if parameters.is_a?(String)
       Kippt::ClipCollection.new(
