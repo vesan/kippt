@@ -9,7 +9,7 @@ class Kippt::Clip
   attributes :url_domain, :updated, :is_starred, :title,
              :url, :notes, :created, :id, :resource_uri,
              :type, :favicon_url, :app_url, :media,
-             :user => Kippt::User
+             :user => Kippt::User, :via => Kippt::Clip
 
   writable_attributes :is_favorite, :title, :url, :notes, :list
 
