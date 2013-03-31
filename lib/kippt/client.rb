@@ -40,8 +40,8 @@ class Kippt::Client
     Kippt::Users.new(self)
   end
 
-  def collection_resource_for(resource_class)
-    resource_class.new(self)
+  def collection_resource_for(resource_class, *options)
+    resource_class.new(*([self] + options))
   end
 
   def resource_from_url(resource_class, url)

@@ -1,5 +1,6 @@
 * [DONE] Adding support for unauthenticated requests
 * Better text representation in IRB
+* Timestamps as time
 
 # Clip
 
@@ -8,8 +9,10 @@
 * Support for including list & via data
 * [DONE] Getting the list of the clip
 * [DONE] Getting the original clip the clip was created via
-* Getting the comments, likes & saves of a clip
-* Getting and setting is favorited (How does is starred work with it?)
+* [DONE] Getting the comments of a clip
+* Getting the likes of a clip
+* Getting the saves of a clip
+* [DONE] Getting and setting is favorited (How does is starred work with it?)
 * [DONE] Getting the media of the clip (experimental)
 * [DONE] Getting the type of the clip
 * [DONE] Getting the favicon url of the clip

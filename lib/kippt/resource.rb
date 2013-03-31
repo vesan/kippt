@@ -30,7 +30,7 @@ module Kippt::Resource
       mappings = hashes.reduce({}, :update)
       mappings.each do |attrib, object_class|
         define_method(attrib) do
-          object_class.new(attributes.send(attrib))
+          _get_class(object_class).new(attributes.send(attrib))
         end
       end
       @attribute_names += convert_to_symbols(mappings.keys)
@@ -66,9 +66,9 @@ module Kippt::Resource
         define_method(attrib) do
           value = attributes.send(attrib)
           if value.is_a? String
-            client.resource_from_url(attribute_class, value)
+            client.resource_from_url(_get_class(attribute_class), value)
           else
-            attribute_class.new(value)
+            _get_class(attribute_class).new(value)
           end
         end
       end
@@ -79,6 +79,7 @@ module Kippt::Resource
     def convert_to_symbols(list)
       list.map {|item| item.to_sym }
     end
+
   end
 
   def initialize(attributes = {}, client = nil)
@@ -128,5 +129,16 @@ module Kippt::Resource
 
   def client
     @client
+  end
+
+  def _get_class(camel_cased_word)
+    names = camel_cased_word.split('::')
+    names.shift if names.empty? || names.first.empty?
+
+    constant = Object
+    names.each do |name|
+      constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+    end
+    constant
   end
 end

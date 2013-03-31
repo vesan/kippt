@@ -1,6 +1,7 @@
 require "kippt/resource"
 require "kippt/user"
 require "kippt/list"
+require "kippt/comments"
 
 class Kippt::Clip
   include Kippt::Resource
@@ -8,7 +9,7 @@ class Kippt::Clip
   attributes :url_domain, :updated, :is_starred, :title,
              :url, :notes, :created, :id, :resource_uri,
              :type, :favicon_url, :app_url, :media,
-             :user => Kippt::User, :via => Kippt::Clip
+             :user => "Kippt::User", :via => "Kippt::Clip"
 
   writable_attributes :is_favorite, :title, :url, :notes, :list
 
@@ -18,7 +19,7 @@ class Kippt::Clip
   alias :is_starred= :is_favorite=
   alias :starred? :favorite?
 
-  embedded_attributes :list => Kippt::List
+  embedded_attributes :list => "Kippt::List"
 
   def collection_resource_class
     Kippt::Clips
@@ -30,5 +31,9 @@ class Kippt::Clip
     else
       list.resource_uri
     end
+  end
+
+  def comments
+    Kippt::Comments.new(client, self)
   end
 end
