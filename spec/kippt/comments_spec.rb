@@ -3,7 +3,7 @@ require "kippt/comments"
 
 describe Kippt::Comments do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub :clip, id: 100, all_comments_embedded?: false }
+  let(:clip) { stub :clip, :id => 100, :all_comments_embedded? => false }
   subject { Kippt::Comments.new(client, clip) }
   let(:base_uri) { "clips/#{clip.id}/comments" }
   let(:singular_fixture) { "comment" }

@@ -12,7 +12,7 @@ class Kippt::Comment
 
   attr_reader :clip
 
-  def initialize(attributes = {}, client = nil, clip)
+  def initialize(attributes = {}, client = nil, clip = nil)
     super(attributes, client)
     @clip = clip
   end
