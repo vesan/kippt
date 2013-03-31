@@ -1,4 +1,4 @@
-require "ostruct"
+require "kippt/users"
 
 class Kippt::User
   include Kippt::Resource

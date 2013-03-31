@@ -1,4 +1,3 @@
-require "ostruct"
 require "kippt/resource"
 require "kippt/user"
 require "kippt/list"

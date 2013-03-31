@@ -1,4 +1,3 @@
-require "ostruct"
 require "kippt/user"
 
 class Kippt::List
