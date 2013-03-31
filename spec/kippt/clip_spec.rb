@@ -52,4 +52,36 @@ describe Kippt::Clip do
       end
     end
   end
+
+  describe "#comments" do
+    it "returns Kippt::Comments" do
+      subject.comments.should be_a Kippt::Comments
+    end
+
+    it "returns object where clip is set" do
+      subject.comments.clip.should eq subject
+    end
+  end
+
+  describe "#all_comments_embedded?" do
+    context "when comment count and number of comment objects matches" do
+      let(:data) { {"comments" => {
+        "count" => 2, "data" => [{}, {}]
+      }} }
+
+      it "returns true" do
+        subject.all_comments_embedded?.should be_true
+      end
+    end
+
+    context "when comment count and number of comment objects doesn't match" do
+      let(:data) { {"comments" => {
+        "count" => 2, "data" => [{}]
+      }} }
+
+      it "returns true" do
+        subject.all_comments_embedded?.should be_false
+      end
+    end
+  end
 end

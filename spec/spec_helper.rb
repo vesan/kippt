@@ -41,17 +41,21 @@ def json_fixture(file)
 end
 
 shared_examples_for "collection resource" do
+  def collection_fixture
+    base_uri.split("/").last
+  end
+
   describe "#all" do
     it "returns collection class" do
       stub_get("/#{base_uri}").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       all_resources = subject.all
       all_resources.is_a? collection_class
     end
 
     it "accepts limit and offset options" do
       stub_get("/#{base_uri}?limit=10&offset=100").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       resources = subject.all(:limit => 10, :offset => 100)
     end
 
@@ -100,7 +104,7 @@ shared_examples_for "collection resource" do
   describe "#collection_from_url" do
     it "returns a new collection" do
       stub_get("/#{base_uri}/?limit=20&offset=20").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       collection = subject.collection_from_url("/api/#{base_uri}/?limit=20&offset=20")
       collection.should be_a(collection_class)
     end

@@ -36,4 +36,16 @@ class Kippt::Clip
   def comments
     Kippt::Comments.new(client, self)
   end
+
+  def all_comments_embedded?
+    comments_count == comments_data.size
+  end
+
+  def comments_count
+    attributes.comments["count"]
+  end
+
+  def comments_data
+    attributes.comments["data"]
+  end
 end

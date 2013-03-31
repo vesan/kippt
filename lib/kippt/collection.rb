@@ -4,9 +4,9 @@ module Kippt::Collection
   attr_reader :total_count, :limit, :offset
 
   def initialize(data, client = nil)
-    meta         = data.fetch("meta")
-    @limit       = meta.fetch("limit")
-    @offset      = meta.fetch("offset")
+    meta         = data.fetch("meta") { {} }
+    @limit       = meta.fetch("limit") { nil }
+    @offset      = meta.fetch("offset") { nil }
     @next        = meta.fetch("next") { nil }
     @previous    = meta.fetch("previous") { nil }
     @total_count = meta.fetch("total_count") { nil }

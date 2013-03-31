@@ -28,6 +28,16 @@ class Kippt::Comments
     "clips/#{clip.id}/comments"
   end
 
+  def all(options = {})
+    validate_collection_options(options)
+
+    if options.empty? && @clip.all_comments_embedded?
+      collection_class.new({"objects" => @clip.comments_data}, client)
+    else
+      collection_class.new(client.get(base_uri, options).body, client)
+    end
+  end
+
   def build(attributes = {})
     object_class.new(attributes, client, clip)
   end
