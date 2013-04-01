@@ -78,4 +78,12 @@ class Kippt::Clip
   def saves_data
     attributes.saves["data"]
   end
+
+  def like
+    Kippt::Like.new(client, self).save
+  end
+
+  def unlike
+    Kippt::Like.new(client, self).destroy
+  end
 end

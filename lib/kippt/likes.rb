@@ -1,5 +1,6 @@
 require "kippt/user_collection"
 require "kippt/user"
+require "kippt/like"
 
 class Kippt::Likes
   include Kippt::CollectionResource
@@ -37,7 +38,11 @@ class Kippt::Likes
     end
   end
 
-  def build(attributes = {})
-    object_class.new(attributes, client, clip)
+  def build
+    Kippt::Like.new(client, clip)
+  end
+
+  def destroy_resource(resource)
+    client.delete(base_uri).success?
   end
 end

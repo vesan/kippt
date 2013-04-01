@@ -84,4 +84,24 @@ describe Kippt::Clip do
       end
     end
   end
+
+  describe "#like" do
+    let(:like) { stub :like }
+
+    it "instantiates a Kippt::Like and saves it" do
+      Kippt::Like.should_receive(:new).with(client, subject).and_return(like)
+      like.should_receive(:save)
+      subject.like
+    end
+  end
+
+  describe "#unlike" do
+    let(:like) { stub :like }
+
+    it "instantiates a Kippt::Like and destroys it" do
+      Kippt::Like.should_receive(:new).with(client, subject).and_return(like)
+      like.should_receive(:destroy)
+      subject.unlike
+    end
+  end
 end
