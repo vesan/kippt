@@ -3,6 +3,7 @@ require "kippt/user"
 require "kippt/list"
 require "kippt/comments"
 require "kippt/likes"
+require "kippt/saves"
 
 class Kippt::Clip
   include Kippt::Resource
@@ -58,12 +59,23 @@ class Kippt::Clip
     likes_count == likes_data.size
   end
 
-
   def likes_count
     attributes.likes["count"]
   end
 
   def likes_data
     attributes.likes["data"]
+  end
+
+  def saves
+    Kippt::Saves.new(client, self)
+  end
+
+  def saves_count
+    attributes.saves["count"]
+  end
+
+  def saves_data
+    attributes.saves["data"]
   end
 end
