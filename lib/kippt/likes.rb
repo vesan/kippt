@@ -1,7 +1,7 @@
-require "kippt/comment_collection"
-require "kippt/comment"
+require "kippt/user_collection"
+require "kippt/user"
 
-class Kippt::Comments
+class Kippt::Likes
   include Kippt::CollectionResource
 
   attr_reader :clip
@@ -12,26 +12,26 @@ class Kippt::Comments
   end
 
   def self.valid_filter_parameters
-    [:limit, :offset]
+    []
   end
 
   def object_class
-    Kippt::Comment
+    Kippt::User
   end
 
   def collection_class
-    Kippt::CommentCollection
+    Kippt::UserCollection
   end
 
   def base_uri
-    "clips/#{clip.id}/comments"
+    "clips/#{clip.id}/likes"
   end
 
   def all(options = {})
     validate_collection_options(options)
 
-    if options.empty? && @clip.all_comments_embedded?
-      collection_class.new({"objects" => @clip.comments_data}, client)
+    if options.empty? && @clip.all_likes_embedded?
+      collection_class.new({"objects" => @clip.likes_data}, client)
     else
       collection_class.new(client.get(base_uri, options).body, client)
     end

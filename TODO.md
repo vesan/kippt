@@ -10,7 +10,7 @@
 * [DONE] Getting the list of the clip
 * [DONE] Getting the original clip the clip was created via
 * [DONE] Getting the comments of a clip
-* Getting the likes of a clip
+* [DONE] Getting the likes of a clip
 * Getting the saves of a clip
 * [DONE] Getting and setting is favorited (How does is starred work with it?)
 * [DONE] Getting the media of the clip (experimental)
@@ -38,6 +38,6 @@
 
 # Comment
 
-* Add support for comments
+* [DONE] Add support for comments
 
 

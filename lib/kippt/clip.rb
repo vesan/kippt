@@ -2,6 +2,7 @@ require "kippt/resource"
 require "kippt/user"
 require "kippt/list"
 require "kippt/comments"
+require "kippt/likes"
 
 class Kippt::Clip
   include Kippt::Resource
@@ -47,5 +48,22 @@ class Kippt::Clip
 
   def comments_data
     attributes.comments["data"]
+  end
+
+  def likes
+    Kippt::Likes.new(client, self)
+  end
+
+  def all_likes_embedded?
+    likes_count == likes_data.size
+  end
+
+
+  def likes_count
+    attributes.likes["count"]
+  end
+
+  def likes_data
+    attributes.likes["data"]
   end
 end

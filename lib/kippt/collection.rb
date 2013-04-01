@@ -16,6 +16,9 @@ module Kippt::Collection
     @object_data = data.fetch("objects")
   end
 
+  extend Forwardable
+  def_delegators :objects, :size, :length
+
   def objects
     @objects ||= @object_data.map {|data| object_class.new(data, client) }
   end
