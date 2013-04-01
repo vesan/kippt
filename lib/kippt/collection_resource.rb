@@ -9,6 +9,10 @@ module Kippt::CollectionResource
     object_class.new(attributes, client)
   end
 
+  def create(attributes = {})
+    build(attributes).save
+  end
+
   def [](resource_id)
     response = client.get("#{base_uri}/#{resource_id}")
     if response.success?
