@@ -1,6 +1,7 @@
 * [DONE] Adding support for unauthenticated requests
 * Better text representation in IRB
 * Timestamps as time
+* Better exceptions
 
 # Clip
 
@@ -21,7 +22,7 @@
 # User
 
 * Support for all the user API's
-* Getting the user for the authenticated user
+* [DONE] Getting the user for the authenticated user
 * Getting the embedded user for likes
 * Getting the counts
 
