@@ -1,4 +1,6 @@
 require "kippt/users"
+require "kippt/followers"
+require "kippt/following"
 
 class Kippt::User
   include Kippt::Resource
@@ -11,5 +13,13 @@ class Kippt::User
 
   def collection_resource_class
     Kippt::Users
+  end
+
+  def followers
+    Kippt::Followers.new(client, self)
+  end
+
+  def following
+    Kippt::Following.new(client, self)
   end
 end
