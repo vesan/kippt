@@ -48,5 +48,12 @@ describe Kippt::Users do
       users = subject.search("bunny")
       users.should be_a Kippt::UserCollection
     end
+
+    it "sets UserCollection client" do
+      stub_get("/users/search?q=bunny").
+        to_return(:status => 200, :body => fixture("users_with_multiple_pages.json"))
+      Kippt::UserCollection.should_receive(:new).with(kind_of(Hash), kind_of(Kippt::Client))
+      users = subject.search("bunny")
+    end
   end
 end
