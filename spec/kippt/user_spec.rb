@@ -21,4 +21,14 @@ describe Kippt::User do
       user.pro?.should be_true
     end
   end
+
+  describe "#following?" do
+    it "uses Kippt::FollowRelationship to get the information" do
+      follow_relationship = mock(:follow_relationship,
+        :following? => true)
+      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      user = Kippt::User.new({:is_pro => true}, nil)
+      user.following?.should be_true
+    end
+  end
 end

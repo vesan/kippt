@@ -1,6 +1,7 @@
 require "kippt/users"
 require "kippt/followers"
 require "kippt/following"
+require "kippt/follow_relationship"
 
 class Kippt::User
   include Kippt::Resource
@@ -21,5 +22,10 @@ class Kippt::User
 
   def following
     Kippt::Following.new(client, self)
+  end
+
+  # Tells if authenticated user is following the user.
+  def following?
+    Kippt::FollowRelationship.new(client, self).following?
   end
 end
