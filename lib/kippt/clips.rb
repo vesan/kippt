@@ -52,8 +52,4 @@ class Kippt::Clips
       raise ArgumentError.new("'#{key}' is not a valid search parameter") unless VALID_SEARCH_PARAMETERS.include?(key)
     end
   end
-
-  def client
-    @client
-  end
 end
