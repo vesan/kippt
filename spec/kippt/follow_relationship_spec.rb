@@ -8,8 +8,8 @@ describe Kippt::FollowRelationship do
 
   describe "#following?" do
     it "returns boolean" do
-      stub_get("/users/10/relationship/")
-        .to_return(:status => 200, :body => '{"following": true}')
+      stub_get("/users/10/relationship/").
+        to_return(:status => 200, :body => '{"following": true}')
       subject.following?.should be_true
     end
   end
