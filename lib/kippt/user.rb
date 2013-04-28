@@ -8,9 +8,11 @@ class Kippt::User
 
   attributes :username, :bio, :app_url, :avatar_url, :twitter,
              :id, :github, :website_url, :full_name, :dribble,
-             :counts, :resource_uri
+             :counts, :resource_uri, :api_token
 
   boolean_attributes :is_pro
+
+  alias_method :token, :api_token
 
   def collection_resource_class
     Kippt::Users

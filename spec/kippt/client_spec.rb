@@ -56,12 +56,12 @@ describe Kippt::Client do
   describe "#account" do
     subject { Kippt::Client.new(:username => "bob", :password => "secret") }
 
-    it "returns a Kippt::Account instance" do
+    it "returns a Kippt::User instance" do
       subject.should_receive(:get).with("account").and_return(
         stub :body => {}
       )
       account = subject.account
-      account.should be_a(Kippt::Account)
+      account.should be_a(Kippt::User)
     end
   end
 

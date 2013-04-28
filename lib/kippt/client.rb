@@ -1,5 +1,4 @@
 require "kippt/connection"
-require "kippt/account"
 require "kippt/clips"
 require "kippt/lists"
 require "kippt/users"
@@ -24,8 +23,13 @@ class Kippt::Client
     end
   end
 
-  def account
-    Kippt::Account.new(get("account").body)
+  def account(include_api_token = false)
+    if include_api_token
+      url = "account?include_data=api_token"
+    else
+      url = "account"
+    end
+    Kippt::User.new(get(url).body, self)
   end
 
   def lists

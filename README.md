@@ -58,16 +58,17 @@ client = Kippt::Client.new(unauthenticated: true)
 
 ### Account
 
-You can get the account details (username and token):
+You can get the current authenticated user:
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 account = client.account
 account.username #=> "vesan"
-account.token    #=> "2544d6bfddf5893ec8617"
+account = client.account(true) # includes the API token
+account.api_token    #=> "2544d6bfddf5893ec8617"
 ```
 
-Always use token instead of the password if possible because it's more secure.
+Always use the API token instead of the password if possible because it's more secure.
 
 
 ### Resources
