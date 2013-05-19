@@ -29,8 +29,9 @@ module Kippt::Resource
 
       mappings = hashes.reduce({}, :update)
       mappings.each do |attrib, object_class|
+        reified_class = _get_class(object_class)
         define_method(attrib) do
-          _get_class(object_class).new(attributes.send(attrib))
+          reified_class.new(attributes.send(attrib))
         end
       end
       @attribute_names += convert_to_symbols(mappings.keys)
@@ -63,12 +64,13 @@ module Kippt::Resource
       @embedded_attribute_names.freeze
 
       mappings.each do |attrib, attribute_class|
+        reified_class = _get_class(attribute_class)
         define_method(attrib) do
           value = attributes.send(attrib)
           if value.is_a? String
-            client.resource_from_url(_get_class(attribute_class), value)
+            client.resource_from_url(reified_class, value)
           else
-            _get_class(attribute_class).new(value)
+            reified_class.new(value)
           end
         end
       end
@@ -80,6 +82,22 @@ module Kippt::Resource
       list.map {|item| item.to_sym }
     end
 
+    protected
+
+    def _get_class(camel_cased_word)
+      if camel_cased_word.is_a? Class
+        camel_cased_word
+      else
+        names = camel_cased_word.split('::')
+        names.shift if names.empty? || names.first.empty?
+
+        constant = Object
+        names.each do |name|
+          constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+        end
+        constant
+      end
+    end
   end
 
   def initialize(attributes = {}, client = nil)
@@ -129,16 +147,5 @@ module Kippt::Resource
 
   def client
     @client
-  end
-
-  def _get_class(camel_cased_word)
-    names = camel_cased_word.split('::')
-    names.shift if names.empty? || names.first.empty?
-
-    constant = Object
-    names.each do |name|
-      constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-    end
-    constant
   end
 end
