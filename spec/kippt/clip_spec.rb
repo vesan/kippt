@@ -8,8 +8,12 @@ describe Kippt::Clip do
 
   let(:data) { MultiJson.load(fixture("clip.json").read) }
   let(:attributes) {
-    [:url_domain, :updated, :is_starred, :title,
-     :url, :notes, :created, :id, :resource_uri]
+    [:url_domain, :is_starred, :title,
+     :url, :notes, :id, :resource_uri]
+   }
+   let(:mapped_attributes) {
+     {:updated => "Time", :created => "Time",
+      :user => "Kippt::User", :via => "Kippt::Clip"}
    }
 
   it_behaves_like "resource"

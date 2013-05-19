@@ -9,7 +9,10 @@ describe Kippt::Comment do
 
   let(:data) { MultiJson.load(fixture("comment.json").read) }
   let(:attributes) {
-    [:body, :created, :id, :resource_uri]
+    [:body, :id, :resource_uri]
+   }
+   let(:mapped_attributes) {
+     {:created => "Time", :user => "Kippt::User"}
    }
 
   it_behaves_like "resource"

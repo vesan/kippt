@@ -8,9 +8,13 @@ describe Kippt::List do
 
   let(:data) { MultiJson.load(fixture("list.json").read) }
   let(:attributes) {
-    [:id, :rss_url, :updated, :title,
-     :created, :slug, :resource_uri]
+    [:id, :rss_url, :title,
+     :slug, :resource_uri]
   }
+   let(:mapped_attributes) {
+     {:updated => "Time", :created => "Time",
+      :user => "Kippt::User"}
+   }
 
   it_behaves_like "resource"
 

@@ -8,10 +8,11 @@ require "kippt/saves"
 class Kippt::Clip
   include Kippt::Resource
 
-  attributes :url_domain, :updated, :is_starred, :title,
-             :url, :notes, :created, :id, :resource_uri,
+  attributes :url_domain, :is_starred, :title,
+             :url, :notes, :id, :resource_uri,
              :type, :favicon_url, :app_url, :media,
-             :user => "Kippt::User", :via => "Kippt::Clip"
+             :updated => Time, :created => Time,
+             :user => Kippt::User, :via => Kippt::Clip
 
   writable_attributes :is_favorite, :title, :url, :notes, :list
 

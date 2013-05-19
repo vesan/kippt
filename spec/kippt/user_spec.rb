@@ -12,6 +12,9 @@ describe Kippt::User do
      :id, :github, :website_url, :full_name, :dribble,
      :counts, :resource_uri]
   }
+  let(:mapped_attributes) {
+    {}
+  }
 
   it_behaves_like "resource"
 

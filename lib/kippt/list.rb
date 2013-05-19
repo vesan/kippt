@@ -3,8 +3,9 @@ require "kippt/user"
 class Kippt::List
   include Kippt::Resource
 
-  attributes :app_url, :id, :rss_url, :updated, :title,
-             :created, :slug, :resource_uri, :description,
+  attributes :app_url, :id, :rss_url, :title,
+             :slug, :resource_uri, :description,
+             :updated => Time, :created => Time,
              :user => Kippt::User
   boolean_attributes :is_private
 

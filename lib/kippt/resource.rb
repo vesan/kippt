@@ -29,9 +29,15 @@ module Kippt::Resource
 
       mappings = hashes.reduce({}, :update)
       mappings.each do |attrib, object_class|
-        reified_class = _get_class(object_class)
-        define_method(attrib) do
-          reified_class.new(attributes.send(attrib))
+        if object_class.to_s == "Time"
+          define_method(attrib) do
+            Time.at(attributes.send(attrib))
+          end
+        else
+          reified_class = _get_class(object_class)
+          define_method(attrib) do
+            reified_class.new(attributes.send(attrib))
+          end
         end
       end
       @attribute_names += convert_to_symbols(mappings.keys)

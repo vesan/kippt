@@ -5,8 +5,8 @@ require "kippt/clip"
 class Kippt::Comment
   include Kippt::Resource
 
-  attributes :body, :created, :id, :resource_uri,
-             :user => "Kippt::User"
+  attributes :body, :id, :resource_uri,
+             :created => Time, :user => Kippt::User
 
   writable_attributes :body
 

@@ -1,6 +1,6 @@
 * [DONE] Adding support for unauthenticated requests
 * Better text representation in IRB
-* Timestamps as time
+* [DONE] Timestamps as time
 * Better exceptions
 
 # Clip

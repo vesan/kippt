@@ -266,6 +266,14 @@ shared_examples_for "resource" do
     end
   end
 
+  describe "mapped attribute accessors" do
+    it "delegates to attributes and wraps with to a object" do
+      mapped_attributes.each do |attribute_name, attribute_class|
+        subject.send(attribute_name).class.to_s.should eq attribute_class
+      end
+    end
+  end
+
   describe "#destroy" do
     let(:collection_resource)  { stub }
 
