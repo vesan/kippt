@@ -3,6 +3,7 @@ require "kippt/followers"
 require "kippt/following"
 require "kippt/follow_relationship"
 require "kippt/user_clips"
+require "kippt/user_lists"
 
 class Kippt::User
   include Kippt::Resource
@@ -17,6 +18,10 @@ class Kippt::User
 
   def collection_resource_class
     Kippt::Users
+  end
+
+  def lists
+    Kippt::UserLists.new(client, self)
   end
 
   def clips

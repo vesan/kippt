@@ -21,7 +21,7 @@
 
 # User
 
-* Support for all the user API's (still missing lists & following/unfollowing users)
+* Support for all the user API's (still missing following/unfollowing users)
 * [DONE] Getting the user for the authenticated user
 * Getting the embedded user for likes
 * Getting the counts

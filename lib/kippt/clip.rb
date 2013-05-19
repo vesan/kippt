@@ -1,9 +1,9 @@
 require "kippt/resource"
-require "kippt/user"
 require "kippt/list"
 require "kippt/comments"
 require "kippt/likes"
 require "kippt/saves"
+require "kippt/user"
 
 class Kippt::Clip
   include Kippt::Resource
