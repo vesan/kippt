@@ -34,4 +34,38 @@ describe Kippt::User do
       user.following?.should be_true
     end
   end
+
+  describe "#follower_count" do
+    it "returns the count from the fetched data" do
+      user = Kippt::User.new({:counts => {"follows" => 11}})
+      user.follower_count.should eq 11
+    end
+  end
+
+  describe "#following_count" do
+    it "returns the count from the fetched data" do
+      user = Kippt::User.new({:counts => {"followed_by" => 111}})
+      user.following_count.should eq 111
+    end
+  end
+
+  describe "#follow" do
+    it "sets up a Kippt::FollowRelationship and calls it" do
+      follow_relationship = mock(:follow_relationship,
+        :follow => true)
+      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      user = Kippt::User.new
+      user.follow.should be_true
+    end
+  end
+
+  describe "#unfollow" do
+    it "sets up a Kippt::FollowRelationship and calls it" do
+      follow_relationship = mock(:follow_relationship,
+        :unfollow => true)
+      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      user = Kippt::User.new
+      user.unfollow.should be_true
+    end
+  end
 end

@@ -40,4 +40,20 @@ class Kippt::User
   def following?
     Kippt::FollowRelationship.new(client, self).following?
   end
+
+  def follower_count
+    counts["follows"]
+  end
+
+  def following_count
+    counts["followed_by"]
+  end
+
+  def follow
+    Kippt::FollowRelationship.new(client, self).follow
+  end
+
+  def unfollow
+    Kippt::FollowRelationship.new(client, self).unfollow
+  end
 end

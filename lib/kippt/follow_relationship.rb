@@ -16,7 +16,33 @@ class Kippt::FollowRelationship
     end
   end
 
+  def follow
+    response = update_following(true)
+
+    if response.success?
+      true
+    else
+      raise Kippt::APIError.new("Problem with following: #{response.body["message"]}")
+    end
+  end
+
+  def unfollow
+    response = update_following(false)
+
+    if response.success?
+      true
+    else
+      raise Kippt::APIError.new("Problem with unfollowing: #{response.body["message"]}")
+    end
+  end
+
   private
+
+  def update_following(value)
+    follow_value = value ? "follow" : "unfollow"
+
+    client.post("users/#{user.id}/relationship/", :data => {:action => follow_value})
+  end
 
   def client
     @client

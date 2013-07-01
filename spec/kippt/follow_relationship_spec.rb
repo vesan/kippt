@@ -13,4 +13,22 @@ describe Kippt::FollowRelationship do
       subject.following?.should be_true
     end
   end
+
+  describe "#follow" do
+    it "updates the value on the server" do
+      stub_post("/users/10/relationship/").
+         with(:body => "{\"action\":\"follow\"}").
+         to_return(:status => 200, :body => "", :headers => {})
+      subject.follow.should be_true
+    end
+  end
+
+  describe "#unfollow" do
+    it "updates the value on the server" do
+      stub_post("/users/10/relationship/").
+         with(:body => "{\"action\":\"unfollow\"}").
+         to_return(:status => 200, :body => "", :headers => {})
+      subject.unfollow.should be_true
+    end
+  end
 end
