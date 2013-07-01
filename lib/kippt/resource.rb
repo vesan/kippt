@@ -36,7 +36,8 @@ module Kippt::Resource
         else
           reified_class = _get_class(object_class)
           define_method(attrib) do
-            reified_class.new(attributes.send(attrib))
+            value = attributes.send(attrib)
+            reified_class.new(value) unless value.nil?
           end
         end
       end

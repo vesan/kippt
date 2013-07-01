@@ -12,7 +12,7 @@ class Kippt::Clip
              :url, :notes, :id, :resource_uri,
              :type, :favicon_url, :app_url, :media,
              :updated => Time, :created => Time,
-             :user => Kippt::User, :via => Kippt::Clip
+             :user => Kippt::User
 
   writable_attributes :is_favorite, :title, :url, :notes, :list
 
@@ -22,7 +22,7 @@ class Kippt::Clip
   alias :is_starred= :is_favorite=
   alias :starred? :favorite?
 
-  embedded_attributes :list => "Kippt::List"
+  embedded_attributes :list => "Kippt::List", :via => "Kippt::Clip"
 
   def collection_resource_class
     Kippt::Clips
