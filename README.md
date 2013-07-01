@@ -175,6 +175,16 @@ clip = client.clips[clip_id]
 clip.destroy #=> true
 ```
 
+### Debugging
+
+To get more information on what is going on under the covers, set `DEBUG=true` 
+as environment variable or pass `debug: true` in the Kippt::Client options hash 
+like:
+
+```ruby
+client = Kippt::Client.new(unauthenticated: true, debug: true)
+```
+
 
 ## Contributing
 

@@ -26,6 +26,22 @@ describe Kippt::Client do
         }.to_not raise_error
       end
     end
+
+    context "when debug is set to true" do
+      it "sets client to debug mode" do
+        client = Kippt::Client.new(:unauthenticated => true, :debug => true)
+        client.debug?.should be_true
+      end
+    end
+  end
+
+  context "#debug" do
+    it "can be set and read" do
+      client = Kippt::Client.new(:unauthenticated => true)
+      client.debug?.should be_false
+      client.debug = true
+      client.debug?.should be_true
+    end
   end
 
   describe "connection" do

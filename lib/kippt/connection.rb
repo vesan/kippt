@@ -35,7 +35,7 @@ module Kippt::Connection
   def connection
     @connection ||= Faraday.new("https://#{HOST}/api") do |builder|
       builder.use Kippt::Connection::ParseMultiJson
-      builder.use Faraday::Response::Logger if ENV['DEBUG']
+      builder.use Faraday::Response::Logger if debug?
       builder.adapter Faraday.default_adapter
     end
   end
