@@ -1,13 +1,13 @@
 * [DONE] Adding support for unauthenticated requests
-* Better text representation in IRB
 * [DONE] Timestamps as time
+* Better text representation in IRB
 * Better exceptions
 
 # Clip
 
 * [DONE] Getting the feed of authenticated user
 * [DONE] Getting the user of the clip
-* Support for including list & via data
+* [DONE] Support for including list & via data
 * [DONE] Getting the list of the clip
 * [DONE] Getting the original clip the clip was created via
 * [DONE] Getting the comments of a clip

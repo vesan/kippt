@@ -1,4 +1,6 @@
 module Kippt::CollectionResource
+  # For certain objects you can get extra data by giving option `include_data`.
+  # For example with clips you can add `include_data: "list,via"`.
   def all(options = {})
     validate_collection_options(options)
 
@@ -13,8 +15,10 @@ module Kippt::CollectionResource
     build(attributes).save
   end
 
-  def [](resource_id)
-    response = client.get("#{base_uri}/#{resource_id}")
+  # For certain objects you can get extra data by giving option `include_data`.
+  # For example with clips you can add `include_data: "list,via"`.
+  def [](resource_id, options = {})
+    response = client.get("#{base_uri}/#{resource_id}", options)
     if response.success?
       object_class.new(response.body, client)
     else
