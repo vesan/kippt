@@ -79,7 +79,7 @@ module Kippt::Resource
           elsif value.is_a? reified_class
             value
           else
-            reified_class.new(value)
+            reified_class.new(value, client)
           end
         end
       end
