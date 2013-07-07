@@ -2,13 +2,24 @@ require "spec_helper"
 require "kippt/clips"
 
 describe Kippt::Clips do
-  subject { Kippt::Client.new(valid_user_credentials).clips }
+  let(:client) { Kippt::Client.new(valid_user_credentials) }
+  subject { client.clips }
   let(:base_uri) { "clips" }
   let(:singular_fixture) { "clip" }
   let(:collection_class) { Kippt::ClipCollection }
   let(:resource_class) { Kippt::Clip }
 
   it_behaves_like "collection resource"
+
+  describe "#feed" do
+    subject { Kippt::Client.new(valid_user_credentials).clips }
+
+    it "returns ClipCollection" do
+      stub_get("/clips/feed").
+        to_return(:status => 200, :body => fixture("feed.json"))
+      subject.feed.should be_a Kippt::ClipCollection
+    end
+  end
 
   describe "#search" do
     subject { Kippt::Client.new(valid_user_credentials).clips }
@@ -45,7 +56,7 @@ describe Kippt::Clips do
       stub_get("/search/clips?q=bunny").
         to_return(:status => 200, :body => fixture("clips.json"))
       clips = subject.search("bunny")
-      clips.is_a? Kippt::ClipCollection
+      clips.should be_a Kippt::ClipCollection
     end
   end
 
@@ -54,7 +65,7 @@ describe Kippt::Clips do
 
     context "successful request" do
       it "returns hash with success boolean" do
-       stub_request(:post, "https://kippt.com/api/clips").
+       stub_post("/clips").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
          to_return(:status => 200, :body => "{}", :headers => {})
 
@@ -66,7 +77,7 @@ describe Kippt::Clips do
 
     context "unsuccessful request" do
       it "returns hash with success boolean and error message" do
-       stub_request(:post, "https://kippt.com/api/clips").
+       stub_post("/clips").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
          to_return(:status => 400, :body => "{\"message\": \"No good.\"}", :headers => {})
 
@@ -79,7 +90,7 @@ describe Kippt::Clips do
 
     context "when object doesn't have an id" do
       it "POSTs new resource to the API" do
-       stub_request(:post, "https://kippt.com/api/clips").
+       stub_post("/clips").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
          to_return(:status => 200, :body => "{}", :headers => {})
 
@@ -90,7 +101,7 @@ describe Kippt::Clips do
     
     context "when object has an id" do
       it "PUTs new version of the resource to the API" do
-       stub_request(:put, "https://kippt.com/api/clips/22").
+       stub_put("/clips/22").
          with(:body => "{\"url\":\"http://kiskolabs.com\"}").
          to_return(:status => 200, :body => "{}", :headers => {})
 
@@ -105,7 +116,7 @@ describe Kippt::Clips do
 
     context "successful request" do
       it "returns boolean" do
-       stub_request(:delete, "https://kippt.com/api/clips/100").
+       stub_delete("/clips/100").
          to_return(:status => 200, :headers => {})
 
         clip = Kippt::Clip.new(:id => 100)

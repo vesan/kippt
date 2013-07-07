@@ -11,6 +11,18 @@ def stub_get(url)
   stub_request(:get, kippt_url(url))
 end
 
+def stub_post(url)
+  stub_request(:post, kippt_url(url))
+end
+
+def stub_put(url)
+  stub_request(:put, kippt_url(url))
+end
+
+def stub_delete(url)
+  stub_request(:delete, kippt_url(url))
+end
+
 def kippt_url(url)
   "https://kippt.com/api#{url}"
 end
@@ -24,18 +36,26 @@ def fixture(file)
   File.new(fixture_path + '/' + file)
 end
 
+def json_fixture(file)
+  MultiJson.load(fixture(file).read)
+end
+
 shared_examples_for "collection resource" do
+  def collection_fixture
+    base_uri.split("/").last
+  end
+
   describe "#all" do
     it "returns collection class" do
       stub_get("/#{base_uri}").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       all_resources = subject.all
       all_resources.is_a? collection_class
     end
 
     it "accepts limit and offset options" do
       stub_get("/#{base_uri}?limit=10&offset=100").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       resources = subject.all(:limit => 10, :offset => 100)
     end
 
@@ -61,6 +81,18 @@ shared_examples_for "collection resource" do
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
       subject[10].should be_a(resource_class)
     end
+
+    context "when resource is not found" do
+      it "raises exception" do
+        stub_get("/#{base_uri}/10").
+          to_return(:status => 404, :body => {"message" => "Resource not found."})
+        lambda {
+          subject[10]
+          subject.all(:foobar => true)
+        }.should raise_error(
+          Kippt::APIError, "Resource could not be loaded: Resource not found.")
+      end
+    end
   end
 
   describe "#find" do
@@ -72,7 +104,7 @@ shared_examples_for "collection resource" do
   describe "#collection_from_url" do
     it "returns a new collection" do
       stub_get("/#{base_uri}/?limit=20&offset=20").
-        to_return(:status => 200, :body => fixture("#{base_uri}.json"))
+        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       collection = subject.collection_from_url("/api/#{base_uri}/?limit=20&offset=20")
       collection.should be_a(collection_class)
     end
@@ -95,7 +127,7 @@ shared_examples_for "collection resource" do
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, subject)
+      subject.object_class.should_receive(:new).with({:an => "attribute"}, client)
       subject.build(:an => "attribute")
     end
   end
@@ -165,6 +197,8 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the next page of results from the collection resource" do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+
         results = stub
         collection_resource.should_receive(:collection_from_url).
           with(data_with_multiple_pages["meta"]["next"]).
@@ -202,6 +236,8 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the previous page of results from the collection resource" do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+
         results = stub
         collection_resource.should_receive(:collection_from_url).
           with(data_with_multiple_pages["meta"]["previous"]).
@@ -230,8 +266,19 @@ shared_examples_for "resource" do
     end
   end
 
+  describe "mapped attribute accessors" do
+    it "delegates to attributes and wraps with to a object" do
+      mapped_attributes.each do |attribute_name, attribute_class|
+        subject.send(attribute_name).class.to_s.should eq attribute_class
+      end
+    end
+  end
+
   describe "#destroy" do
+    let(:collection_resource)  { stub }
+
     it "sends delete request to the server" do
+      client.stub(:collection_resource_for).and_return(collection_resource)
       collection_resource.should_receive(:destroy_resource).with(subject).and_return(true)
       subject.destroy.should be_true
     end
@@ -239,6 +286,12 @@ shared_examples_for "resource" do
 
   describe "#save" do
     context "with valid parameters" do
+      let(:collection_resource)  { stub }
+
+      before do
+        client.stub(:collection_resource_for).and_return(collection_resource)
+      end
+
       it "sends POST request to server" do
         collection_resource.should_receive(:save_resource).with(subject).and_return({})
         subject.save
@@ -259,7 +312,10 @@ shared_examples_for "resource" do
     end
 
     context "with invalid parameters" do
+      let(:collection_resource)  { stub }
+
       before do
+        client.stub(:collection_resource_for).and_return(collection_resource)
         collection_resource.stub(:save_resource).and_return({:success => false, :error_message => "No url."})
       end
 

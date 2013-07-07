@@ -1,7 +1,7 @@
 require "kippt/connection"
-require "kippt/account"
 require "kippt/clips"
 require "kippt/lists"
+require "kippt/users"
 
 class Kippt::Client
   include Kippt::Connection
@@ -9,18 +9,42 @@ class Kippt::Client
   attr_reader :username, :token, :password
 
   def initialize(options = {})
-    @username = options.fetch(:username) { raise ArgumentError.new("username is required") }
+    self.debug = options.fetch(:debug, nil)
 
-    @password = options.fetch(:password) { nil }
-    @token    = options.fetch(:token) { nil }
+    if options[:unauthenticated]
+      # Unauthenticated
+    else
+      @username  = options.fetch(:username) { raise ArgumentError.new("username is required") }
 
-    if @password.nil? && @token.nil?
-      raise ArgumentError.new("password or token is required")
+      @password  = options.fetch(:password) { nil }
+      @token     = options.fetch(:token) { nil }
+
+      if @password.nil? && @token.nil?
+        raise ArgumentError.new("password or token is required")
+      end
     end
   end
 
-  def account
-    Kippt::Account.new(get("account").body)
+  def debug=(value)
+    @debug = value
+  end
+
+  def debug
+    if @debug.nil?
+      !!ENV["DEBUG"]
+    else
+      @debug
+    end
+  end
+  alias_method :debug?, :debug
+
+  def account(include_api_token = false)
+    if include_api_token
+      url = "account?include_data=api_token"
+    else
+      url = "account"
+    end
+    Kippt::User.new(get(url).body, self)
   end
 
   def lists
@@ -29,5 +53,19 @@ class Kippt::Client
 
   def clips
     Kippt::Clips.new(self)
+  end
+
+  def users
+    Kippt::Users.new(self)
+  end
+
+  def collection_resource_for(resource_class, *options)
+    resource_class.new(*([self] + options))
+  end
+
+  def resource_from_url(resource_class, url)
+    raise ArgumentError.new("The parameter URL can't be blank") if url.nil? || url == ""
+
+    resource_class.new(self.get(url).body, self)
   end
 end

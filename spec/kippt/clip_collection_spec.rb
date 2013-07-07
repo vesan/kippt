@@ -6,9 +6,9 @@ describe Kippt::ClipCollection do
   let(:data_with_multiple_pages) {
     MultiJson.load(fixture("clips_with_multiple_pages.json").read)
   }
-  subject { Kippt::ClipCollection.new(data) }
-  let(:subject_with_multiple_pages) { Kippt::ClipCollection.new(data_with_multiple_pages, collection_resource) }
-  let(:collection_resource) { nil }
+  let(:client) { stub }
+  subject { Kippt::ClipCollection.new(data, client) }
+  let(:subject_with_multiple_pages) { Kippt::ClipCollection.new(data_with_multiple_pages, client) }
 
   it_behaves_like "collection"
 end

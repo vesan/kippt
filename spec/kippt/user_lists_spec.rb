@@ -1,10 +1,10 @@
 require "spec_helper"
-require "kippt/lists"
+require "kippt/user_lists"
 
-describe Kippt::Lists do
+describe Kippt::UserLists do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  subject { client.lists }
-  let(:base_uri) { "lists" }
+  subject { Kippt::User.new({:id => 10}, client).lists }
+  let(:base_uri) { "users/#{10}/lists" }
   let(:singular_fixture) { "list" }
   let(:collection_class) { Kippt::ListCollection }
   let(:resource_class) { Kippt::List }

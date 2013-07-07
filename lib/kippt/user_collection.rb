@@ -1,14 +1,14 @@
 require "kippt/collection"
-require "kippt/list"
+require "kippt/user"
 
-class Kippt::ListCollection
+class Kippt::UserCollection
   include Kippt::Collection
 
   def object_class
-    Kippt::List
+    Kippt::User
   end
 
   def collection_resource_class
-    Kippt::Lists
+    Kippt::Users
   end
 end

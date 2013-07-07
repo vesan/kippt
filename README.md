@@ -49,19 +49,26 @@ client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 # Methods called on `client` will use the passed credentials
 ```
 
+Or you can use the API unauthenticated:
+
+```ruby
+client = Kippt::Client.new(unauthenticated: true)
+```
+
 
 ### Account
 
-You can get the account details (username and token):
+You can get the current authenticated user:
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 account = client.account
 account.username #=> "vesan"
-account.token    #=> "2544d6bfddf5893ec8617"
+account = client.account(true) # includes the API token
+account.api_token    #=> "2544d6bfddf5893ec8617"
 ```
 
-Always use token instead of the password if possible because it's more secure.
+Always use the API token instead of the password if possible because it's more secure.
 
 
 ### Resources
@@ -166,6 +173,16 @@ Deleting resources is done with `#destroy`:
 clip_id = 1001
 clip = client.clips[clip_id]
 clip.destroy #=> true
+```
+
+### Debugging
+
+To get more information on what is going on under the covers, set `DEBUG=true` 
+as environment variable or pass `debug: true` in the Kippt::Client options hash 
+like:
+
+```ruby
+client = Kippt::Client.new(unauthenticated: true, debug: true)
 ```
 
 

@@ -1,46 +1,42 @@
 require "kippt/connection"
 require "kippt/collection_resource"
-require "kippt/clip_collection"
-require "kippt/clip"
+require "kippt/user_collection"
+require "kippt/user"
 
-class Kippt::Clips
+class Kippt::Users
   include Kippt::CollectionResource
-  VALID_SEARCH_PARAMETERS = [:q, :list, :is_starred]
+  VALID_SEARCH_PARAMETERS = [:q]
 
   def initialize(client)
     @client = client
   end
 
   def self.valid_filter_parameters
-    [:limit, :offset, :is_read_later, :is_starred]
+    [:limit, :offset]
   end
 
   def object_class
-    Kippt::Clip
+    Kippt::User
   end
 
   def collection_class
-    Kippt::ClipCollection
+    Kippt::UserCollection
   end
 
   def base_uri
-    "clips"
-  end
-
-  def feed
-    Kippt::ClipCollection.new(client.get("clips/feed").body, client)
+    "users"
   end
 
   def search(parameters)
     if parameters.is_a?(String)
-      Kippt::ClipCollection.new(
-        client.get("search/clips", {:q => parameters}).body,
+      Kippt::UserCollection.new(
+        client.get("#{base_uri}/search", {:q => parameters}).body,
         client)
     else
       validate_search_parameters(parameters)
 
-      Kippt::ClipCollection.new(
-        client.get("search/clips", parameters).body,
+      Kippt::UserCollection.new(
+        client.get("#{base_uri}/search", parameters).body,
         client)
     end
   end

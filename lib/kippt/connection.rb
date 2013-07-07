@@ -2,6 +2,8 @@ require "multi_json"
 require "faraday_middleware/response_middleware"
 
 module Kippt::Connection
+  HOST = "kippt.com"
+
   class ParseMultiJson < FaradayMiddleware::ResponseMiddleware
     define_parser do |body|
       begin
@@ -31,9 +33,9 @@ module Kippt::Connection
   private
 
   def connection
-    @connection ||= Faraday.new("https://kippt.com/api") do |builder|
+    @connection ||= Faraday.new("https://#{HOST}/api") do |builder|
       builder.use Kippt::Connection::ParseMultiJson
-      # builder.use Faraday::Response::Logger
+      builder.use Faraday::Response::Logger if debug?
       builder.adapter Faraday.default_adapter
     end
   end
@@ -47,8 +49,10 @@ module Kippt::Connection
       set_default_headers(req)
 
       unless @password
-        req.headers["X-Kippt-Username"]  = @username
-        req.headers["X-Kippt-API-Token"] = @token
+        if @username && @token
+          req.headers["X-Kippt-Username"]  = @username
+          req.headers["X-Kippt-API-Token"] = @token
+        end
       end
 
       if method == :get
