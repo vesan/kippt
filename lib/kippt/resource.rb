@@ -76,6 +76,8 @@ module Kippt::Resource
           value = attributes.send(attrib)
           if value.is_a? String
             client.resource_from_url(reified_class, value)
+          elsif value.is_a? reified_class
+            value
           else
             reified_class.new(value)
           end

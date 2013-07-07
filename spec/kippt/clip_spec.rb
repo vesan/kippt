@@ -55,6 +55,15 @@ describe Kippt::Clip do
         subject.list.should be_a Kippt::List
       end
     end
+
+    context "when a Kippt::List is passed" do
+      let(:list) { Kippt::List.new }
+      let(:data) { {"list" => list} }
+
+      it "returns the passed list" do
+        subject.list.should eq list
+      end
+    end
   end
 
   describe "#comments" do
