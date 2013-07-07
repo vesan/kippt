@@ -6,7 +6,7 @@ describe Kippt::List do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
   let(:collection_resource_class) { Kippt::Lists }
 
-  let(:data) { MultiJson.load(fixture("list.json").read) }
+  let(:data) { json_fixture("list.json") }
   let(:attributes) {
     [:id, :rss_url, :title,
      :slug, :resource_uri]
@@ -27,7 +27,7 @@ describe Kippt::List do
 
   describe "#collaborators" do
     it "returns the users generated from the data" do
-      list = Kippt::List.new({"collaborators" => {"count" => 1, "data" => [fixture("user.json")]}}, nil)
+      list = Kippt::List.new({"collaborators" => {"count" => 1, "data" => [json_fixture("user.json")]}}, nil)
       list.collaborators.size.should eq 1
       list.collaborators.first.should be_a Kippt::User
     end
