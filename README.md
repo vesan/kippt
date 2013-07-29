@@ -91,6 +91,15 @@ list_id = 10
 list = client.lists[list_id] # Returns Kippt::ListItem
 ```
 
+Get single lists&rsquo;s clips:
+
+```ruby
+client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
+list_id = 10
+list = Kippt::List.new({ id: list_id }, client)
+list.clips # Returns a Kippt::ClipCollection
+```
+
 
 #### Clips
 
@@ -156,7 +165,7 @@ clip.url = "http://github.com"
 clip.save #=> Returns boolean
 ```
 
-If you are missing required fields `#save` will return `false` and you can use 
+If you are missing required fields `#save` will return `false` and you can use
 `#errors` to get the error messages returned by the API.
 
 ```ruby
@@ -177,8 +186,8 @@ clip.destroy #=> true
 
 ### Debugging
 
-To get more information on what is going on under the covers, set `DEBUG=true` 
-as environment variable or pass `debug: true` in the Kippt::Client options hash 
+To get more information on what is going on under the covers, set `DEBUG=true`
+as environment variable or pass `debug: true` in the Kippt::Client options hash
 like:
 
 ```ruby

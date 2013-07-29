@@ -21,6 +21,10 @@ class Kippt::List
     }
   end
 
+  def clips
+    Kippt::ClipCollection.new(client.get("lists/#{id}/clips").body, client)
+  end
+
   def follow
     response = client.post("#{resource_uri}relationship", :data => {:action => "follow"})
     raise Kippt::APIError.new("There was an error with the request: #{response.body["message"]}") unless response.success?
