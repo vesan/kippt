@@ -34,7 +34,7 @@ describe Kippt::List do
   end
 
   describe "#clips" do
-    subject { Kippt::List.new({ id: 10 }, client).clips }
+    subject { Kippt::List.new({ "id" => 10 }, client).clips }
 
     it "returns the clips for the list" do
       stub_get("/lists/#{10}/clips").
