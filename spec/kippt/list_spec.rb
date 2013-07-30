@@ -33,6 +33,16 @@ describe Kippt::List do
     end
   end
 
+  describe "#clips" do
+    subject { Kippt::List.new({ "id" => 10 }, client).clips }
+
+    it "returns the clips for the list" do
+      stub_get("/lists/#{10}/clips").
+        to_return(:status => 200, :body => fixture("clips.json"))
+      subject.should be_a Kippt::ClipCollection
+    end
+  end
+
   describe "#follow" do
     context "when request is successful" do
       let(:client) { Kippt::Client.new(valid_user_credentials) }
