@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 / August 6, 2013
+
+Adds ability to fetch the clips for a list. Contributed by [Darep](https://github.com/Darep).
+
 ## 2.0 / July 7, 2013
 
 After being long time in development this update adds support for all the
