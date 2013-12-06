@@ -37,9 +37,10 @@ describe Kippt::List do
     subject { Kippt::List.new({ "id" => 10 }, client).clips }
 
     it "returns the clips for the list" do
-      stub_get("/lists/#{10}/clips").
+      stub_get("/lists/10/clips").
         to_return(:status => 200, :body => fixture("clips.json"))
-      subject.should be_a Kippt::ClipCollection
+      subject.should be_a Kippt::Clips
+      subject.base_uri.should eq "lists/10/clips"
     end
   end
 

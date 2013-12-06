@@ -15,7 +15,7 @@ describe Kippt::UserClips do
     it "returns ClipCollection" do
       stub_get("/#{base_uri}/favorites").
         to_return(:status => 200, :body => fixture("clips.json"))
-      subject.favorites.should be_a Kippt::ClipCollection
+      subject.favorites.should be_a Kippt::Clips
     end
   end
 
@@ -23,7 +23,7 @@ describe Kippt::UserClips do
     it "returns ClipCollection" do
       stub_get("/#{base_uri}/likes").
         to_return(:status => 200, :body => fixture("clips.json"))
-      subject.likes.should be_a Kippt::ClipCollection
+      subject.likes.should be_a Kippt::Clips
     end
   end
 end

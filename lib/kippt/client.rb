@@ -1,5 +1,5 @@
 require "kippt/connection"
-require "kippt/clips"
+require "kippt/root_clips"
 require "kippt/lists"
 require "kippt/users"
 
@@ -52,7 +52,7 @@ class Kippt::Client
   end
 
   def clips
-    Kippt::Clips.new(self)
+    Kippt::RootClips.new(self)
   end
 
   def users

@@ -14,10 +14,20 @@ describe Kippt::Clips do
   describe "#feed" do
     subject { Kippt::Client.new(valid_user_credentials).clips }
 
-    it "returns ClipCollection" do
-      stub_get("/clips/feed").
-        to_return(:status => 200, :body => fixture("feed.json"))
-      subject.feed.should be_a Kippt::ClipCollection
+    it "returns Clips" do
+      feed = subject.feed
+      feed.should be_a Kippt::Clips
+      feed.base_uri.should eq "clips/feed"
+    end
+  end
+
+  describe "#favorites" do
+    subject { Kippt::Client.new(valid_user_credentials).clips }
+
+    it "returns Clips" do
+      feed = subject.favorites
+      feed.should be_a Kippt::Clips
+      feed.base_uri.should eq "clips/favorites"
     end
   end
 

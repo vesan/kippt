@@ -22,7 +22,7 @@ class Kippt::List
   end
 
   def clips
-    Kippt::ClipCollection.new(client.get("lists/#{id}/clips").body, client)
+    Kippt::Clips.new(client, "lists/#{id}/clips")
   end
 
   def follow

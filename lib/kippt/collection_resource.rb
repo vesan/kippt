@@ -1,4 +1,8 @@
+require "kippt/helpers"
+
 module Kippt::CollectionResource
+  include Kippt::Helpers
+
   # For certain objects you can get extra data by giving option `include_data`.
   # For example with clips you can add `include_data: "list,via"`.
   def all(options = {})
@@ -59,11 +63,8 @@ module Kippt::CollectionResource
   private
 
   def validate_collection_options(options)
-    options.each do |key, _|
-      unless self.class.valid_filter_parameters.include?(key)
-        raise ArgumentError.new("Unrecognized argument: #{key}")
-      end
-    end
+    symbolize_keys! options
+    assert_valid_keys options, self.class.valid_filter_parameters
   end
 
   def writable_parameters_from(resource)

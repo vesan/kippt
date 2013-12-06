@@ -13,7 +13,7 @@ class Kippt::Likes
   end
 
   def self.valid_filter_parameters
-    []
+    [:limit, :offset]
   end
 
   def object_class

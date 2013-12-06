@@ -7,6 +7,10 @@ class Kippt::Following
 
   attr_reader :user
 
+  def self.valid_filter_parameters
+    [:limit, :offset]
+  end
+
   def initialize(client, user)
     @client = client
     @user   = user

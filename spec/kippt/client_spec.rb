@@ -93,9 +93,9 @@ describe Kippt::Client do
   describe "#clips" do
     subject { Kippt::Client.new(:username => "bob", :password => "secret") }
 
-    it "returns a Kippt::Clips instance" do
+    it "returns a Kippt::RootClips instance" do
       clips = subject.clips
-      clips.should be_a(Kippt::Clips)
+      clips.should be_a(Kippt::RootClips)
     end
   end
 

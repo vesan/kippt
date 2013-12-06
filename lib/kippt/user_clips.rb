@@ -1,6 +1,6 @@
 require "kippt/connection"
 require "kippt/collection_resource"
-require "kippt/clip_collection"
+require "kippt/clips"
 require "kippt/clip"
 
 class Kippt::UserClips
@@ -30,10 +30,10 @@ class Kippt::UserClips
   end
 
   def favorites
-    Kippt::ClipCollection.new(client.get("#{base_uri}/favorites").body, client)
+    Kippt::Clips.new(client, "#{base_uri}/favorites")
   end
 
   def likes
-    Kippt::ClipCollection.new(client.get("#{base_uri}/likes").body, client)
+    Kippt::Clips.new(client, "#{base_uri}/likes")
   end
 end
