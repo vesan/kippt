@@ -13,7 +13,7 @@ class Kippt::Clips
   end
 
   def self.valid_filter_parameters
-    [:limit, :offset, :is_read_later, :is_starred]
+    [:limit, :offset, :is_read_later, :is_starred, :url, :since, :include_data]
   end
 
   def object_class

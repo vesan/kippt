@@ -96,6 +96,10 @@ Get single lists&rsquo;s clips:
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
 list_id = 10
+list = client.lists[list_id].clips # Returns a Kippt::ClipCollection
+
+# OR
+
 list = Kippt::List.new({ id: list_id }, client)
 list.clips # Returns a Kippt::ClipCollection
 ```
@@ -105,7 +109,13 @@ list.clips # Returns a Kippt::ClipCollection
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-clips = client.clips.fetch # Returns Kippt::ClipCollection
+client.clips.fetch # Returns Kippt::ClipCollection
+
+# Returns first page of clips for an URL
+client.clips.fetch(url: "https://github.com/vesan/kippt")
+
+# Returns first page of clips added in the last day
+client.clips.fetch(since: Time.now.to_i - 86400)
 ```
 
 Both ListCollection and ClipCollection are Enumerable.
