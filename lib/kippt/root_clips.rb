@@ -19,9 +19,7 @@ class Kippt::RootClips < Kippt::Clips
 
   def search(parameters)
     if parameters.is_a?(String)
-      Kippt::ClipCollection.new(
-        client.get("search/clips", {:q => parameters}).body,
-        client)
+      search({:q => parameters})
     else
       validate_search_parameters(parameters)
 

@@ -26,9 +26,7 @@ class Kippt::Users
 
   def search(parameters)
     if parameters.is_a?(String)
-      Kippt::UserCollection.new(
-        client.get("#{base_uri}/search", {:q => parameters}).body,
-        client)
+      search({:q => parameters})
     else
       validate_search_parameters(parameters)
 
