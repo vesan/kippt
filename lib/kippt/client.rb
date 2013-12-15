@@ -1,7 +1,7 @@
-require "kippt/connection"
-require "kippt/root_clips"
-require "kippt/lists"
-require "kippt/users"
+require_relative "connection"
+require_relative "root_clips"
+require_relative "lists"
+require_relative "users"
 
 class Kippt::Client
   include Kippt::Connection

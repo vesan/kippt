@@ -1,8 +1,14 @@
-require "kippt/version"
-require "core_ext/open_struct"
+require_relative "kippt/version"
+require_relative "core_ext/open_struct"
 require "faraday"
 require "faraday_middleware"
-require "kippt/client"
+
+require_relative "kippt/helpers"
+require_relative "kippt/resource"
+require_relative "kippt/collection_resource"
+require_relative "kippt/collection"
+require_relative "kippt/user"
+require_relative "kippt/client"
 
 module Kippt
   class APIError < StandardError; end

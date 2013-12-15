@@ -1,7 +1,4 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/user_collection"
-require "kippt/user"
+require_relative "user_collection"
 
 class Kippt::Users
   include Kippt::CollectionResource

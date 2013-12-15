@@ -1,5 +1,4 @@
-require "kippt/collection"
-require "kippt/comment"
+require_relative "comment"
 
 class Kippt::CommentCollection
   include Kippt::Collection

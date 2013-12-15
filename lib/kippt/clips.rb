@@ -1,7 +1,5 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/clip_collection"
-require "kippt/clip"
+require_relative "clip_collection"
+require_relative "clip"
 
 # Generic clip proxy. Used to wrap endpoints that return clips as JSON.
 class Kippt::Clips

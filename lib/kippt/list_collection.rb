@@ -1,5 +1,5 @@
-require "kippt/collection"
-require "kippt/list"
+require_relative "lists"
+require_relative "list"
 
 class Kippt::ListCollection
   include Kippt::Collection

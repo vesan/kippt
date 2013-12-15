@@ -1,6 +1,4 @@
-require "kippt/resource"
-require "kippt/user"
-require "kippt/clip"
+require_relative "comments"
 
 class Kippt::Comment
   include Kippt::Resource

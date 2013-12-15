@@ -1,4 +1,4 @@
-require "kippt/users"
+require_relative "likes"
 
 class Kippt::Like
   def initialize(client, clip)

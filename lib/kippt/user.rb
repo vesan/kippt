@@ -1,9 +1,8 @@
-require "kippt/users"
-require "kippt/followers"
-require "kippt/following"
-require "kippt/follow_relationship"
-require "kippt/user_clips"
-require "kippt/user_lists"
+require_relative "users"
+require_relative "followers"
+require_relative "following"
+require_relative "follow_relationship"
+require_relative "user_lists"
 
 class Kippt::User
   include Kippt::Resource

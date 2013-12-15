@@ -1,7 +1,4 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/clips"
-require "kippt/clip"
+require_relative "clips"
 
 # The root "/clips" resource that exposes features like feed, favorites and
 # search.

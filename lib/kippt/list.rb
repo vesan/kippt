@@ -1,4 +1,4 @@
-require "kippt/user"
+require_relative "clips"
 
 class Kippt::List
   include Kippt::Resource

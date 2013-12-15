@@ -1,5 +1,5 @@
-require "kippt/collection"
-require "kippt/clip"
+require_relative "collection"
+require_relative "clip"
 
 class Kippt::ClipCollection
   include Kippt::Collection

@@ -1,7 +1,5 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/list_collection"
-require "kippt/list"
+require_relative "list_collection"
+require_relative "list"
 
 class Kippt::Lists
   include Kippt::CollectionResource

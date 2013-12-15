@@ -1,6 +1,5 @@
-require "kippt/user_collection"
-require "kippt/user"
-require "kippt/like"
+require_relative "user_collection"
+require_relative "like"
 
 class Kippt::Likes
   include Kippt::CollectionResource

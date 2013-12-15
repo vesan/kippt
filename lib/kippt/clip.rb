@@ -1,9 +1,7 @@
-require "kippt/resource"
-require "kippt/list"
-require "kippt/comments"
-require "kippt/likes"
-require "kippt/saves"
-require "kippt/user"
+require_relative "comments"
+require_relative "likes"
+require_relative "saves"
+require_relative "list"
 
 class Kippt::Clip
   include Kippt::Resource

@@ -1,5 +1,4 @@
-require "kippt/user_collection"
-require "kippt/user"
+require_relative "user_collection"
 
 class Kippt::Saves
   attr_reader :clip

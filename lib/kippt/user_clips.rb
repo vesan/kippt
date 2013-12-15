@@ -1,11 +1,6 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/clips"
-require "kippt/clip"
+require_relative "clips"
 
-class Kippt::UserClips
-  include Kippt::CollectionResource
-
+class Kippt::UserClips < Kippt::Clips
   attr_reader :user
 
   def self.valid_filter_parameters
@@ -13,20 +8,9 @@ class Kippt::UserClips
   end
 
   def initialize(client, user)
-    @client = client
-    @user   = user
-  end
+    @user = user
 
-  def object_class
-    Kippt::Clip
-  end
-
-  def collection_class
-    Kippt::ClipCollection
-  end
-
-  def base_uri
-    "users/#{user.id}/clips"
+    super(client, "users/#{user.id}/clips")
   end
 
   def favorites

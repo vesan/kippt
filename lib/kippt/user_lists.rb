@@ -1,8 +1,3 @@
-require "kippt/connection"
-require "kippt/collection_resource"
-require "kippt/list_collection"
-require "kippt/list"
-
 # Loads public lists for a user.
 class Kippt::UserLists
   include Kippt::CollectionResource

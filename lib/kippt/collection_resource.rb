@@ -1,5 +1,3 @@
-require "kippt/helpers"
-
 module Kippt::CollectionResource
   include Kippt::Helpers
 

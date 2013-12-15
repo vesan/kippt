@@ -1,6 +1,3 @@
-require "kippt/collection"
-require "kippt/user"
-
 class Kippt::UserCollection
   include Kippt::Collection
 
