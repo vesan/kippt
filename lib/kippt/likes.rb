@@ -28,7 +28,7 @@ class Kippt::Likes
     "clips/#{clip.id}/likes"
   end
 
-  def all(options = {})
+  def fetch(options = {})
     validate_collection_options(options)
 
     if options.empty? && @clip.all_likes_embedded?
@@ -37,6 +37,8 @@ class Kippt::Likes
       collection_class.new(client.get(base_uri, options).body, client)
     end
   end
+
+  alias all fetch
 
   def build
     Kippt::Like.new(client, clip)

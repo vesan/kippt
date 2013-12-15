@@ -80,7 +80,7 @@ Get all the lists:
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-lists = client.lists.all # Returns Kippt::ListCollection
+lists = client.lists.fetch # Returns Kippt::ListCollection
 ```
 
 Get single list:
@@ -105,7 +105,7 @@ list.clips # Returns a Kippt::ClipCollection
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-clips = client.clips.all # Returns Kippt::ClipCollection
+clips = client.clips.fetch # Returns Kippt::ClipCollection
 ```
 
 Both ListCollection and ClipCollection are Enumerable.
@@ -117,7 +117,7 @@ Lists and clips are paginated:
 
 ```ruby
 client = Kippt::Client.new(username: "vesan", token: "2544d6bfddf5893ec8617")
-clips = client.clips.all
+clips = client.clips.fetch
 
 clips.total_count
 clips.offset
@@ -136,7 +136,7 @@ clips.previous_page # Returns new Kippt::ClipCollection
 Limit and offset can be controlled manually:
 
 ```ruby
-client.clips.all(limit: 25, offset: 50)
+client.clips.fetch(limit: 25, offset: 50)
 ```
 
 

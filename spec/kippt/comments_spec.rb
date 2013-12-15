@@ -14,24 +14,24 @@ describe Kippt::Comments do
     base_uri.split("/").last
   end
 
-  describe "#all" do
+  describe "#fetch" do
     it "returns collection class" do
       stub_get("/#{base_uri}").
         to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
-      all_resources = subject.all
+      all_resources = subject.fetch
       all_resources.is_a? collection_class
     end
 
     it "accepts limit and offset options" do
       stub_get("/#{base_uri}?limit=10&offset=100").
         to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
-      resources = subject.all(:limit => 10, :offset => 100)
+      resources = subject.fetch(:limit => 10, :offset => 100)
     end
 
     context "when passed unrecognized arguments" do
       it "raises error" do
         lambda {
-          subject.all(:foobar => true)
+          subject.fetch(:foobar => true)
         }.should raise_error(
           ArgumentError, "Unrecognized argument: foobar")
       end
@@ -57,7 +57,7 @@ describe Kippt::Comments do
           to_return(:status => 404, :body => {"message" => "Resource not found."})
         lambda {
           subject[10]
-          subject.all(:foobar => true)
+          subject.fetch(:foobar => true)
         }.should raise_error(
           Kippt::APIError, "Resource could not be loaded: Resource not found.")
       end

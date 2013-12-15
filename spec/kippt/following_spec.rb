@@ -12,6 +12,6 @@ describe Kippt::Following do
   it "uses the correct base uri" do
     stub_get("/users/10/following").
       to_return(:status => 200, :body => fixture("users.json"))
-    subject.all
+    subject.fetch
   end
 end

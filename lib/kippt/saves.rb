@@ -13,9 +13,11 @@ class Kippt::Saves
     Kippt::UserCollection
   end
 
-  def all(options = {})
+  def fetch(options = {})
     collection_class.new({"objects" => @clip.saves_data}, client)
   end
+
+  alias all fetch
 
   private
 

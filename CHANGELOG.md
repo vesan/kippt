@@ -5,6 +5,8 @@
 Changes all fetching to paginated HTTP endpoints to return a proxy so that you can control
 what you load. This causes breaking changes on some parts of the API.
 
+Adds new `#fetch` method that works like `#all` but better reflects the use of the method.
+
 Removes `#total_count` on fetched collections because it's been deprecated:
 https://github.com/kippt/api-documentation/blob/c104158674e55a4c103b93ccd41233e9a6daea0a/basics/pagination.md
 
