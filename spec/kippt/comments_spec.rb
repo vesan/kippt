@@ -57,7 +57,6 @@ describe Kippt::Comments do
           to_return(:status => 404, :body => {"message" => "Resource not found."})
         lambda {
           subject[10]
-          subject.fetch(:foobar => true)
         }.should raise_error(
           Kippt::APIError, "Resource could not be loaded: Resource not found.")
       end
