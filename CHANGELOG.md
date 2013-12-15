@@ -2,6 +2,8 @@
 
 ## 3.0 / ???
 
+Deprecates support for Ruby 1.8.7.
+
 Changes all fetching to paginated HTTP endpoints to return a proxy so that you can control
 what you load. This causes breaking changes on some parts of the API.
 
