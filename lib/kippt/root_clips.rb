@@ -6,6 +6,8 @@ require "kippt/clip"
 # The root "/clips" resource that exposes features like feed, favorites and
 # search.
 class Kippt::RootClips < Kippt::Clips
+  VALID_SEARCH_PARAMETERS = [:q, :list, :is_starred]
+
   def initialize(client)
     super(client, "clips")
   end

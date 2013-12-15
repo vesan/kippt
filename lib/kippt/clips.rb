@@ -6,7 +6,6 @@ require "kippt/clip"
 # Generic clip proxy. Used to wrap endpoints that return clips as JSON.
 class Kippt::Clips
   include Kippt::CollectionResource
-  VALID_SEARCH_PARAMETERS = [:q, :list, :is_starred]
 
   attr_reader :base_uri
 
