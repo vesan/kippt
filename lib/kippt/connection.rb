@@ -63,8 +63,12 @@ module Kippt::Connection
       end
     end
 
-    if response.status == 401
-      raise Kippt::APIError.new(response.body["message"])
+    if response.status == 401 || (500..599).include?(response.status)
+      if response.body && response.body["message"]
+        raise Kippt::APIError.new(response.body["message"])
+      else
+        raise Kippt::APIError.new("Unknown response from Kippt: #{response.body}")
+      end
     end
 
     response
