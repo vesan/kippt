@@ -1,5 +1,4 @@
 require_relative "kippt/version"
-require_relative "core_ext/open_struct"
 require "faraday"
 require "faraday_middleware"
 
