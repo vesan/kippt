@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0 / ???
+
+Changes all fetching to paginated HTTP endpoints to return a proxy so that you can control
+what you load. This causes breaking changes on some parts of the API.
+
+Removes `#total_count` on fetched collections because it's been deprecated:
+https://github.com/kippt/api-documentation/blob/c104158674e55a4c103b93ccd41233e9a6daea0a/basics/pagination.md
+
 ## 2.0.1 / August 6, 2013
 
 Adds ability to fetch the clips for a list. Contributed by [Darep](https://github.com/Darep).

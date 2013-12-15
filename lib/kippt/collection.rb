@@ -1,7 +1,7 @@
 module Kippt::Collection
   include Enumerable
 
-  attr_reader :total_count, :limit, :offset
+  attr_reader :limit, :offset
 
   def initialize(data, client = nil)
     meta         = data.fetch("meta") { {} }
@@ -9,7 +9,6 @@ module Kippt::Collection
     @offset      = meta.fetch("offset") { nil }
     @next        = meta.fetch("next") { nil }
     @previous    = meta.fetch("previous") { nil }
-    @total_count = meta.fetch("total_count") { nil }
 
     @client  = client
 
