@@ -92,9 +92,75 @@ describe Kippt::Clip do
         "count" => 2, "data" => [{}]
       }} }
 
-      it "returns true" do
+      it "returns false" do
         subject.all_comments_embedded?.should be_false
       end
+    end
+  end
+
+  describe "#likes" do
+    it "returns Kippt::ClipLikes" do
+      subject.likes.should be_a Kippt::ClipLikes
+    end
+
+    it "returns object where clip is set" do
+      subject.likes.clip.should eq subject
+    end
+  end
+
+  describe "#all_likes_embedded?" do
+    context "when like count and number of like objects matches" do
+      let(:data) { {"likes" => {
+        "count" => 2, "data" => [{}, {}]
+      }} }
+
+      it "returns true" do
+        subject.all_likes_embedded?.should be_true
+      end
+    end
+
+    context "when like count and number of like objects doesn't match" do
+      let(:data) { {"likes" => {
+        "count" => 2, "data" => [{}]
+      }} }
+
+      it "returns false" do
+        subject.all_likes_embedded?.should be_false
+      end
+    end
+  end
+
+  describe "#likes_count" do
+    it "returns the likes count from the response" do
+      subject.likes_count.should eq 0
+    end
+  end
+
+  describe "#likes_data" do
+    it "returns the likes data from the response" do
+      subject.likes_data.should eq []
+    end
+  end
+
+  describe "#saves" do
+    it "returns Kippt::Saves" do
+      subject.saves.should be_a Kippt::Saves
+    end
+
+    it "returns object where clip is set" do
+      subject.saves.clip.should eq subject
+    end
+  end
+
+  describe "#saves_count" do
+    it "returns the saves count from the response" do
+      subject.saves_count.should eq 0
+    end
+  end
+
+  describe "#saves_data" do
+    it "returns the saves data from the response" do
+      subject.saves_data.should eq []
     end
   end
 

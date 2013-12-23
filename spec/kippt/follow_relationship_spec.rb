@@ -12,6 +12,16 @@ describe Kippt::FollowRelationship do
         to_return(:status => 200, :body => '{"following": true}')
       subject.following?.should be_true
     end
+
+    context "when request is not successful" do
+      it "raises an exception" do
+        fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
+        client.stub(:get).and_return(fail_response)
+        expect {
+          subject.following?
+        }.to raise_exception Kippt::APIError, "Resource could not be loaded: NOT FOUND"
+      end
+    end
   end
 
   describe "#follow" do
@@ -21,6 +31,16 @@ describe Kippt::FollowRelationship do
          to_return(:status => 200, :body => "", :headers => {})
       subject.follow.should be_true
     end
+
+    context "when request is not successful" do
+      it "raises an exception" do
+        fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
+        client.stub(:post).and_return(fail_response)
+        expect {
+          subject.follow
+        }.to raise_exception Kippt::APIError, "Problem with following: NOT FOUND"
+      end
+    end
   end
 
   describe "#unfollow" do
@@ -29,6 +49,16 @@ describe Kippt::FollowRelationship do
          with(:body => "{\"action\":\"unfollow\"}").
          to_return(:status => 200, :body => "", :headers => {})
       subject.unfollow.should be_true
+    end
+
+    context "when request is not successful" do
+      it "raises an exception" do
+        fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
+        client.stub(:post).and_return(fail_response)
+        expect {
+          subject.unfollow
+        }.to raise_exception Kippt::APIError, "Problem with unfollowing: NOT FOUND"
+      end
     end
   end
 end
