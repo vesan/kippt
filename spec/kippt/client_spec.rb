@@ -132,12 +132,12 @@ describe Kippt::Client do
     subject { Kippt::Client.new(valid_user_credentials) }
 
     it "returns instance of the resource class" do
-      subject.collection_resource_for(Kippt::Clip, {}).should be_a(Kippt::Clip)
+      subject.collection_resource_for(Kippt::Users).should be_a(Kippt::Users)
     end
 
     it "passes itself and the passed arguments as parameters" do
       resource_class = double :resource
-      resource_class.should_receive(:new).with(:option1, :option2, subject)
+      resource_class.should_receive(:new).with(subject, :option1, :option2)
       subject.collection_resource_for(resource_class, :option1, :option2)
     end
   end

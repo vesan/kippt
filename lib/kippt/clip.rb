@@ -25,7 +25,7 @@ class Kippt::Clip
   embedded_attributes :list => "Kippt::List", :via => "Kippt::Clip"
 
   def collection_resource_class
-    Kippt::Clips
+    Kippt::RootClips
   end
 
   def list_uri
