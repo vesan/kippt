@@ -6,6 +6,7 @@ describe Kippt::Clips do
   subject { client.clips }
   let(:base_uri) { "clips" }
   let(:singular_fixture) { "clip" }
+  let(:collection_fixture) { "clips" }
   let(:collection_class) { Kippt::ClipCollection }
   let(:resource_class) { Kippt::Clip }
 
@@ -93,7 +94,7 @@ describe Kippt::Clips do
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         response = subject.save_resource(clip)
-        response[:success].should be_false
+        response.success?.should be_false
         response[:error_message].should eq "No good."
       end
     end

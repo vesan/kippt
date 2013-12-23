@@ -1,7 +1,7 @@
 require_relative "user_collection"
 
 class Kippt::Users
-  include Kippt::CollectionResource
+  include Kippt::ReadCollectionResource
   VALID_SEARCH_PARAMETERS = [:q]
 
   def initialize(client)

@@ -6,6 +6,7 @@ describe Kippt::Lists do
   subject { client.lists }
   let(:base_uri) { "lists" }
   let(:singular_fixture) { "list" }
+  let(:collection_fixture) { "lists" }
   let(:collection_class) { Kippt::ListCollection }
   let(:resource_class) { Kippt::List }
 

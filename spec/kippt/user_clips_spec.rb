@@ -6,6 +6,7 @@ describe Kippt::UserClips do
   subject { Kippt::User.new({:id => 10}, client).clips }
   let(:base_uri) { "users/#{10}/clips" }
   let(:singular_fixture) { "clip" }
+  let(:collection_fixture) { "clips" }
   let(:collection_class) { Kippt::ClipCollection }
   let(:resource_class) { Kippt::Clip }
 

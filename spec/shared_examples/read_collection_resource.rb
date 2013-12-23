@@ -1,32 +1,4 @@
-require "spec_helper"
-require "kippt/comments"
-
-describe Kippt::Comments do
-  let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub :clip, :id => 100, :all_comments_embedded? => false }
-  subject { Kippt::Comments.new(client, clip) }
-  let(:base_uri) { "clips/#{clip.id}/comments" }
-  let(:singular_fixture) { "comment" }
-  let(:collection_class) { Kippt::CommentCollection }
-  let(:resource_class) { Kippt::Comment }
-
-  it_behaves_like "collection resource"
-
-  def collection_fixture
-    base_uri.split("/").last
-  end
-
-  describe "#build" do
-    it "returns new resource" do
-      subject.build.should be_a(resource_class)
-    end
-
-    it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client, clip)
-      subject.build({:an => "attribute"})
-    end
-  end
-
+shared_examples_for "read collection resource" do
 
   describe "#fetch" do
     it "returns collection class" do
@@ -40,18 +12,6 @@ describe Kippt::Comments do
       stub_get("/#{base_uri}?limit=10&offset=100").
         to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
       resources = subject.fetch(:limit => 10, :offset => 100)
-    end
-
-    context "when comments are embedded" do
-      let(:clip) { stub :clip,
-                        id: 100,
-                        all_comments_embedded?: true,
-                        comments_data: [{body: "Embedded body"}] }
-
-      it "uses the embedded data to create comments" do
-        comments = subject.fetch
-        comments.first.body.should eq "Embedded body"
-      end
     end
 
     context "when passed unrecognized arguments" do
@@ -112,17 +72,6 @@ describe Kippt::Comments do
           subject.collection_from_url(nil)
         }.should raise_error(ArgumentError, "The parameter URL can't be blank")
       end
-    end
-  end
-
-  describe "#build" do
-    it "returns new resource" do
-      subject.build.should be_a(resource_class)
-    end
-
-    it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client, clip)
-      subject.build(:an => "attribute")
     end
   end
 end

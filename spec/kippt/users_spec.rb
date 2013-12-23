@@ -6,10 +6,11 @@ describe Kippt::Users do
   subject { client.users }
   let(:base_uri) { "users" }
   let(:singular_fixture) { "user" }
+  let(:collection_fixture) { "users" }
   let(:collection_class) { Kippt::UserCollection }
   let(:resource_class) { Kippt::User }
 
-  it_behaves_like "collection resource"
+  it_behaves_like "read collection resource"
 
   describe "#search" do
     subject { Kippt::Client.new(valid_user_credentials).users }

@@ -6,6 +6,7 @@ describe Kippt::UserLists do
   subject { Kippt::User.new({:id => 10}, client).lists }
   let(:base_uri) { "users/#{10}/lists" }
   let(:singular_fixture) { "list" }
+  let(:collection_fixture) { "lists" }
   let(:collection_class) { Kippt::ListCollection }
   let(:resource_class) { Kippt::List }
 
