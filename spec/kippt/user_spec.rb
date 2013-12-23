@@ -25,6 +25,17 @@ describe Kippt::User do
     end
   end
 
+  describe "#likes" do
+    it "returns correctly configured user likes proxy" do
+      client = double :client
+      user = Kippt::User.new(nil, client)
+
+      likes = user.likes
+      likes.should be_a(Kippt::UserLikes)
+      likes.user.should eq user
+    end
+  end
+
   describe "#following?" do
     it "uses Kippt::FollowRelationship to get the information" do
       follow_relationship = mock(:follow_relationship,

@@ -10,11 +10,4 @@ shared_examples_for "collection resource" do
       subject.create(:an => "attribute")
     end
   end
-
-  # describe "#build" do
-  #   it "initializes a new object of object class" do
-  #     resource_class.should_receive(:new).with({test: "data"}, client)
-  #     subject.build({test: "data"}).should be_a(resource_class)
-  #   end
-  # end
 end

@@ -1,5 +1,6 @@
 require_relative "comments"
-require_relative "likes"
+require_relative "clip_likes"
+require_relative "like"
 require_relative "saves"
 require_relative "list"
 
@@ -51,7 +52,7 @@ class Kippt::Clip
   end
 
   def likes
-    Kippt::Likes.new(client, self)
+    Kippt::ClipLikes.new(client, self)
   end
 
   def all_likes_embedded?

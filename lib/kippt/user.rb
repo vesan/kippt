@@ -3,6 +3,7 @@ require_relative "followers"
 require_relative "following"
 require_relative "follow_relationship"
 require_relative "user_lists"
+require_relative "user_likes"
 
 class Kippt::User
   include Kippt::Resource
@@ -33,6 +34,10 @@ class Kippt::User
 
   def following
     Kippt::Following.new(client, self)
+  end
+
+  def likes
+    Kippt::UserLikes.new(client, self)
   end
 
   # Tells if authenticated user is following the user.

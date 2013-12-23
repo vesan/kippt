@@ -2,6 +2,22 @@
 * [DONE] Timestamps as time
 * Better exceptions
 
+# 3.0
+
+* [DONE] Add support for favorites
+* [DONE] Add support for filtering clips by URL
+* [DONE] Any other filtering that is missing?
+* [DONE] Convert to return proxy:
+** [DONE] list.clips
+** [DONE] clip.comments
+** [DONE] clip.likes
+** [DONE] clip.saves
+** [DONE] clips.feed
+** [DONE] user_clips.favorites
+* [DONE] Check that all end points have the same filtering capabilities
+* [DONE] Refactors users.search
+* [DONE] Make sure likes make sense. Now User & Like objects are somehow mixed.
+
 # Clip
 
 * [DONE] Getting the feed of authenticated user
