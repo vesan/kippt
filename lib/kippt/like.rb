@@ -1,7 +1,7 @@
 require_relative "likes"
 
 class Kippt::Like
-  attr_reader :user, :errors
+  attr_reader :clip, :errors
 
   def initialize(clip, client)
     @client = client
@@ -42,9 +42,5 @@ class Kippt::Like
 
   def client
     @client
-  end
-
-  def clip
-    @clip
   end
 end
