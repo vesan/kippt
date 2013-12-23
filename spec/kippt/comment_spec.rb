@@ -2,7 +2,7 @@ require "spec_helper"
 require "kippt/comment"
 
 describe Kippt::Comment do
-  subject { Kippt::Comment.new(data, client, clip) }
+  subject { Kippt::Comment.new(data, clip, client) }
   let(:client) { Kippt::Client.new(valid_user_credentials) }
   let(:clip) { stub(:clip) }
   let(:collection_resource_class) { Kippt::Comments }

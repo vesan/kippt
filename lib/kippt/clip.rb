@@ -80,10 +80,10 @@ class Kippt::Clip
   end
 
   def like
-    Kippt::Like.new(client, self).save
+    Kippt::Like.new(self, client).save
   end
 
   def unlike
-    Kippt::Like.new(client, self).destroy
+    Kippt::Like.new(self, client).destroy
   end
 end

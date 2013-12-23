@@ -60,7 +60,7 @@ class Kippt::Client
   end
 
   def collection_resource_for(resource_class, *options)
-    resource_class.new(*([self] + options))
+    resource_class.new(*(options + [self]))
   end
 
   def resource_from_url(resource_class, url)

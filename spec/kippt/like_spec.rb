@@ -5,7 +5,7 @@ describe Kippt::Like do
     let(:client) { double :client }
     let(:clip) { double :clip }
     let(:collection) { double :likes_collection_resource }
-    let(:like) { Kippt::Like.new(client, clip) }
+    let(:like) { Kippt::Like.new(clip, client) }
 
     it "tells collection resource to save itself" do
       collection.should_receive(:save_resource).with(like).and_return({success: true})
@@ -27,7 +27,7 @@ describe Kippt::Like do
     let(:client) { double :client }
     let(:clip) { double :clip }
     let(:collection) { double :likes_collection_resource }
-    let(:like) { Kippt::Like.new(client, clip) }
+    let(:like) { Kippt::Like.new(clip, client) }
 
     it "tells collection resource to destroy itself" do
       client.stub(:collection_resource_for).and_return(collection)

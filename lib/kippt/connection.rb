@@ -9,7 +9,7 @@ module Kippt::Connection
       begin
         MultiJson.load(body) unless body.strip.empty?
       rescue MultiJson::DecodeError
-        nil
+        body
       end
     end
   end
