@@ -28,7 +28,7 @@ class Kippt::List
   def following?
     response = client.get("#{resource_uri}relationship")
     raise Kippt::APIError.new("There was an error with the request: #{response.body["message"]}") unless response.success?
-    response.body[:following]
+    response.body["following"]
   end
 
   def follow

@@ -49,7 +49,7 @@ describe Kippt::List do
       let(:client) { Kippt::Client.new(valid_user_credentials) }
 
       it "returns value from the response" do
-        response = stub(:success? => true, body: {following: false})
+        response = stub(:success? => true, body: {"following" => false})
         client.should_receive(:get).with("/api/lists/10/relationship").and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
         list.following?.should be_false
