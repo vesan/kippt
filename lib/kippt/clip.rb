@@ -3,6 +3,7 @@ require_relative "clip_likes"
 require_relative "like"
 require_relative "saves"
 require_relative "list"
+require_relative "favorite"
 
 class Kippt::Clip
   include Kippt::Resource
@@ -85,5 +86,13 @@ class Kippt::Clip
 
   def unlike
     Kippt::Like.new(self, client).destroy
+  end
+
+  def favorite
+    Kippt::Favorite.new(self, client).save
+  end
+
+  def unfavorite
+    Kippt::Favorite.new(self, client).destroy
   end
 end

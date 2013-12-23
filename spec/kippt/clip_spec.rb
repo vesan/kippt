@@ -183,4 +183,24 @@ describe Kippt::Clip do
       subject.unlike
     end
   end
+
+  describe "#favorite" do
+    let(:favorite) { stub :favorite }
+
+    it "instantiates a Kippt::Favorite and saves it" do
+      Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)
+      favorite.should_receive(:save)
+      subject.favorite
+    end
+  end
+
+  describe "#unlike" do
+    let(:favorite) { stub :favorite }
+
+    it "instantiates a Kippt::Favorite and destroys it" do
+      Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)
+      favorite.should_receive(:destroy)
+      subject.unfavorite
+    end
+  end
 end

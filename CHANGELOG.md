@@ -9,6 +9,8 @@ Adds method to get check if the authenticated user is following a list (`List#fo
 
 Adds support for fetching clips by URL or created after time.
 
+Adds support for favoriting and unfavoriting a clip.
+
 Adds new `#fetch` method that works like `#all` but better reflects the use of the method.
 
 Removes `#total_count` on fetched collections because it's been deprecated:
