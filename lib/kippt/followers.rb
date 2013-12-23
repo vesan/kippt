@@ -1,7 +1,7 @@
 require_relative "user_collection"
 
 class Kippt::Followers
-  include Kippt::CollectionResource
+  include Kippt::ReadCollectionResource
 
   attr_reader :user
 
