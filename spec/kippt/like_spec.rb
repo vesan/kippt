@@ -8,18 +8,18 @@ describe Kippt::Like do
     let(:like) { Kippt::Like.new(clip, client) }
 
     it "tells collection resource to save itself" do
-      collection.should_receive(:save_resource).with(like).and_return({success: true})
-      client.should_receive(:collection_resource_for).with(Kippt::Likes, clip).and_return(collection)
+      expect(collection).to receive(:save_resource).with(like).and_return({success: true})
+      expect(client).to receive(:collection_resource_for).with(Kippt::Likes, clip).and_return(collection)
 
-      like.save.should be_truthy
+      expect(like.save).to be_truthy
     end
 
     it "sets errors if there is any" do
-      collection.stub(:save_resource).and_return({success: false, error_message: "PROBLEM"})
-      client.stub(:collection_resource_for).and_return(collection)
+      allow(collection).to receive(:save_resource).and_return({success: false, error_message: "PROBLEM"})
+      allow(client).to receive(:collection_resource_for).and_return(collection)
 
-      like.save.should be_falsey
-      like.errors.should eq ["PROBLEM"]
+      expect(like.save).to be_falsey
+      expect(like.errors).to eq ["PROBLEM"]
     end
   end
 
@@ -30,9 +30,9 @@ describe Kippt::Like do
     let(:like) { Kippt::Like.new(clip, client) }
 
     it "tells collection resource to destroy itself" do
-      client.stub(:collection_resource_for).and_return(collection)
-      collection.should_receive(:destroy_resource).with(like).and_return(true)
-      like.destroy.should be_truthy
+      allow(client).to receive(:collection_resource_for).and_return(collection)
+      expect(collection).to receive(:destroy_resource).with(like).and_return(true)
+      expect(like.destroy).to be_truthy
     end
   end
 end

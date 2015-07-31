@@ -14,8 +14,8 @@ describe Kippt::Likes do
     it "uses only the base_uri" do
       like = double :like
       response = double :response, success?: true
-      client.should_receive(:delete).with("clips/100/likes").and_return(response)
-      subject.destroy_resource(like).should be_truthy
+      expect(client).to receive(:delete).with("clips/100/likes").and_return(response)
+      expect(subject.destroy_resource(like)).to be_truthy
     end
   end
 end

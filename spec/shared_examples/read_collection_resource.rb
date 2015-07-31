@@ -16,9 +16,9 @@ shared_examples_for "read collection resource" do
 
     context "when passed unrecognized arguments" do
       it "raises error" do
-        lambda {
+        expect {
           subject.fetch(:foobar => true)
-        }.should raise_error(
+        }.to raise_error(
           ArgumentError, "Unrecognized argument: foobar")
       end
     end
@@ -28,22 +28,22 @@ shared_examples_for "read collection resource" do
     it "fetches single resource" do
       stub_get("/#{base_uri}/10").
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
-      subject[10].id.should eq 10
+      expect(subject[10].id).to eq 10
     end
 
     it "returns resource" do
       stub_get("/#{base_uri}/10").
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
-      subject[10].should be_a(resource_class)
+      expect(subject[10]).to be_a(resource_class)
     end
 
     context "when resource is not found" do
       it "raises exception" do
         stub_get("/#{base_uri}/10").
           to_return(:status => 404, :body => {"message" => "Resource not found."}.to_json)
-        lambda {
+        expect {
           subject[10]
-        }.should raise_error(
+        }.to raise_error(
           Kippt::APIError, "Resource could not be loaded: Resource not found.")
       end
     end
@@ -51,7 +51,7 @@ shared_examples_for "read collection resource" do
 
   describe "#find" do
     it "exists" do
-      subject.respond_to?(:find).should be_truthy
+      expect(subject.respond_to?(:find)).to be_truthy
     end
   end
 end

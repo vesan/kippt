@@ -35,9 +35,9 @@ describe Kippt::Users do
 
         context "with invalid keys" do
           it "raises ArgumentError" do
-            lambda {
+            expect {
               subject.search(:q => "bunny", :stuff => true)
-            }.should raise_error(ArgumentError, "'stuff' is not a valid search parameter")
+            }.to raise_error(ArgumentError, "'stuff' is not a valid search parameter")
           end
         end
       end
@@ -47,13 +47,13 @@ describe Kippt::Users do
       stub_get("/users/search?q=bunny").
         to_return(:status => 200, :body => fixture("users_with_multiple_pages.json"))
       users = subject.search("bunny")
-      users.should be_a Kippt::UserCollection
+      expect(users).to be_a Kippt::UserCollection
     end
 
     it "sets UserCollection client" do
       stub_get("/users/search?q=bunny").
         to_return(:status => 200, :body => fixture("users_with_multiple_pages.json"))
-      Kippt::UserCollection.should_receive(:new).with(kind_of(Hash), kind_of(Kippt::Client))
+      expect(Kippt::UserCollection).to receive(:new).with(kind_of(Hash), kind_of(Kippt::Client))
       users = subject.search("bunny")
     end
   end

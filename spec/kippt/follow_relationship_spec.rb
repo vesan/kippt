@@ -10,13 +10,13 @@ describe Kippt::FollowRelationship do
     it "returns boolean" do
       stub_get("/users/10/relationship/").
         to_return(:status => 200, :body => '{"following": true}')
-      subject.following?.should be_truthy
+      expect(subject.following?).to be_truthy
     end
 
     context "when request is not successful" do
       it "raises an exception" do
         fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
-        client.stub(:get).and_return(fail_response)
+        allow(client).to receive(:get).and_return(fail_response)
         expect {
           subject.following?
         }.to raise_exception Kippt::APIError, "Resource could not be loaded: NOT FOUND"
@@ -29,13 +29,13 @@ describe Kippt::FollowRelationship do
       stub_post("/users/10/relationship/").
          with(:body => "{\"action\":\"follow\"}").
          to_return(:status => 200, :body => "", :headers => {})
-      subject.follow.should be_truthy
+      expect(subject.follow).to be_truthy
     end
 
     context "when request is not successful" do
       it "raises an exception" do
         fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
-        client.stub(:post).and_return(fail_response)
+        allow(client).to receive(:post).and_return(fail_response)
         expect {
           subject.follow
         }.to raise_exception Kippt::APIError, "Problem with following: NOT FOUND"
@@ -48,13 +48,13 @@ describe Kippt::FollowRelationship do
       stub_post("/users/10/relationship/").
          with(:body => "{\"action\":\"unfollow\"}").
          to_return(:status => 200, :body => "", :headers => {})
-      subject.unfollow.should be_truthy
+      expect(subject.unfollow).to be_truthy
     end
 
     context "when request is not successful" do
       it "raises an exception" do
         fail_response = double :fail_response, success?: false, body: {"message" => "NOT FOUND"}
-        client.stub(:post).and_return(fail_response)
+        allow(client).to receive(:post).and_return(fail_response)
         expect {
           subject.unfollow
         }.to raise_exception Kippt::APIError, "Problem with unfollowing: NOT FOUND"

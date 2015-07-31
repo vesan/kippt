@@ -14,11 +14,11 @@ describe Kippt::Clips do
 
   describe "#build" do
     it "returns new resource" do
-      subject.build.should be_a(resource_class)
+      expect(subject.build).to be_a(resource_class)
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client)
+      expect(subject.object_class).to receive(:new).with({:an => "attribute"}, client)
       subject.build(:an => "attribute")
     end
   end
@@ -28,8 +28,8 @@ describe Kippt::Clips do
 
     it "returns Clips" do
       feed = subject.feed
-      feed.should be_a Kippt::Clips
-      feed.base_uri.should eq "clips/feed"
+      expect(feed).to be_a Kippt::Clips
+      expect(feed.base_uri).to eq "clips/feed"
     end
   end
 
@@ -38,8 +38,8 @@ describe Kippt::Clips do
 
     it "returns Clips" do
       feed = subject.favorites
-      feed.should be_a Kippt::Clips
-      feed.base_uri.should eq "clips/favorites"
+      expect(feed).to be_a Kippt::Clips
+      expect(feed.base_uri).to eq "clips/favorites"
     end
   end
 
@@ -66,9 +66,9 @@ describe Kippt::Clips do
 
         context "with invalid keys" do
           it "raises ArgumentError" do
-            lambda {
+            expect {
               subject.search(:q => "bunny", :stuff => true)
-            }.should raise_error(ArgumentError, "'stuff' is not a valid search parameter")
+            }.to raise_error(ArgumentError, "'stuff' is not a valid search parameter")
           end
         end
       end
@@ -78,7 +78,7 @@ describe Kippt::Clips do
       stub_get("/search/clips?q=bunny").
         to_return(:status => 200, :body => fixture("clips.json"))
       clips = subject.search("bunny")
-      clips.should be_a Kippt::ClipCollection
+      expect(clips).to be_a Kippt::ClipCollection
     end
   end
 
@@ -93,7 +93,7 @@ describe Kippt::Clips do
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         response = subject.save_resource(clip)
-        response[:success].should be_truthy
+        expect(response[:success]).to be_truthy
       end
     end
 
@@ -105,8 +105,8 @@ describe Kippt::Clips do
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         response = subject.save_resource(clip)
-        response.success?.should be_falsey
-        response[:error_message].should eq "No good."
+        expect(response.success?).to be_falsey
+        expect(response[:error_message]).to eq "No good."
       end
     end
 
@@ -142,7 +142,7 @@ describe Kippt::Clips do
          to_return(:status => 200, :headers => {})
 
         clip = Kippt::Clip.new(:id => 100)
-        subject.destroy_resource(clip).should be_truthy
+        expect(subject.destroy_resource(clip)).to be_truthy
       end
     end
   end

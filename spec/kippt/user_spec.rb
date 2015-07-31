@@ -21,7 +21,7 @@ describe Kippt::User do
   describe "#pro?" do
     it "gets data from is_pro" do
       user = Kippt::User.new({:is_pro => true}, nil)
-      user.pro?.should be_truthy
+      expect(user.pro?).to be_truthy
     end
   end
 
@@ -31,8 +31,8 @@ describe Kippt::User do
       user = Kippt::User.new(nil, client)
 
       likes = user.likes
-      likes.should be_a(Kippt::UserLikes)
-      likes.user.should eq user
+      expect(likes).to be_a(Kippt::UserLikes)
+      expect(likes.user).to eq user
     end
   end
 
@@ -40,23 +40,23 @@ describe Kippt::User do
     it "uses Kippt::FollowRelationship to get the information" do
       follow_relationship = double(:follow_relationship,
         :following? => true)
-      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      allow(Kippt::FollowRelationship).to receive(:new).and_return(follow_relationship)
       user = Kippt::User.new({:is_pro => true}, nil)
-      user.following?.should be_truthy
+      expect(user.following?).to be_truthy
     end
   end
 
   describe "#follower_count" do
     it "returns the count from the fetched data" do
       user = Kippt::User.new({:counts => {"follows" => 11}})
-      user.follower_count.should eq 11
+      expect(user.follower_count).to eq 11
     end
   end
 
   describe "#following_count" do
     it "returns the count from the fetched data" do
       user = Kippt::User.new({:counts => {"followed_by" => 111}})
-      user.following_count.should eq 111
+      expect(user.following_count).to eq 111
     end
   end
 
@@ -64,9 +64,9 @@ describe Kippt::User do
     it "sets up a Kippt::FollowRelationship and calls it" do
       follow_relationship = double(:follow_relationship,
         :follow => true)
-      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      allow(Kippt::FollowRelationship).to receive(:new).and_return(follow_relationship)
       user = Kippt::User.new
-      user.follow.should be_truthy
+      expect(user.follow).to be_truthy
     end
   end
 
@@ -74,9 +74,9 @@ describe Kippt::User do
     it "sets up a Kippt::FollowRelationship and calls it" do
       follow_relationship = double(:follow_relationship,
         :unfollow => true)
-      Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
+      allow(Kippt::FollowRelationship).to receive(:new).and_return(follow_relationship)
       user = Kippt::User.new
-      user.unfollow.should be_truthy
+      expect(user.unfollow).to be_truthy
     end
   end
 end

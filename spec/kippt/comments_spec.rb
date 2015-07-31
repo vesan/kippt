@@ -18,11 +18,11 @@ describe Kippt::Comments do
 
   describe "#build" do
     it "returns new resource" do
-      subject.build.should be_a(resource_class)
+      expect(subject.build).to be_a(resource_class)
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client, clip)
+      expect(subject.object_class).to receive(:new).with({:an => "attribute"}, client, clip)
       subject.build({:an => "attribute"})
     end
   end
@@ -50,15 +50,15 @@ describe Kippt::Comments do
 
       it "uses the embedded data to create comments" do
         comments = subject.fetch
-        comments.first.body.should eq "Embedded body"
+        expect(comments.first.body).to eq "Embedded body"
       end
     end
 
     context "when passed unrecognized arguments" do
       it "raises error" do
-        lambda {
+        expect {
           subject.fetch(:foobar => true)
-        }.should raise_error(
+        }.to raise_error(
           ArgumentError, "Unrecognized argument: foobar")
       end
     end
@@ -68,22 +68,22 @@ describe Kippt::Comments do
     it "fetches single resource" do
       stub_get("/#{base_uri}/10").
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
-      subject[10].id.should eq 10
+      expect(subject[10].id).to eq 10
     end
 
     it "returns resource" do
       stub_get("/#{base_uri}/10").
         to_return(:status => 200, :body => fixture("#{singular_fixture}.json"))
-      subject[10].should be_a(resource_class)
+      expect(subject[10]).to be_a(resource_class)
     end
 
     context "when resource is not found" do
       it "raises exception" do
         stub_get("/#{base_uri}/10").
           to_return(:status => 404, :body => {"message" => "Resource not found."}.to_json)
-        lambda {
+        expect {
           subject[10]
-        }.should raise_error(
+        }.to raise_error(
           Kippt::APIError, "Resource could not be loaded: Resource not found.")
       end
     end
@@ -91,17 +91,17 @@ describe Kippt::Comments do
 
   describe "#find" do
     it "exists" do
-      subject.respond_to?(:find).should be_truthy
+      expect(subject.respond_to?(:find)).to be_truthy
     end
   end
 
   describe "#build" do
     it "returns new resource" do
-      subject.build.should be_a(resource_class)
+      expect(subject.build).to be_a(resource_class)
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client, clip)
+      expect(subject.object_class).to receive(:new).with({:an => "attribute"}, client, clip)
       subject.build(:an => "attribute")
     end
   end

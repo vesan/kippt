@@ -8,18 +8,18 @@ describe Kippt::Favorite do
     let(:favorite) { Kippt::Favorite.new(clip, client) }
 
     it "tells collection resource to save itself" do
-      collection.should_receive(:save_resource).with(favorite).and_return({success: true})
-      client.should_receive(:collection_resource_for).with(Kippt::Favorites, clip).and_return(collection)
+      expect(collection).to receive(:save_resource).with(favorite).and_return({success: true})
+      expect(client).to receive(:collection_resource_for).with(Kippt::Favorites, clip).and_return(collection)
 
-      favorite.save.should be_truthy
+      expect(favorite.save).to be_truthy
     end
 
     it "sets errors if there is any" do
-      collection.stub(:save_resource).and_return({success: false, error_message: "PROBLEM"})
-      client.stub(:collection_resource_for).and_return(collection)
+      allow(collection).to receive(:save_resource).and_return({success: false, error_message: "PROBLEM"})
+      allow(client).to receive(:collection_resource_for).and_return(collection)
 
-      favorite.save.should be_falsey
-      favorite.errors.should eq ["PROBLEM"]
+      expect(favorite.save).to be_falsey
+      expect(favorite.errors).to eq ["PROBLEM"]
     end
   end
 
@@ -30,9 +30,9 @@ describe Kippt::Favorite do
     let(:favorite) { Kippt::Favorite.new(clip, client) }
 
     it "tells collection resource to destroy itself" do
-      client.stub(:collection_resource_for).and_return(collection)
-      collection.should_receive(:destroy_resource).with(favorite).and_return(true)
-      favorite.destroy.should be_truthy
+      allow(client).to receive(:collection_resource_for).and_return(collection)
+      expect(collection).to receive(:destroy_resource).with(favorite).and_return(true)
+      expect(favorite.destroy).to be_truthy
     end
   end
 end

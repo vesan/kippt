@@ -11,8 +11,8 @@ describe Kippt::Favorites do
     it "uses only the base_uri" do
       favorite = double :favorite
       response = double :response, success?: true
-      client.should_receive(:delete).with("clips/100/favorites").and_return(response)
-      subject.destroy_resource(favorite).should be_truthy
+      expect(client).to receive(:delete).with("clips/100/favorites").and_return(response)
+      expect(subject.destroy_resource(favorite)).to be_truthy
     end
   end
 end

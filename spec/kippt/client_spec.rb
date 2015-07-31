@@ -30,7 +30,7 @@ describe Kippt::Client do
     context "when debug is set to true" do
       it "sets client to debug mode" do
         client = Kippt::Client.new(:unauthenticated => true, :debug => true)
-        client.debug?.should be_truthy
+        expect(client.debug?).to be_truthy
       end
     end
   end
@@ -38,9 +38,9 @@ describe Kippt::Client do
   context "#debug" do
     it "can be set and read" do
       client = Kippt::Client.new(:unauthenticated => true)
-      client.debug?.should be_falsey
+      expect(client.debug?).to be_falsey
       client.debug = true
-      client.debug?.should be_truthy
+      expect(client.debug?).to be_truthy
     end
   end
 
@@ -84,16 +84,16 @@ describe Kippt::Client do
     subject { Kippt::Client.new(:username => "bob", :password => "secret") }
 
     it "returns a Kippt::User instance" do
-      subject.should_receive(:get).with("account").and_return(
+      expect(subject).to receive(:get).with("account").and_return(
         double :body => {}
       )
       account = subject.account
-      account.should be_a(Kippt::User)
+      expect(account).to be_a(Kippt::User)
     end
 
     context "when asked for api token" do
       it "asks for the token from the server" do
-        subject.should_receive(:get).with("account?include_data=api_token").and_return(
+        expect(subject).to receive(:get).with("account?include_data=api_token").and_return(
           double :body => {}
         )
         account = subject.account(true)
@@ -106,7 +106,7 @@ describe Kippt::Client do
 
     it "returns a Kippt::Lists instance" do
       lists = subject.lists
-      lists.should be_a(Kippt::Lists)
+      expect(lists).to be_a(Kippt::Lists)
     end
   end
 
@@ -115,7 +115,7 @@ describe Kippt::Client do
 
     it "returns a Kippt::RootClips instance" do
       clips = subject.clips
-      clips.should be_a(Kippt::RootClips)
+      expect(clips).to be_a(Kippt::RootClips)
     end
   end
 
@@ -124,7 +124,7 @@ describe Kippt::Client do
 
     it "returns a Kippt::Users instance" do
       users = subject.users
-      users.should be_a(Kippt::Users)
+      expect(users).to be_a(Kippt::Users)
     end
   end
 
@@ -132,12 +132,12 @@ describe Kippt::Client do
     subject { Kippt::Client.new(valid_user_credentials) }
 
     it "returns instance of the resource class" do
-      subject.collection_resource_for(Kippt::Users).should be_a(Kippt::Users)
+      expect(subject.collection_resource_for(Kippt::Users)).to be_a(Kippt::Users)
     end
 
     it "passes itself and the passed arguments as parameters" do
       resource_class = double :resource
-      resource_class.should_receive(:new).with(subject, :option1, :option2)
+      expect(resource_class).to receive(:new).with(subject, :option1, :option2)
       subject.collection_resource_for(resource_class, :option1, :option2)
     end
   end
@@ -149,7 +149,7 @@ describe Kippt::Client do
       stub_get("/users/10").
         to_return(:status => 200, :body => fixture("user.json"))
       resource = subject.resource_from_url(Kippt::User, "/api/users/10")
-      resource.should be_a(Kippt::User)
+      expect(resource).to be_a(Kippt::User)
     end
 
     context "when passed URL is blank" do

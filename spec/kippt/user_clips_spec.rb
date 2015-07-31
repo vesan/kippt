@@ -14,11 +14,11 @@ describe Kippt::UserClips do
 
   describe "#build" do
     it "returns new resource" do
-      subject.build.should be_a(resource_class)
+      expect(subject.build).to be_a(resource_class)
     end
 
     it "accepts parameters" do
-      subject.object_class.should_receive(:new).with({:an => "attribute"}, client)
+      expect(subject.object_class).to receive(:new).with({:an => "attribute"}, client)
       subject.build(:an => "attribute")
     end
   end
@@ -27,7 +27,7 @@ describe Kippt::UserClips do
     it "returns ClipCollection" do
       stub_get("/#{base_uri}/favorites").
         to_return(:status => 200, :body => fixture("clips.json"))
-      subject.favorites.should be_a Kippt::Clips
+      expect(subject.favorites).to be_a Kippt::Clips
     end
   end
 
@@ -35,7 +35,7 @@ describe Kippt::UserClips do
     it "returns ClipCollection" do
       stub_get("/#{base_uri}/likes").
         to_return(:status => 200, :body => fixture("clips.json"))
-      subject.likes.should be_a Kippt::Clips
+      expect(subject.likes).to be_a Kippt::Clips
     end
   end
 end

@@ -19,7 +19,7 @@ describe Kippt::Comment do
 
   describe "#clip" do
     it "returns the clip passed to it" do
-      subject.clip.should eq clip
+      expect(subject.clip).to eq clip
     end
   end
 end

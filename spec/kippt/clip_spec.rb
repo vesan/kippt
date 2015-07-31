@@ -23,7 +23,7 @@ describe Kippt::Clip do
       let(:data) { {"list" => "/api/lists/44525/"} }
 
       it "returns the URI" do
-        subject.list_uri.should eq "/api/lists/44525/"
+        expect(subject.list_uri).to eq "/api/lists/44525/"
       end
     end
 
@@ -31,7 +31,7 @@ describe Kippt::Clip do
       let(:data) { {"list" => {"resource_uri" => "/api/lists/44525/"}} }
 
       it "returns the uri of the embedded list" do
-        subject.list_uri.should eq "/api/lists/44525/"
+        expect(subject.list_uri).to eq "/api/lists/44525/"
       end
     end
   end
@@ -44,7 +44,7 @@ describe Kippt::Clip do
         stub_get("/lists/44525/").
           to_return(:status => 200, :body => fixture("list.json"))
 
-        subject.list.should be_a Kippt::List
+        expect(subject.list).to be_a Kippt::List
       end
     end
 
@@ -52,7 +52,7 @@ describe Kippt::Clip do
       let(:data) { {"list" => {"resource_uri" => "/api/lists/44525/"}} }
 
       it "returns an instance using the embedded list" do
-        subject.list.should be_a Kippt::List
+        expect(subject.list).to be_a Kippt::List
       end
     end
 
@@ -61,18 +61,18 @@ describe Kippt::Clip do
       let(:data) { {"list" => list} }
 
       it "returns the passed list" do
-        subject.list.should eq list
+        expect(subject.list).to eq list
       end
     end
   end
 
   describe "#comments" do
     it "returns Kippt::Comments" do
-      subject.comments.should be_a Kippt::Comments
+      expect(subject.comments).to be_a Kippt::Comments
     end
 
     it "returns object where clip is set" do
-      subject.comments.clip.should eq subject
+      expect(subject.comments.clip).to eq subject
     end
   end
 
@@ -83,7 +83,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns true" do
-        subject.all_comments_embedded?.should be_truthy
+        expect(subject.all_comments_embedded?).to be_truthy
       end
     end
 
@@ -93,18 +93,18 @@ describe Kippt::Clip do
       }} }
 
       it "returns false" do
-        subject.all_comments_embedded?.should be_falsey
+        expect(subject.all_comments_embedded?).to be_falsey
       end
     end
   end
 
   describe "#likes" do
     it "returns Kippt::ClipLikes" do
-      subject.likes.should be_a Kippt::ClipLikes
+      expect(subject.likes).to be_a Kippt::ClipLikes
     end
 
     it "returns object where clip is set" do
-      subject.likes.clip.should eq subject
+      expect(subject.likes.clip).to eq subject
     end
   end
 
@@ -115,7 +115,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns true" do
-        subject.all_likes_embedded?.should be_truthy
+        expect(subject.all_likes_embedded?).to be_truthy
       end
     end
 
@@ -125,42 +125,42 @@ describe Kippt::Clip do
       }} }
 
       it "returns false" do
-        subject.all_likes_embedded?.should be_falsey
+        expect(subject.all_likes_embedded?).to be_falsey
       end
     end
   end
 
   describe "#likes_count" do
     it "returns the likes count from the response" do
-      subject.likes_count.should eq 0
+      expect(subject.likes_count).to eq 0
     end
   end
 
   describe "#likes_data" do
     it "returns the likes data from the response" do
-      subject.likes_data.should eq []
+      expect(subject.likes_data).to eq []
     end
   end
 
   describe "#saves" do
     it "returns Kippt::Saves" do
-      subject.saves.should be_a Kippt::Saves
+      expect(subject.saves).to be_a Kippt::Saves
     end
 
     it "returns object where clip is set" do
-      subject.saves.clip.should eq subject
+      expect(subject.saves.clip).to eq subject
     end
   end
 
   describe "#saves_count" do
     it "returns the saves count from the response" do
-      subject.saves_count.should eq 0
+      expect(subject.saves_count).to eq 0
     end
   end
 
   describe "#saves_data" do
     it "returns the saves data from the response" do
-      subject.saves_data.should eq []
+      expect(subject.saves_data).to eq []
     end
   end
 
@@ -168,8 +168,8 @@ describe Kippt::Clip do
     let(:like) { double :like }
 
     it "instantiates a Kippt::Like and saves it" do
-      Kippt::Like.should_receive(:new).with(subject, client).and_return(like)
-      like.should_receive(:save)
+      expect(Kippt::Like).to receive(:new).with(subject, client).and_return(like)
+      expect(like).to receive(:save)
       subject.like
     end
   end
@@ -178,8 +178,8 @@ describe Kippt::Clip do
     let(:like) { double :like }
 
     it "instantiates a Kippt::Like and destroys it" do
-      Kippt::Like.should_receive(:new).with(subject, client).and_return(like)
-      like.should_receive(:destroy)
+      expect(Kippt::Like).to receive(:new).with(subject, client).and_return(like)
+      expect(like).to receive(:destroy)
       subject.unlike
     end
   end
@@ -188,8 +188,8 @@ describe Kippt::Clip do
     let(:favorite) { double :favorite }
 
     it "instantiates a Kippt::Favorite and saves it" do
-      Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)
-      favorite.should_receive(:save)
+      expect(Kippt::Favorite).to receive(:new).with(subject, client).and_return(favorite)
+      expect(favorite).to receive(:save)
       subject.favorite
     end
   end
@@ -198,8 +198,8 @@ describe Kippt::Clip do
     let(:favorite) { double :favorite }
 
     it "instantiates a Kippt::Favorite and destroys it" do
-      Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)
-      favorite.should_receive(:destroy)
+      expect(Kippt::Favorite).to receive(:new).with(subject, client).and_return(favorite)
+      expect(favorite).to receive(:destroy)
       subject.unfavorite
     end
   end

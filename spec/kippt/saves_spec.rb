@@ -13,7 +13,7 @@ describe Kippt::Saves do
     end
 
     it "uses the clip saves data" do
-      Kippt::UserCollection.should_receive(:new).with({"objects" => clip.saves_data}, client)
+      expect(Kippt::UserCollection).to receive(:new).with({"objects" => clip.saves_data}, client)
       subject.fetch
     end
   end
