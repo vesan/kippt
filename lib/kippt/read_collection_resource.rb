@@ -24,12 +24,6 @@ module Kippt::ReadCollectionResource
 
   alias find []
 
-  def collection_from_url(url)
-    raise ArgumentError.new("The parameter URL can't be blank") if url.nil? || url == ""
-
-    collection_class.new(client.get(url).body, client)
-  end
-
   private
 
   def validate_collection_options(options)

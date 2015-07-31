@@ -95,26 +95,6 @@ describe Kippt::Comments do
     end
   end
 
-  describe "#collection_from_url" do
-    it "returns a new collection" do
-      stub_get("/#{base_uri}/?limit=20&offset=20").
-        to_return(:status => 200, :body => fixture("#{collection_fixture}.json"))
-      collection = subject.collection_from_url("/api/#{base_uri}/?limit=20&offset=20")
-      collection.should be_a(collection_class)
-    end
-
-    context "when passed URL is blank" do
-      it "raises ArgumentError" do
-        lambda {
-          subject.collection_from_url("")
-        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
-        lambda {
-          subject.collection_from_url(nil)
-        }.should raise_error(ArgumentError, "The parameter URL can't be blank")
-      end
-    end
-  end
-
   describe "#build" do
     it "returns new resource" do
       subject.build.should be_a(resource_class)
