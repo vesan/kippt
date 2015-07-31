@@ -11,14 +11,14 @@ describe Kippt::Favorite do
       collection.should_receive(:save_resource).with(favorite).and_return({success: true})
       client.should_receive(:collection_resource_for).with(Kippt::Favorites, clip).and_return(collection)
 
-      favorite.save.should be_true
+      favorite.save.should be_truthy
     end
 
     it "sets errors if there is any" do
       collection.stub(:save_resource).and_return({success: false, error_message: "PROBLEM"})
       client.stub(:collection_resource_for).and_return(collection)
 
-      favorite.save.should be_false
+      favorite.save.should be_falsey
       favorite.errors.should eq ["PROBLEM"]
     end
   end
@@ -32,7 +32,7 @@ describe Kippt::Favorite do
     it "tells collection resource to destroy itself" do
       client.stub(:collection_resource_for).and_return(collection)
       collection.should_receive(:destroy_resource).with(favorite).and_return(true)
-      favorite.destroy.should be_true
+      favorite.destroy.should be_truthy
     end
   end
 end

@@ -3,7 +3,7 @@ require "kippt/comments"
 
 describe Kippt::Comments do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub :clip, :id => 100, :all_comments_embedded? => false }
+  let(:clip) { double :clip, :id => 100, :all_comments_embedded? => false }
   subject { Kippt::Comments.new(client, clip) }
   let(:base_uri) { "clips/#{clip.id}/comments" }
   let(:singular_fixture) { "comment" }
@@ -43,10 +43,10 @@ describe Kippt::Comments do
     end
 
     context "when comments are embedded" do
-      let(:clip) { stub :clip,
-                        id: 100,
-                        all_comments_embedded?: true,
-                        comments_data: [{body: "Embedded body"}] }
+      let(:clip) { double :clip,
+                          id: 100,
+                          all_comments_embedded?: true,
+                          comments_data: [{body: "Embedded body"}] }
 
       it "uses the embedded data to create comments" do
         comments = subject.fetch
@@ -80,7 +80,7 @@ describe Kippt::Comments do
     context "when resource is not found" do
       it "raises exception" do
         stub_get("/#{base_uri}/10").
-          to_return(:status => 404, :body => {"message" => "Resource not found."})
+          to_return(:status => 404, :body => {"message" => "Resource not found."}.to_json)
         lambda {
           subject[10]
         }.should raise_error(
@@ -91,7 +91,7 @@ describe Kippt::Comments do
 
   describe "#find" do
     it "exists" do
-      subject.respond_to?(:find).should be_true
+      subject.respond_to?(:find).should be_truthy
     end
   end
 

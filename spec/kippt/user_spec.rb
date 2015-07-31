@@ -21,7 +21,7 @@ describe Kippt::User do
   describe "#pro?" do
     it "gets data from is_pro" do
       user = Kippt::User.new({:is_pro => true}, nil)
-      user.pro?.should be_true
+      user.pro?.should be_truthy
     end
   end
 
@@ -38,11 +38,11 @@ describe Kippt::User do
 
   describe "#following?" do
     it "uses Kippt::FollowRelationship to get the information" do
-      follow_relationship = mock(:follow_relationship,
+      follow_relationship = double(:follow_relationship,
         :following? => true)
       Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
       user = Kippt::User.new({:is_pro => true}, nil)
-      user.following?.should be_true
+      user.following?.should be_truthy
     end
   end
 
@@ -62,21 +62,21 @@ describe Kippt::User do
 
   describe "#follow" do
     it "sets up a Kippt::FollowRelationship and calls it" do
-      follow_relationship = mock(:follow_relationship,
+      follow_relationship = double(:follow_relationship,
         :follow => true)
       Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
       user = Kippt::User.new
-      user.follow.should be_true
+      user.follow.should be_truthy
     end
   end
 
   describe "#unfollow" do
     it "sets up a Kippt::FollowRelationship and calls it" do
-      follow_relationship = mock(:follow_relationship,
+      follow_relationship = double(:follow_relationship,
         :unfollow => true)
       Kippt::FollowRelationship.stub(:new).and_return(follow_relationship)
       user = Kippt::User.new
-      user.unfollow.should be_true
+      user.unfollow.should be_truthy
     end
   end
 end

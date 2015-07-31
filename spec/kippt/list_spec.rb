@@ -21,7 +21,7 @@ describe Kippt::List do
   describe "#private?" do
     it "gets data from is_private" do
       list = Kippt::List.new({"is_private" => true}, nil)
-      list.private?.should be_true
+      list.private?.should be_truthy
     end
   end
 
@@ -49,10 +49,10 @@ describe Kippt::List do
       let(:client) { Kippt::Client.new(valid_user_credentials) }
 
       it "returns value from the response" do
-        response = stub(:success? => true, body: {"following" => false})
+        response = double(:response, :success? => true, body: {"following" => false})
         client.should_receive(:get).with("/api/lists/10/relationship").and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
-        list.following?.should be_false
+        list.following?.should be_falsey
       end
 
       it "makes a request" do
@@ -65,7 +65,7 @@ describe Kippt::List do
 
     context "when request is unsuccessful" do
       it "raises an exception" do
-        response = stub(:success? => false, :body => {"message" => "Weird issue going on."})
+        response = double(:response, :success? => false, :body => {"message" => "Weird issue going on."})
         client.should_receive(:get).with("/api/lists/10/relationship").and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
 
@@ -81,7 +81,7 @@ describe Kippt::List do
       let(:client) { Kippt::Client.new(valid_user_credentials) }
 
       it "returns true" do
-        response = stub(:success? => true)
+        response = double(:response, :success? => true)
         client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "follow"}).and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
         list.follow.should eq true
@@ -98,7 +98,7 @@ describe Kippt::List do
 
     context "when request is unsuccessful" do
       it "raises an exception" do
-        response = stub(:success? => false, :body => {"message" => "Weird issue going on."})
+        response = double(:response, :success? => false, :body => {"message" => "Weird issue going on."})
         client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "follow"}).and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
 
@@ -114,7 +114,7 @@ describe Kippt::List do
       let(:client) { Kippt::Client.new(valid_user_credentials) }
 
       it "returns true" do
-        response = stub(:success? => true)
+        response = double(:response, :success? => true)
         client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "unfollow"}).and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
         list.unfollow.should eq true
@@ -131,7 +131,7 @@ describe Kippt::List do
 
     context "when request is unsuccessful" do
       it "raises an exception" do
-        response = stub(:success? => false, :body => {"message" => "Weird issue going on."})
+        response = double(:response, :success? => false, :body => {"message" => "Weird issue going on."})
         client.should_receive(:post).with("/api/lists/10/relationship", :data => {:action => "unfollow"}).and_return(response)
         list = Kippt::List.new(json_fixture("list.json"), client)
 

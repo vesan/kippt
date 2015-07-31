@@ -93,7 +93,7 @@ describe Kippt::Clips do
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         response = subject.save_resource(clip)
-        response[:success].should be_true
+        response[:success].should be_truthy
       end
     end
 
@@ -105,7 +105,7 @@ describe Kippt::Clips do
 
         clip = Kippt::Clip.new(:url => "http://kiskolabs.com")
         response = subject.save_resource(clip)
-        response.success?.should be_false
+        response.success?.should be_falsey
         response[:error_message].should eq "No good."
       end
     end
@@ -142,7 +142,7 @@ describe Kippt::Clips do
          to_return(:status => 200, :headers => {})
 
         clip = Kippt::Clip.new(:id => 100)
-        subject.destroy_resource(clip).should be_true
+        subject.destroy_resource(clip).should be_truthy
       end
     end
   end

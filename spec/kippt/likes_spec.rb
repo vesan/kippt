@@ -3,7 +3,7 @@ require "kippt/likes"
 
 describe Kippt::Likes do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub :user, :id => 100, :all_likes_embedded? => false }
+  let(:clip) { double :user, :id => 100, :all_likes_embedded? => false }
   subject { Kippt::Likes.new(client, clip) }
   let(:base_uri) { "clips/#{clip.id}/likes" }
   let(:singular_fixture) { "user" }
@@ -15,7 +15,7 @@ describe Kippt::Likes do
       like = double :like
       response = double :response, success?: true
       client.should_receive(:delete).with("clips/100/likes").and_return(response)
-      subject.destroy_resource(like).should be_true
+      subject.destroy_resource(like).should be_truthy
     end
   end
 end

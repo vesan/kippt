@@ -3,7 +3,7 @@ require "kippt/saves"
 
 describe Kippt::Saves do
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub :clip, :saves_data => fixture("users.json") }
+  let(:clip) { double :clip, :saves_data => fixture("users.json") }
   subject { Kippt::Saves.new(client, clip) }
 
   describe "#fetch" do

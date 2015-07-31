@@ -40,7 +40,7 @@ shared_examples_for "read collection resource" do
     context "when resource is not found" do
       it "raises exception" do
         stub_get("/#{base_uri}/10").
-          to_return(:status => 404, :body => {"message" => "Resource not found."})
+          to_return(:status => 404, :body => {"message" => "Resource not found."}.to_json)
         lambda {
           subject[10]
         }.should raise_error(
@@ -51,7 +51,7 @@ shared_examples_for "read collection resource" do
 
   describe "#find" do
     it "exists" do
-      subject.respond_to?(:find).should be_true
+      subject.respond_to?(:find).should be_truthy
     end
   end
 end

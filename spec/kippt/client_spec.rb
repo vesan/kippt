@@ -30,7 +30,7 @@ describe Kippt::Client do
     context "when debug is set to true" do
       it "sets client to debug mode" do
         client = Kippt::Client.new(:unauthenticated => true, :debug => true)
-        client.debug?.should be_true
+        client.debug?.should be_truthy
       end
     end
   end
@@ -38,9 +38,9 @@ describe Kippt::Client do
   context "#debug" do
     it "can be set and read" do
       client = Kippt::Client.new(:unauthenticated => true)
-      client.debug?.should be_false
+      client.debug?.should be_falsey
       client.debug = true
-      client.debug?.should be_true
+      client.debug?.should be_truthy
     end
   end
 
@@ -85,7 +85,7 @@ describe Kippt::Client do
 
     it "returns a Kippt::User instance" do
       subject.should_receive(:get).with("account").and_return(
-        stub :body => {}
+        double :body => {}
       )
       account = subject.account
       account.should be_a(Kippt::User)
@@ -94,7 +94,7 @@ describe Kippt::Client do
     context "when asked for api token" do
       it "asks for the token from the server" do
         subject.should_receive(:get).with("account?include_data=api_token").and_return(
-          stub :body => {}
+          double :body => {}
         )
         account = subject.account(true)
       end
@@ -155,10 +155,10 @@ describe Kippt::Client do
     context "when passed URL is blank" do
       it "raises ArgumentError" do
         expect {
-          subject.resource_from_url(stub, "")
+          subject.resource_from_url(double, "")
         }.to raise_error(ArgumentError, "The parameter URL can't be blank")
         expect {
-          subject.resource_from_url(stub, nil)
+          subject.resource_from_url(double, nil)
         }.to raise_error(ArgumentError, "The parameter URL can't be blank")
       end
     end

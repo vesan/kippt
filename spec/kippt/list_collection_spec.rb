@@ -5,7 +5,7 @@ describe Kippt::ListCollection do
   let(:data_with_multiple_pages) {
     MultiJson.load(fixture("lists_with_multiple_pages.json").read)
   }
-  let(:client) { stub }
+  let(:client) { double(:client) }
   subject { Kippt::ListCollection.new(data, client) }
   let(:subject_with_multiple_pages) { Kippt::ListCollection.new(data_with_multiple_pages, client) }
   let(:collection_resource_class) { Kippt::Lists }

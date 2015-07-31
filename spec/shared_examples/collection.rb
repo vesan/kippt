@@ -53,12 +53,12 @@ shared_examples_for "collection" do
 
   describe "#next_page" do
     context "if there is a next page" do
-      let(:collection_resource) { stub }
+      let(:collection_resource) { double(:collection_resource) }
 
       it "gets the next page of results from the collection resource" do
         client.should_receive(:collection_resource_for).with(collection_resource_class, data_with_multiple_pages["meta"]["next"]).and_return(collection_resource)
 
-        results = stub
+        results = double :results
         collection_resource.should_receive(:fetch).
           and_return(results)
 
@@ -91,14 +91,14 @@ shared_examples_for "collection" do
 
   describe "#previous_page" do
     context "if there is a previous page" do
-      let(:collection_resource) { stub }
+      let(:collection_resource) { double(:collection_resource) }
 
       it "gets the previous page of results from the collection resource" do
         client.should_receive(:collection_resource_for)
           .with(collection_resource_class, data_with_multiple_pages["meta"]["previous"])
           .and_return(collection_resource)
 
-        results = stub
+        results = double :results
         collection_resource.should_receive(:fetch).
           and_return(results)
 

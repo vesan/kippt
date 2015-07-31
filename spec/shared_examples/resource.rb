@@ -16,18 +16,18 @@ shared_examples_for "resource" do
   end
 
   describe "#destroy" do
-    let(:collection_resource)  { stub }
+    let(:collection_resource)  { double(:collection_resource) }
 
     it "sends delete request to the server" do
       client.stub(:collection_resource_for).and_return(collection_resource)
       collection_resource.should_receive(:destroy_resource).with(subject).and_return(true)
-      subject.destroy.should be_true
+      subject.destroy.should be_truthy
     end
   end
 
   describe "#save" do
     context "with valid parameters" do
-      let(:collection_resource)  { stub }
+      let(:collection_resource)  { double(:collection_resource) }
 
       before do
         client.stub(:collection_resource_for).and_return(collection_resource)
@@ -41,7 +41,7 @@ shared_examples_for "resource" do
       it "returns true" do
         collection_resource.stub(:save_resource).and_return(
           {:success => true})
-        subject.save.should be_true
+        subject.save.should be_truthy
       end
 
       it "sets the updated attributes received from the server" do
@@ -53,7 +53,7 @@ shared_examples_for "resource" do
     end
 
     context "with invalid parameters" do
-      let(:collection_resource)  { stub }
+      let(:collection_resource)  { double(:collection_resource) }
 
       before do
         client.stub(:collection_resource_for).and_return(collection_resource)
@@ -66,7 +66,7 @@ shared_examples_for "resource" do
       end
 
       it "returns false" do
-        subject.save.should be_false
+        subject.save.should be_falsey
       end
 
       it "clears previous errors" do

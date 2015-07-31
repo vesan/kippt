@@ -83,7 +83,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns true" do
-        subject.all_comments_embedded?.should be_true
+        subject.all_comments_embedded?.should be_truthy
       end
     end
 
@@ -93,7 +93,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns false" do
-        subject.all_comments_embedded?.should be_false
+        subject.all_comments_embedded?.should be_falsey
       end
     end
   end
@@ -115,7 +115,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns true" do
-        subject.all_likes_embedded?.should be_true
+        subject.all_likes_embedded?.should be_truthy
       end
     end
 
@@ -125,7 +125,7 @@ describe Kippt::Clip do
       }} }
 
       it "returns false" do
-        subject.all_likes_embedded?.should be_false
+        subject.all_likes_embedded?.should be_falsey
       end
     end
   end
@@ -165,7 +165,7 @@ describe Kippt::Clip do
   end
 
   describe "#like" do
-    let(:like) { stub :like }
+    let(:like) { double :like }
 
     it "instantiates a Kippt::Like and saves it" do
       Kippt::Like.should_receive(:new).with(subject, client).and_return(like)
@@ -175,7 +175,7 @@ describe Kippt::Clip do
   end
 
   describe "#unlike" do
-    let(:like) { stub :like }
+    let(:like) { double :like }
 
     it "instantiates a Kippt::Like and destroys it" do
       Kippt::Like.should_receive(:new).with(subject, client).and_return(like)
@@ -185,7 +185,7 @@ describe Kippt::Clip do
   end
 
   describe "#favorite" do
-    let(:favorite) { stub :favorite }
+    let(:favorite) { double :favorite }
 
     it "instantiates a Kippt::Favorite and saves it" do
       Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)
@@ -195,7 +195,7 @@ describe Kippt::Clip do
   end
 
   describe "#unlike" do
-    let(:favorite) { stub :favorite }
+    let(:favorite) { double :favorite }
 
     it "instantiates a Kippt::Favorite and destroys it" do
       Kippt::Favorite.should_receive(:new).with(subject, client).and_return(favorite)

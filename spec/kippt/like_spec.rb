@@ -11,14 +11,14 @@ describe Kippt::Like do
       collection.should_receive(:save_resource).with(like).and_return({success: true})
       client.should_receive(:collection_resource_for).with(Kippt::Likes, clip).and_return(collection)
 
-      like.save.should be_true
+      like.save.should be_truthy
     end
 
     it "sets errors if there is any" do
       collection.stub(:save_resource).and_return({success: false, error_message: "PROBLEM"})
       client.stub(:collection_resource_for).and_return(collection)
 
-      like.save.should be_false
+      like.save.should be_falsey
       like.errors.should eq ["PROBLEM"]
     end
   end
@@ -32,7 +32,7 @@ describe Kippt::Like do
     it "tells collection resource to destroy itself" do
       client.stub(:collection_resource_for).and_return(collection)
       collection.should_receive(:destroy_resource).with(like).and_return(true)
-      like.destroy.should be_true
+      like.destroy.should be_truthy
     end
   end
 end

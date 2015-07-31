@@ -4,7 +4,7 @@ require "kippt/comment"
 describe Kippt::Comment do
   subject { Kippt::Comment.new(data, clip, client) }
   let(:client) { Kippt::Client.new(valid_user_credentials) }
-  let(:clip) { stub(:clip) }
+  let(:clip) { double(:clip) }
   let(:collection_resource_class) { Kippt::Comments }
 
   let(:data) { MultiJson.load(fixture("comment.json").read) }
