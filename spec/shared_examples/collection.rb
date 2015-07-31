@@ -56,11 +56,10 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the next page of results from the collection resource" do
-        client.stub(:collection_resource_for).and_return(collection_resource)
+        client.should_receive(:collection_resource_for).with(collection_resource_class, data_with_multiple_pages["meta"]["next"]).and_return(collection_resource)
 
         results = stub
-        collection_resource.should_receive(:collection_from_url).
-          with(data_with_multiple_pages["meta"]["next"]).
+        collection_resource.should_receive(:fetch).
           and_return(results)
 
         subject_with_multiple_pages.next_page.should eq results
@@ -95,11 +94,12 @@ shared_examples_for "collection" do
       let(:collection_resource) { stub }
 
       it "gets the previous page of results from the collection resource" do
-        client.stub(:collection_resource_for).and_return(collection_resource)
+        client.should_receive(:collection_resource_for)
+          .with(collection_resource_class, data_with_multiple_pages["meta"]["previous"])
+          .and_return(collection_resource)
 
         results = stub
-        collection_resource.should_receive(:collection_from_url).
-          with(data_with_multiple_pages["meta"]["previous"]).
+        collection_resource.should_receive(:fetch).
           and_return(results)
 
         subject_with_multiple_pages.previous_page.should eq results

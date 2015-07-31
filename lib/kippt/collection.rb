@@ -37,7 +37,7 @@ module Kippt::Collection
   def next_page
     raise Kippt::APIError.new("There is no next page") if @next.nil? || @next == ""
 
-    collection_resource.collection_from_url(@next)
+    collection_resource_from_url(@next).fetch
   end
 
   def previous_page?
@@ -48,14 +48,14 @@ module Kippt::Collection
   def previous_page
     raise Kippt::APIError.new("There is no previous page") if @previous.nil? || @previous == ""
 
-    collection_resource.collection_from_url(@previous)
+    collection_resource_from_url(@previous).fetch
   end
   alias_method :prev_page, :previous_page
 
   private
 
-  def collection_resource
-    @collection_resource ||= client.collection_resource_for(collection_resource_class)
+  def collection_resource_from_url(url)
+    client.collection_resource_for(collection_resource_class, url)
   end
 
   def client
