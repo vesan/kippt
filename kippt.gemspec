@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "faraday_middleware", "~> 0.8"
   gem.add_dependency "multi_json", "~> 1.3"
 
-  gem.add_development_dependency "rspec", "~> 2.9"
+  gem.add_development_dependency "rspec", "~> 3.0"
   gem.add_development_dependency "webmock", "~> 1.11"
   gem.add_development_dependency "simplecov", "~> 0.7"
 end
