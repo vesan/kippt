@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1 / July 31, 2015
+
+Fixes bug with fetching next & previous page of clips.
+
+Updates RSpec to >= 3.0 and updates the test syntax to use the `expect`-style.
+
 ## 3.0 / December 23, 2013
 
 Changes all fetching to paginated HTTP endpoints to return a proxy so that you can control
